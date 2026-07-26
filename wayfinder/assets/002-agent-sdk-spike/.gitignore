@@ -1,0 +1,7 @@
+node_modules/
+findings.json
+# Your own screenshots stay local. The generated calibration mock is kept,
+# because the known-hex comparison is part of the finding.
+inputs/*
+!inputs/README.md
+!inputs/_synthetic-known-hex.png
