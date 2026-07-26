@@ -1,0 +1,10 @@
+# dependencies
+node_modules/
+
+# OS cruft
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# logs and scratch
+*.log
