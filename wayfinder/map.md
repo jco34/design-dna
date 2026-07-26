@@ -94,6 +94,23 @@ default, `prototype` for the prototype-typed tickets, `frontend-design` or
   decision 9** and makes Scope human-chosen for URL items too. Findings in
   [`003-capture-findings.md`](assets/003-capture-findings.md).
   ([ticket](tickets/003-how-a-url-becomes-an-item.md))
+- **004** The extraction schema is **two schemas**: `ExtractedDna`, the closed
+  object the agent returns under `outputFormat`, and the **Item** record that
+  adds everything the agent may not write, related by nine mechanical lines.
+  Seven traits; palette is **five roles each with an ordinal weight** (never a
+  percentage), and a hex is **"what the agent read"**, stored as approximate,
+  with per-swatch `authorship` (`agent | sampled | override`) so building a pixel
+  sampler later is not a breaking change. **Two absence states, not three:**
+  a state describes the reading and a value describes the design, so
+  Undetermined sits on the leaf and **Not applicable is derived from Scope by
+  the producer** - which **revises 001's decision 5** and settles 003's
+  challenge, making Scope CLI-supplied and never the agent's to write. Motion is
+  rejected because a still Capture cannot show it, and the philosophy "axes" turn
+  out to be labels by 001's own definition, so they go to 005. Schema in
+  [`004-extraction-schema.json`](assets/004-extraction-schema.json), module in
+  [`004-extraction-schema.ts`](assets/004-extraction-schema.ts), commentary in
+  [`004-schema-commentary.md`](assets/004-schema-commentary.md).
+  ([ticket](tickets/004-extraction-schema.md))
 
 ## Not yet specified
 

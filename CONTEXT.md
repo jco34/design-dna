@@ -41,6 +41,11 @@ transplanting on its own, such as a palette or a type system. The unit of
 mixing, and taken whole or not at all.
 _Avoid_: Element, Facet, Aspect, Attribute
 
+**Swatch**:
+One colour of a palette: the role it performs in the design and how much of the
+design it carries. Never meaningful on its own, since a palette is taken whole.
+_Avoid_: Colour, Hex, Token
+
 **Label**:
 A taxonomy value carried by an item so it can be found. Describes an item
 rather than contributing to a prompt, and so is never mixed.
@@ -57,9 +62,17 @@ has no page layout, and nothing is missing.
 _Avoid_: N/A, Empty, None
 
 **Undetermined**:
-A trait the agent looked for and could not read from the capture. Something is
-missing, and a later re-run or override can fill it.
+A trait, or one part of a trait, that the agent looked for and could not read
+from the capture. Something is missing, and a later re-run or override can fill
+it.
 _Avoid_: Unknown, Missing, Null
+
+**Authorship**:
+How a stored value came to be there: read off the capture by the agent,
+measured from the capture by a tool, or written by you. Carried by every trait
+and every label. A value the agent read is approximate and is never presented
+as exact.
+_Avoid_: Confidence, Precision, Provenance
 
 **Override**:
 A trait or label value written by you rather than by the agent.

@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Design DNA extraction",
+  "description": "The design analysis of one Capture. Report only what you can read off the image. Never invent a value. Any leaf you cannot read is the empty string for text fields and \"undetermined\" for choice fields. Do not describe the subject matter, the copy, or the company; describe the design.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "palette",
+    "typography",
+    "composition",
+    "spacing",
+    "surfaceTreatment",
+    "imagery",
+    "philosophy",
+    "labels"
+  ],
+  "properties": {
+    "palette": {
+      "type": "object",
+      "description": "The colour system, by role. Give the colour that actually performs each role in this design. Values are your visual read, not a pixel measurement, and are stored as approximate.",
+      "additionalProperties": false,
+      "required": ["background", "surface", "ink", "muted", "accent"],
+      "properties": {
+        "background": {
+          "type": "object",
+          "description": "The page or canvas colour that sits behind everything.",
+          "additionalProperties": false,
+          "required": ["hex", "weight"],
+          "properties": {
+            "hex": {
+              "type": "string",
+              "description": "Lowercase #rrggbb, exactly seven characters, for example \"#10131a\". Empty string if you cannot read it."
+            },
+            "weight": {
+              "type": "string",
+              "description": "How much of the design this colour carries. dominant: most of the visible area. supporting: a substantial but secondary share. occasional: small deliberate moments only.",
+              "enum": ["dominant", "supporting", "occasional", "undetermined"]
+            }
+          }
+        },
+        "surface": {
+          "type": "object",
+          "description": "The colour of panels, cards and raised areas sitting on the background. If the design has no layered surfaces, give the nearest colour doing that job.",
+          "additionalProperties": false,
+          "required": ["hex", "weight"],
+          "properties": {
+            "hex": {
+              "type": "string",
+              "description": "Lowercase #rrggbb, exactly seven characters. Empty string if you cannot read it."
+            },
+            "weight": {
+              "type": "string",
+              "description": "How much of the design this colour carries.",
+              "enum": ["dominant", "supporting", "occasional", "undetermined"]
+            }
+          }
+        },
+        "ink": {
+          "type": "object",
+          "description": "The primary text colour, the one headings and body copy are set in.",
+          "additionalProperties": false,
+          "required": ["hex", "weight"],
+          "properties": {
+            "hex": {
+              "type": "string",
+              "description": "Lowercase #rrggbb, exactly seven characters. Empty string if you cannot read it."
+            },
+            "weight": {
+              "type": "string",
+              "description": "How much of the design this colour carries.",
+              "enum": ["dominant", "supporting", "occasional", "undetermined"]
+            }
+          }
+        },
+        "muted": {
+          "type": "object",
+          "description": "The lower-emphasis colour: secondary copy, captions, hairlines, disabled states.",
+          "additionalProperties": false,
+          "required": ["hex", "weight"],
+          "properties": {
+            "hex": {
+              "type": "string",
+              "description": "Lowercase #rrggbb, exactly seven characters. Empty string if you cannot read it."
+            },
+            "weight": {
+              "type": "string",
+              "description": "How much of the design this colour carries.",
+              "enum": ["dominant", "supporting", "occasional", "undetermined"]
+            }
+          }
+        },
+        "accent": {
+          "type": "object",
+          "description": "The one colour the design uses to make something matter: the primary call to action, the brand hit. If several compete, give the one used on the primary action.",
+          "additionalProperties": false,
+          "required": ["hex", "weight"],
+          "properties": {
+            "hex": {
+              "type": "string",
+              "description": "Lowercase #rrggbb, exactly seven characters. Empty string if you cannot read it."
+            },
+            "weight": {
+              "type": "string",
+              "description": "How much of the design this colour carries. An accent used on one button is \"occasional\"; an accent flooding half the page is \"dominant\". This distinction matters more than the hex.",
+              "enum": ["dominant", "supporting", "occasional", "undetermined"]
+            }
+          }
+        }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "description": "The type system. Name a family only if you actually recognise the letterforms; describing the style is always required and is the more useful of the two.",
+      "additionalProperties": false,
+      "required": [
+        "headingFamily",
+        "headingCharacter",
+        "bodyFamily",
+        "bodyCharacter",
+        "scale",
+        "weightRange"
+      ],
+      "properties": {
+        "headingFamily": {
+          "type": "string",
+          "description": "The named typeface used for headings, for example \"Inter\" or \"GT Sectra\". Empty string if you do not recognise it or cannot see glyphs. Never guess a name to fill this in, and never put a generic CSS family here."
+        },
+        "headingCharacter": {
+          "type": "string",
+          "description": "The heading type described specifically, for example \"geometric sans, wide apertures, very tight tracking, all-caps at display size\". Include tracking, leading and case here. Never \"sans-serif\". Empty string only if no glyphs are visible at all. Roughly 20-200 characters."
+        },
+        "bodyFamily": {
+          "type": "string",
+          "description": "The named typeface used for body copy. Empty string if you do not recognise it or cannot see glyphs."
+        },
+        "bodyCharacter": {
+          "type": "string",
+          "description": "The body type described specifically, including tracking, leading and measure. Empty string only if no glyphs are visible at all. Roughly 20-200 characters."
+        },
+        "scale": {
+          "type": "string",
+          "description": "Size contrast between the largest heading and body copy. tight: they sit close together. moderate: a clear but conventional step. dramatic: display type many times body size.",
+          "enum": ["tight", "moderate", "dramatic", "undetermined"]
+        },
+        "weightRange": {
+          "type": "string",
+          "description": "How many weights the design uses. uniform: essentially one. paired: two, typically a regular and a bold. wide: three or more, or a light-to-black spread used expressively.",
+          "enum": ["uniform", "paired", "wide", "undetermined"]
+        }
+      }
+    },
+    "composition": {
+      "type": "object",
+      "description": "How the design is arranged in space: the grid, the alignment, how attention is directed.",
+      "additionalProperties": false,
+      "required": ["structure", "contentWidth"],
+      "properties": {
+        "structure": {
+          "type": "string",
+          "description": "The layout approach in words, for example \"centred single column with an asymmetric 60/40 hero split, everything left-aligned to one rail\". Describe relationships, not pixel measurements. Empty string if you cannot read it. Roughly 20-300 characters."
+        },
+        "contentWidth": {
+          "type": "string",
+          "description": "How much horizontal room content is given. full-bleed: content runs edge to edge. wide: a container near the full viewport. contained: a clear centred measure with visible margins. narrow: a deliberately tight column.",
+          "enum": ["full-bleed", "wide", "contained", "narrow", "undetermined"]
+        }
+      }
+    },
+    "spacing": {
+      "type": "object",
+      "description": "How generously the design breathes, and whether its spacing follows a system.",
+      "additionalProperties": false,
+      "required": ["density", "rhythm"],
+      "properties": {
+        "density": {
+          "type": "string",
+          "description": "dense: packed, information-first, little rest. balanced: conventional comfortable spacing. airy: large deliberate emptiness used as a design element.",
+          "enum": ["dense", "balanced", "airy", "undetermined"]
+        },
+        "rhythm": {
+          "type": "string",
+          "description": "Whether spacing reads as systematic or ad hoc, and where the design puts its air, for example \"consistent step scale, generous section breaks, tight within groups\". Do not assert pixel values. Empty string if you cannot read it. Roughly 20-240 characters."
+        }
+      }
+    },
+    "surfaceTreatment": {
+      "type": "object",
+      "description": "What the surfaces are made of: how edges are cut, how things are separated, whether anything lifts off the page, and the finish.",
+      "additionalProperties": false,
+      "required": ["corners", "borders", "elevation", "finish"],
+      "properties": {
+        "corners": {
+          "type": "string",
+          "description": "Corner treatment on cards, buttons and inputs. sharp: square. slight: a small radius. rounded: obviously soft. pill: fully rounded ends. mixed: deliberately inconsistent.",
+          "enum": ["sharp", "slight", "rounded", "pill", "mixed", "undetermined"]
+        },
+        "borders": {
+          "type": "string",
+          "description": "How elements are separated. none: separation is by space or colour alone. hairline: fine low-contrast lines. heavy: thick or high-contrast rules as a design feature. mixed.",
+          "enum": ["none", "hairline", "heavy", "mixed", "undetermined"]
+        },
+        "elevation": {
+          "type": "string",
+          "description": "Depth. flat: no shadows at all. subtle: soft shadows you have to look for. pronounced: shadows or offsets that are part of the look.",
+          "enum": ["flat", "subtle", "pronounced", "undetermined"]
+        },
+        "finish": {
+          "type": "string",
+          "description": "The material quality of the surfaces, for example \"matte flat fills\", \"a faint film grain over a mesh gradient\", \"frosted translucent nav over content\". Write \"plain flat fills\" if there is genuinely no texture; that is an answer, not a gap. Empty string only if you cannot read it. Roughly 15-240 characters."
+        }
+      }
+    },
+    "imagery": {
+      "type": "object",
+      "description": "The pictures, illustration or graphics the design uses. A design that uses none is a real and common answer.",
+      "additionalProperties": false,
+      "required": ["kind", "treatment"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "The dominant kind of imagery. none: the design is typographic and geometric only. ui-screenshot: pictures of the product itself. mixed: two or more with no clear lead.",
+          "enum": [
+            "none",
+            "photography",
+            "illustration",
+            "3d-render",
+            "abstract-graphic",
+            "ui-screenshot",
+            "mixed",
+            "undetermined"
+          ]
+        },
+        "treatment": {
+          "type": "string",
+          "description": "How that imagery is styled and used, for example \"duotone photography bled off the right edge, no borders\". Empty string when kind is \"none\" or when you cannot read it. Roughly 15-240 characters."
+        }
+      }
+    },
+    "philosophy": {
+      "type": "object",
+      "description": "The one free-text field. Everything worth saying that the fields above cannot hold belongs here and nowhere else.",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "One paragraph, roughly 80-1200 characters, on the intent behind this design and the mechanism that makes it work. Be specific to this design. A paragraph that would be equally true of any other page of its kind is a failure. Do not inventory the fields above. Do not praise. Empty string only if the image is unreadable."
+        }
+      }
+    },
+    "labels": {
+      "type": "array",
+      "description": "Short lowercase descriptors someone would search this design by. Provisional: the controlled vocabulary is not yet designed, so use plain, conventional, reusable words and prefer an existing common term over an invented one.",
+      "minItems": 3,
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "description": "One lowercase descriptor, one to three words, hyphenated if multi-word."
+      }
+    }
+  }
+}
