@@ -83,6 +83,17 @@ default, `prototype` for the prototype-typed tickets, `frontend-design` or
   unstable run-to-run), so re-extraction is not idempotent. Findings in
   [`002-agent-sdk-findings.md`](assets/002-agent-sdk-findings.md).
   ([ticket](tickets/002-prove-agent-sdk-extraction.md))
+- **003** A **Capture** is a fixed **1440x900 viewport shot at
+  `deviceScaleFactor: 2`**, never full-page: measured across ten real sites, a
+  full-page Capture would span 0.63:1 to 10.25:1 (median **7.57:1**), which no
+  card grid survives, so **011 may treat 1.6:1 as fixed**. Consent banners are
+  captured as noise rather than dismissed (signature detection missed the
+  first-party dialogs that design-conscious sites ship). Capture failure
+  **refuses the Item**, keeping 001's one-capture invariant. Cropping becomes a
+  CLI `--selector` flag backed by `locator.screenshot()`, which **revises 001's
+  decision 9** and makes Scope human-chosen for URL items too. Findings in
+  [`003-capture-findings.md`](assets/003-capture-findings.md).
+  ([ticket](tickets/003-how-a-url-becomes-an-item.md))
 
 ## Not yet specified
 
