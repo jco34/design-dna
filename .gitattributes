@@ -1,0 +1,10 @@
+# Normalize line endings so a Windows checkout does not produce whole-file
+# diffs. Text is stored LF in the repo and checked out per core.autocrlf.
+* text=auto eol=lf
+
+# Binary: never touch these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
