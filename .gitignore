@@ -8,3 +8,10 @@ Desktop.ini
 
 # logs and scratch
 *.log
+
+# next.js
+web/.next/
+web/out/
+
+# playwright
+seed/node_modules/
