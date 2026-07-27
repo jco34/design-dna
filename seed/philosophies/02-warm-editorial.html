@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Marginalia Review - Issue Nineteen</title>
+<style>
+  :root {
+    --paper: #f5efe2;
+    --paper-deep: #ebe3d2;
+    --ink: #211d18;
+    --ink-soft: #4e463b;
+    --muted: #8d8371;
+    --hair: #cfc4ae;
+    --oxblood: #6e2523;
+
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --text: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --util: "Optima", Candara, "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  body { overflow: hidden; }
+
+  .page {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  /* ---------------------------------------------------------- masthead */
+
+  .masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 64px 16px;
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .title {
+    font-family: var(--display);
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: 0.015em;
+  }
+  .title span { font-style: italic; }
+
+  .masthead nav { display: flex; gap: 32px; }
+  .masthead nav a {
+    font-family: var(--util);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .masthead nav a:last-child {
+    color: var(--oxblood);
+    border-bottom: 1px solid var(--oxblood);
+    padding-bottom: 2px;
+  }
+
+  /* -------------------------------------------------------------- body */
+
+  .spread {
+    display: grid;
+    grid-template-columns: 1fr 570px;
+    min-height: 0;
+  }
+
+  .column {
+    padding: 46px 72px 40px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .issueline {
+    font-family: var(--util);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .issueline::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--hair);
+  }
+
+  .kicker {
+    margin-top: 34px;
+    font-family: var(--util);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+
+  h1 {
+    margin-top: 16px;
+    font-family: var(--display);
+    font-size: 61px;
+    font-weight: 400;
+    line-height: 1.09;
+    letter-spacing: -0.014em;
+    max-width: 13ch;
+  }
+  h1 em { font-style: italic; }
+
+  .deck {
+    margin-top: 26px;
+    max-width: 44ch;
+    font-size: 17px;
+    line-height: 1.72;
+    color: var(--ink-soft);
+  }
+  .deck .drop {
+    float: left;
+    font-family: var(--display);
+    font-size: 58px;
+    line-height: 0.86;
+    padding: 5px 10px 0 0;
+    color: var(--oxblood);
+  }
+
+  .byline {
+    margin-top: 30px;
+    padding-top: 16px;
+    border-top: 1px solid var(--hair);
+    max-width: 44ch;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .byline .who {
+    font-family: var(--util);
+    font-size: 11.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .byline .len {
+    font-family: var(--util);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  .read {
+    margin-top: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    align-self: flex-start;
+    font-family: var(--util);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--oxblood);
+    text-decoration: none;
+    padding: 14px 26px;
+  }
+
+  /* ------------------------------------------------------------- plate */
+
+  .plate {
+    position: relative;
+    background: var(--paper-deep);
+    display: flex;
+    flex-direction: column;
+  }
+  .plate figure {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .plate svg { width: 100%; height: 100%; display: block; }
+
+  figcaption {
+    font-family: var(--util);
+    font-size: 10.5px;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 14px 40px 22px 34px;
+    background: var(--paper-deep);
+    border-top: 1px solid var(--hair);
+    display: flex;
+    gap: 14px;
+  }
+  figcaption b {
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="masthead">
+      <div class="title">The Marginalia <span>Review</span></div>
+      <nav>
+        <a href="#">Essays</a>
+        <a href="#">Craft</a>
+        <a href="#">Letters</a>
+        <a href="#">Archive</a>
+        <a href="#">Subscribe</a>
+      </nav>
+    </header>
+
+    <div class="spread">
+      <article class="column">
+        <p class="issueline">Issue Nineteen &middot; Michaelmas</p>
+
+        <p class="kicker">A bindery in Devon</p>
+
+        <h1>The paper keeps the <em>hand</em> that folded it.</h1>
+
+        <p class="deck">
+          <span class="drop">F</span>orty years at the bench have left Margaret Hale with a
+          thumb that reads grain direction faster than any machine on the floor. She folds
+          against it once, feels the fibres give, and knows which way the sheet wants to go.
+          The book will open flat for two centuries because of a gesture that takes her
+          under a second.
+        </p>
+
+        <div class="byline">
+          <span class="who">Words by Oliver Nance</span>
+          <span class="len">Photographs by R. Iwu &middot; 18 min</span>
+        </div>
+
+        <a class="read" href="#">Read the essay</a>
+      </article>
+
+      <div class="plate">
+        <figure>
+          <svg viewBox="0 0 570 700" preserveAspectRatio="xMidYMid slice" role="img"
+               aria-label="Photograph: the fore-edges of a stack of hand-folded sheets in raking light">
+            <defs>
+              <linearGradient id="air" x1="0.1" y1="0" x2="0.85" y2="1">
+                <stop offset="0" stop-color="#e9dfc9"/>
+                <stop offset="0.45" stop-color="#c9b795"/>
+                <stop offset="1" stop-color="#4a3c2c"/>
+              </linearGradient>
+              <radialGradient id="keylight" cx="0.28" cy="0.16" r="0.75">
+                <stop offset="0" stop-color="#fff6e2" stop-opacity="0.92"/>
+                <stop offset="0.45" stop-color="#e4d2ae" stop-opacity="0.35"/>
+                <stop offset="1" stop-color="#2b2119" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="vignette" cx="0.42" cy="0.38" r="0.78">
+                <stop offset="0.4" stop-color="#000" stop-opacity="0"/>
+                <stop offset="1" stop-color="#1a120a" stop-opacity="0.62"/>
+              </radialGradient>
+              <filter id="soften" x="-10%" y="-10%" width="120%" height="120%">
+                <feGaussianBlur stdDeviation="1.1"/>
+              </filter>
+              <filter id="deepsoften" x="-10%" y="-10%" width="120%" height="120%">
+                <feGaussianBlur stdDeviation="5"/>
+              </filter>
+              <filter id="grain">
+                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" seed="7"/>
+                <feColorMatrix type="saturate" values="0"/>
+                <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+              </filter>
+            </defs>
+
+            <rect width="570" height="700" fill="url(#air)"/>
+
+            <!-- the far stack, out of focus -->
+            <g filter="url(#deepsoften)" opacity="0.85">
+              <rect x="-40" y="92" width="360" height="150" rx="3" fill="#8d7a5c"/>
+              <rect x="-40" y="86" width="360" height="10" rx="2" fill="#d9c9a6"/>
+            </g>
+
+            <!-- the near stack: fore-edges of folded sheets in raking light -->
+            <g transform="rotate(-6 285 430)" filter="url(#soften)">
+              <rect x="30" y="286" width="600" height="300" fill="#6b5842"/>
+              <g>
+                <rect x="30" y="286" width="600" height="4.6" fill="#f3e6cb"/>
+                <rect x="30" y="292" width="600" height="3.4" fill="#a8916c"/>
+                <rect x="30" y="297" width="600" height="4.8" fill="#efe0c2"/>
+                <rect x="30" y="303" width="600" height="3.1" fill="#9c8663"/>
+                <rect x="30" y="307" width="600" height="5.2" fill="#f6ead2"/>
+                <rect x="30" y="314" width="600" height="3.6" fill="#8f7a59"/>
+                <rect x="30" y="319" width="600" height="4.4" fill="#eaddbe"/>
+                <rect x="30" y="325" width="600" height="3.2" fill="#a08a66"/>
+                <rect x="30" y="330" width="600" height="5.0" fill="#f2e5c8"/>
+                <rect x="30" y="337" width="600" height="3.4" fill="#8a7554"/>
+                <rect x="30" y="342" width="600" height="4.6" fill="#e6d8b8"/>
+                <rect x="30" y="348" width="600" height="3.0" fill="#96805e"/>
+                <rect x="30" y="353" width="600" height="5.4" fill="#f0e2c5"/>
+                <rect x="30" y="360" width="600" height="3.6" fill="#7f6b4c"/>
+                <rect x="30" y="365" width="600" height="4.2" fill="#e2d3b1"/>
+                <rect x="30" y="371" width="600" height="3.2" fill="#8b7655"/>
+                <rect x="30" y="376" width="600" height="5.0" fill="#ecdec0"/>
+                <rect x="30" y="383" width="600" height="3.4" fill="#7a6647"/>
+                <rect x="30" y="388" width="600" height="4.4" fill="#ddceac"/>
+                <rect x="30" y="394" width="600" height="3.0" fill="#846f50"/>
+                <rect x="30" y="399" width="600" height="5.2" fill="#e8daba"/>
+                <rect x="30" y="406" width="600" height="3.6" fill="#6f5c40"/>
+                <rect x="30" y="411" width="600" height="4.2" fill="#d6c6a3"/>
+                <rect x="30" y="417" width="600" height="3.2" fill="#7b6749"/>
+                <rect x="30" y="422" width="600" height="4.8" fill="#e0d1b0"/>
+                <rect x="30" y="429" width="600" height="3.4" fill="#665439"/>
+                <rect x="30" y="434" width="600" height="4.2" fill="#cebe9b"/>
+                <rect x="30" y="440" width="600" height="3.0" fill="#715e42"/>
+                <rect x="30" y="445" width="600" height="4.6" fill="#d8c8a6"/>
+                <rect x="30" y="451" width="600" height="3.6" fill="#5d4c34"/>
+                <rect x="30" y="456" width="600" height="4.0" fill="#c5b590"/>
+                <rect x="30" y="461" width="600" height="3.2" fill="#68563b"/>
+                <rect x="30" y="466" width="600" height="4.4" fill="#cfbf9c"/>
+                <rect x="30" y="472" width="600" height="3.4" fill="#544430"/>
+                <rect x="30" y="477" width="600" height="4.0" fill="#bcac87"/>
+                <rect x="30" y="482" width="600" height="3.0" fill="#5f4e35"/>
+                <rect x="30" y="487" width="600" height="4.2" fill="#c4b491"/>
+                <rect x="30" y="492" width="600" height="3.6" fill="#4b3c2a"/>
+                <rect x="30" y="497" width="600" height="3.8" fill="#b2a27e"/>
+                <rect x="30" y="502" width="600" height="3.2" fill="#56462f"/>
+                <rect x="30" y="507" width="600" height="4.0" fill="#b9a986"/>
+                <rect x="30" y="512" width="600" height="3.4" fill="#423425"/>
+                <rect x="30" y="517" width="600" height="3.6" fill="#a89873"/>
+                <rect x="30" y="522" width="600" height="3.2" fill="#4d3e2a"/>
+                <rect x="30" y="527" width="600" height="3.8" fill="#af9f7c"/>
+                <rect x="30" y="532" width="600" height="3.4" fill="#392c20"/>
+                <rect x="30" y="537" width="600" height="3.4" fill="#9d8d69"/>
+                <rect x="30" y="542" width="600" height="3.2" fill="#443625"/>
+                <rect x="30" y="547" width="600" height="3.6" fill="#a49471"/>
+                <rect x="30" y="552" width="600" height="34" fill="#31261b"/>
+              </g>
+              <!-- the fold, catching the light -->
+              <path d="M30 286 L630 286 L630 279 L30 281 Z" fill="#fbf2e0" opacity="0.9"/>
+            </g>
+
+            <rect width="570" height="700" fill="url(#keylight)" style="mix-blend-mode:screen"/>
+            <rect width="570" height="700" fill="url(#vignette)"/>
+            <rect width="570" height="700" filter="url(#grain)" opacity="0.19"
+                  style="mix-blend-mode:multiply"/>
+          </svg>
+        </figure>
+        <figcaption>
+          <b>Plate I</b>
+          <span>Fore-edges of a folded section, raking light. Hale &amp; Daughter, Ashburton.
+            The sheets are Zerkall mould-made, folded with the grain running head to tail.</span>
+        </figcaption>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

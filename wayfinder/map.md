@@ -128,6 +128,45 @@ default, `prototype` for the prototype-typed tickets, `frontend-design` or
   [`007-prompt-candidates.md`](assets/007-prompt-candidates.md), template in
   [`007-prompt-template.ts`](assets/007-prompt-template.ts).
   ([ticket](tickets/007-what-the-copied-prompt-is.md))
+- **005** The label vocabulary is **fully closed** with **no free tags**, because
+  the open half the hybrid was meant to supply already exists as `philosophy`
+  plus your `note`: three axes only, **`genre` (one of seven), `style` (0-2 of
+  eight), `mood` (0-2 of five)**, each value carrying a definition that lives in
+  the module so it reaches the prompt. `brutalist`/`neo-brutalist`/`brutalism`/
+  `raw-concrete` is answered by **one member with a deliberately wide gloss**,
+  since 002 measured that boundary readings flip run to run and a filter that
+  changes on re-run is worse than a coarse one. Density, flat/dimensional, colour
+  temperature and light/dark are **rejected as derivable** from traits 004
+  already stores; era collapses into `style: retro`; industry is refused by the
+  schema's own "describe the design, not the company". Authorship sits **once per
+  axis**, evolution is **append-only with old items stale and findable via
+  `taxonomyVersion`**, and backfill is a **narrow relabel pass, never a
+  re-extraction**, because 002 proved re-extraction is not idempotent. **Scope is
+  confirmed as `page | section | component`** and the `notApplicable` table 004
+  left unwritten has **one non-empty cell**: `component` excludes `composition`.
+  Vocabulary in [`005-taxonomy.md`](assets/005-taxonomy.md), module in
+  [`005-taxonomy.ts`](assets/005-taxonomy.ts).
+  ([ticket](tickets/005-taxonomy-and-tagging.md))
+- **006** The library is **`library/`, a committed folder**: one JSON file per
+  Item, one PNG per Capture named after it, read by a full directory scan. The
+  ticket's four questions are one decision, because choosing text is what makes
+  git history meaningful and committing is what makes an overwrite safe.
+  **SQLite fails the hand-editability requirement on all four of its parts** and
+  would delete the git decision with it; a full scan of 300 Items **fully Zod-
+  validated measures 31ms**, so there is no query to accelerate. **003's deferred
+  file-size number is closed**: a `deviceScaleFactor: 2` Capture is a **mean of
+  1,114 KB** across six real sites (median 610 KB, tail to 3.0 MB, 2.32-3.38x
+  over 1x), so 300 Items is 0.2-0.4 GB and metadata is **0.3% of the library**.
+  Committing PNGs is safe because 001 makes each Capture write-once, so there is
+  no churn; **ignoring them would ignore the only irreplaceable bytes**, since a
+  DNA re-extracts for $0.05-0.13 and a Capture never returns. **An overwrite is
+  an authorship-respecting merge** that keeps every Override verbatim, and
+  `git log -p` on an Item file is the version history 002's non-idempotence
+  demanded. **The app writes nothing**, which dissolves locking, transactions and
+  migration-on-write. Contract in
+  [`006-storage-contract.md`](assets/006-storage-contract.md), root decision in
+  [ADR 0002](../docs/adr/0002-library-as-committed-files.md).
+  ([ticket](tickets/006-storage-and-persistence.md))
 
 ## Not yet specified
 

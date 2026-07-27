@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontur D7 - Spectrophotometer</title>
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #0d0d0d;
+    --muted: #8a8a85;
+    --rule: #d5d5d0;
+    --field: #f0f0ec;
+    --signal: #e2231a;
+
+    --grotesk: "Helvetica Neue", "Segoe UI", system-ui, Arial, sans-serif;
+    --gutter: 24px;
+    --margin: 56px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--grotesk);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+
+  body { overflow: hidden; }
+
+  .sheet {
+    position: relative;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0 var(--margin);
+  }
+
+  /* The grid itself, drawn. 12 columns, hairline, barely there. */
+  .grid-overlay {
+    position: absolute;
+    inset: 0 var(--margin);
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--gutter);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .grid-overlay span { border-left: 1px solid rgba(13, 13, 13, 0.055); }
+  .grid-overlay span:last-child { border-right: 1px solid rgba(13, 13, 13, 0.055); }
+
+  /* Deliberately not `.sheet > *`: that would beat .grid-overlay's own
+     `position: absolute` and drop the overlay back into the grid as a row. */
+  .masthead, .hero, .datastrip { position: relative; z-index: 1; }
+
+  /* ---------------------------------------------------------- masthead */
+
+  .masthead {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--gutter);
+    align-items: center;
+    padding: 26px 0 22px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .wordmark {
+    grid-column: 1 / span 3;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .wordmark b {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+  .wordmark i {
+    font-style: normal;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  nav {
+    grid-column: 5 / span 6;
+    display: flex;
+    gap: 30px;
+  }
+  nav a {
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    padding-bottom: 2px;
+  }
+  nav a[aria-current] { border-bottom: 2px solid var(--signal); }
+
+  .masthead-meta {
+    grid-column: 11 / span 2;
+    text-align: right;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ------------------------------------------------------------- hero */
+
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--gutter);
+    align-content: center;
+    padding: 4px 0 0;
+  }
+
+  .lede { grid-column: 1 / span 8; }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 26px;
+  }
+  .eyebrow .chip {
+    width: 26px;
+    height: 9px;
+    background: var(--signal);
+    display: inline-block;
+  }
+  .eyebrow .sep { color: var(--rule); }
+  .eyebrow .dim { color: var(--muted); }
+
+  h1 {
+    font-size: 84px;
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.042em;
+    max-width: 15ch;
+    text-wrap: balance;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--signal);
+  }
+
+  .standfirst {
+    margin-top: 28px;
+    max-width: 48ch;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: #3a3a38;
+    font-weight: 400;
+  }
+
+  .actions {
+    margin-top: 34px;
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .btn {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 26px;
+    border: 1px solid var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .btn-primary {
+    background: var(--signal);
+    border-color: var(--signal);
+    color: #fff;
+  }
+  .btn-primary span { opacity: 0.75; }
+  .btn-ghost { background: transparent; color: var(--ink); }
+  .btn-ghost span { color: var(--muted); }
+
+  /* the specification card, hard against the right edge of the grid */
+  .spec {
+    grid-column: 10 / span 3;
+    align-self: start;
+    border-top: 2px solid var(--ink);
+    padding-top: 12px;
+  }
+  .spec h2 {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .spec dl { display: block; }
+  .spec .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .spec dt {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .spec dd {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-align: right;
+  }
+
+  .patchstrip {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 3px;
+  }
+  .patchstrip i { display: block; height: 22px; }
+
+  /* ------------------------------------------------------------ footer */
+
+  .datastrip {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--gutter);
+    border-top: 2px solid var(--ink);
+    padding: 20px 0 30px;
+  }
+  .datastrip section { grid-column: span 3; }
+  .datastrip section:nth-child(2),
+  .datastrip section:nth-child(3),
+  .datastrip section:nth-child(4) {
+    padding-left: 20px;
+    border-left: 1px solid var(--rule);
+  }
+  .datastrip .idx {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--signal);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .datastrip h3 {
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 6px;
+  }
+  .datastrip p {
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 30ch;
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="grid-overlay" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <header class="masthead">
+      <div class="wordmark">
+        <b>KONTUR</b>
+        <i>Basel</i>
+      </div>
+      <nav>
+        <a href="#" aria-current="page">Instrument</a>
+        <a href="#">Software</a>
+        <a href="#">Standards</a>
+        <a href="#">Calibration</a>
+        <a href="#">Support</a>
+      </nav>
+      <div class="masthead-meta">
+        Rev. 7.2<br>ISO 13655
+      </div>
+    </header>
+
+    <main class="hero">
+      <div class="lede">
+        <p class="eyebrow">
+          <span class="chip" aria-hidden="true"></span>
+          <span>Kontur D7</span>
+          <span class="sep">/</span>
+          <span class="dim">Inline spectrophotometer</span>
+        </p>
+
+        <h1>The proof and the press sheet, held to <em>one number.</em></h1>
+
+        <p class="standfirst">
+          D7 reads 31 patches a second across the moving web and reports every one against
+          your reference in ΔE00. Drift shows up on the second sheet, not on the pallet.
+          No light booth, no held-up sheet, no argument with the client.
+        </p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#">Book a press trial <span>&#8594;</span></a>
+          <a class="btn btn-ghost" href="#">Datasheet <span>PDF, 1.2 MB</span></a>
+        </div>
+      </div>
+
+      <aside class="spec">
+        <h2>Measured</h2>
+        <dl>
+          <div class="row"><dt>Geometry</dt><dd>45&#176; / 0&#176;</dd></div>
+          <div class="row"><dt>Spectral range</dt><dd>380-730 nm</dd></div>
+          <div class="row"><dt>Sampling</dt><dd>31 s<sup>-1</sup></dd></div>
+          <div class="row"><dt>Repeatability</dt><dd>ΔE00 0.06</dd></div>
+          <div class="row"><dt>Illuminants</dt><dd>M0-M3</dd></div>
+          <div class="row"><dt>Web speed</dt><dd>to 610 m/min</dd></div>
+        </dl>
+        <div class="patchstrip" aria-hidden="true">
+          <i style="background:#e2231a"></i>
+          <i style="background:#f0a11c"></i>
+          <i style="background:#f5e04a"></i>
+          <i style="background:#2f9e5c"></i>
+          <i style="background:#1c62b8"></i>
+          <i style="background:#5b2d8e"></i>
+          <i style="background:#8a8a85"></i>
+          <i style="background:#0d0d0d"></i>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="datastrip">
+      <section>
+        <span class="idx">01 / READ</span>
+        <h3>Every sheet, not every hour</h3>
+        <p>The head traverses the full web width between impressions.</p>
+      </section>
+      <section>
+        <span class="idx">02 / COMPARE</span>
+        <h3>Against your reference</h3>
+        <p>Load a characterisation set or the approved proof itself.</p>
+      </section>
+      <section>
+        <span class="idx">03 / CORRECT</span>
+        <h3>Ink keys, in the same loop</h3>
+        <p>Zone corrections go to the console before the drift is visible.</p>
+      </section>
+      <section>
+        <span class="idx">04 / CERTIFY</span>
+        <h3>A run report that holds up</h3>
+        <p>Per-sheet ΔE00 signed off and archived with the job.</p>
+      </section>
+    </footer>
+  </div>
+</body>
+</html>

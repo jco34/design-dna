@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PAYDIRT - Invoices that chase themselves</title>
+<style>
+  :root {
+    --bone: #f2ede1;
+    --black: #000000;
+    --yellow: #ffd429;
+    --blue: #2f4bff;
+    --tomato: #ff4d2d;
+    --mint: #17c46a;
+    --white: #ffffff;
+
+    --stack: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif;
+    --bd: 3px solid var(--black);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bone);
+    color: var(--black);
+    font-family: var(--stack);
+    font-weight: 700;
+  }
+  body { overflow: hidden; }
+
+  .frame {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  /* ------------------------------------------------------------- bar */
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: var(--yellow);
+    border-bottom: 4px solid var(--black);
+    padding: 0 26px;
+    height: 68px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+  .logo .mark {
+    width: 34px;
+    height: 34px;
+    background: var(--tomato);
+    border: var(--bd);
+    display: grid;
+    place-items: center;
+    color: var(--white);
+    font-size: 19px;
+    line-height: 1;
+    transform: rotate(-4deg);
+  }
+
+  .bar nav { display: flex; gap: 4px; margin-left: auto; }
+  .bar nav a {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 3px solid transparent;
+  }
+  .bar nav a.on {
+    background: var(--white);
+    border: var(--bd);
+  }
+
+  .bar .signin {
+    font-size: 13px;
+    font-weight: 900;
+    text-decoration: none;
+    color: var(--white);
+    background: var(--black);
+    padding: 11px 20px;
+    border: var(--bd);
+  }
+
+  /* ------------------------------------------------------------ hero */
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 500px;
+    gap: 44px;
+    align-items: center;
+    padding: 0 40px;
+    min-height: 0;
+  }
+
+  .flag {
+    display: inline-block;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    border: var(--bd);
+    box-shadow: 5px 5px 0 var(--black);
+    transform: rotate(-1.5deg);
+  }
+
+  h1 {
+    margin: 26px 0 0;
+    font-size: 77px;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    max-width: 11ch;
+  }
+  h1 mark {
+    background: var(--tomato);
+    color: var(--white);
+    padding: 0 8px 3px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .sub {
+    margin-top: 24px;
+    max-width: 42ch;
+    font-size: 16.5px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .cta {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .cta a {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    padding: 16px 26px;
+    border: var(--bd);
+    box-shadow: 7px 7px 0 var(--black);
+  }
+  .cta .go { background: var(--mint); color: var(--black); }
+  .cta .alt { background: var(--white); color: var(--black); }
+  .cta .note {
+    font-size: 12px;
+    font-weight: 800;
+    max-width: 15ch;
+    line-height: 1.3;
+  }
+
+  /* --------------------------------------------------------- artwork */
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-right: 18px;
+  }
+
+  .card {
+    border: var(--bd);
+    box-shadow: 9px 9px 0 var(--black);
+    background: var(--white);
+  }
+
+  .understack { display: flex; gap: 16px; align-items: stretch; }
+
+  .invoice {
+    transform: rotate(-1.6deg);
+    padding: 18px 20px;
+  }
+  .invoice .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: var(--bd);
+    padding-bottom: 12px;
+  }
+  .invoice .head b { font-size: 20px; font-weight: 900; letter-spacing: -0.03em; }
+  .invoice .head small {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    margin-top: 3px;
+  }
+  .invoice .head .due {
+    background: var(--yellow);
+    border: var(--bd);
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 5px 9px;
+  }
+
+  .lines { padding-top: 4px; }
+  .lines .line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 0;
+    border-bottom: 2px solid var(--black);
+  }
+  .lines .line span:last-child { font-weight: 900; }
+
+  .total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--black);
+    color: var(--white);
+    padding: 12px 14px;
+    margin-top: 12px;
+  }
+  .total .amt { font-size: 26px; font-weight: 900; letter-spacing: -0.04em; }
+  .total .lbl { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .stamp {
+    width: 168px;
+    flex: none;
+    background: var(--tomato);
+    color: var(--white);
+    transform: rotate(2.5deg);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .stamp b { display: block; font-size: 25px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+  .stamp small { display: block; font-size: 11px; font-weight: 800; margin-top: 5px; }
+
+  .ping {
+    flex: 1;
+    background: var(--blue);
+    color: var(--white);
+    transform: rotate(-1deg);
+    padding: 12px 14px;
+    display: flex;
+    gap: 11px;
+    align-items: center;
+  }
+  .ping .dot {
+    width: 30px; height: 30px;
+    background: var(--yellow);
+    border: var(--bd);
+    display: grid; place-items: center;
+    color: var(--black);
+    font-size: 15px; font-weight: 900;
+    flex: none;
+  }
+  .ping p { font-size: 12.5px; font-weight: 800; line-height: 1.35; }
+
+  /* ------------------------------------------------------------ rail */
+
+  .rail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 4px solid var(--black);
+  }
+  .rail div {
+    padding: 16px 22px 20px;
+    border-right: 3px solid var(--black);
+  }
+  .rail div:last-child { border-right: 0; }
+  .rail div:nth-child(1) { background: var(--white); }
+  .rail div:nth-child(2) { background: var(--yellow); }
+  .rail div:nth-child(3) { background: var(--mint); }
+  .rail div:nth-child(4) { background: var(--tomato); color: var(--white); }
+  .rail b {
+    display: block;
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+  .rail span {
+    display: block;
+    margin-top: 7px;
+    font-size: 12.5px;
+    font-weight: 800;
+    line-height: 1.35;
+    max-width: 26ch;
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+
+    <header class="bar">
+      <div class="logo">
+        <span class="mark" aria-hidden="true">&#9679;</span>
+        PAYDIRT
+      </div>
+      <nav>
+        <a class="on" href="#">Invoices</a>
+        <a href="#">Chasing</a>
+        <a href="#">Clients</a>
+        <a href="#">Pricing</a>
+      </nav>
+      <a class="signin" href="#">Start free</a>
+    </header>
+
+    <main class="hero">
+      <div class="pitch">
+        <span class="flag">For people who hate asking twice</span>
+
+        <h1>Your invoice <mark>nags</mark> so you don't.</h1>
+
+        <p class="sub">
+          Send it once. Paydirt follows up on day 3, day 10 and day 30, in your words,
+          from your address. It stops the second the money lands.
+        </p>
+
+        <div class="cta">
+          <a class="go" href="#">Send your first invoice</a>
+          <a class="alt" href="#">See a chase sequence</a>
+          <p class="note">No card. 10 invoices free, every month.</p>
+        </div>
+      </div>
+
+      <div class="stack" aria-hidden="true">
+        <div class="card invoice">
+          <div class="head">
+            <div>
+              <b>INV-0147</b>
+              <small>Brightseam Studio &#8594; Halcyon Foods</small>
+            </div>
+            <span class="due">14 days late</span>
+          </div>
+          <div class="lines">
+            <div class="line"><span>Brand system, phase 2</span><span>&#163;6,400</span></div>
+            <div class="line"><span>Packaging artwork, 11 SKU</span><span>&#163;2,750</span></div>
+            <div class="line"><span>Press check, Leeds</span><span>&#163;480</span></div>
+          </div>
+          <div class="total">
+            <span class="lbl">Outstanding</span>
+            <span class="amt">&#163;9,630</span>
+          </div>
+        </div>
+
+        <div class="understack">
+          <div class="card ping">
+            <span class="dot">&#163;</span>
+            <p>Halcyon Foods paid in full. Chasing stopped.</p>
+          </div>
+
+          <div class="card stamp">
+            <b>CHASE 3</b>
+            <small>Queued Friday, 09:00</small>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="rail">
+      <div>
+        <b>11 days</b>
+        <span>Median time to payment, down from 39.</span>
+      </div>
+      <div>
+        <b>3 nudges</b>
+        <span>Then it escalates to a phone-call reminder for you.</span>
+      </div>
+      <div>
+        <b>&#163;0</b>
+        <span>Per invoice. We take nothing off the top.</span>
+      </div>
+      <div>
+        <b>1 button</b>
+        <span>Clients pay by card or bank transfer. No login.</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

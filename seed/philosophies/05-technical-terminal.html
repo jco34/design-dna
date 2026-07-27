@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>corefile - continuous profiler for production</title>
+<style>
+  :root {
+    --bg: #070907;
+    --panel: #0c0f0c;
+    --panel-2: #101410;
+    --hair: #1d251d;
+    --hair-2: #2a352a;
+    --ink: #cfe0cf;
+    --dim: #6f7f6f;
+    --faint: #465446;
+    --phos: #4df08a;
+    --phos-dim: #1f8f52;
+    --amber: #ffb44a;
+    --red: #ff5f56;
+
+    --mono: ui-monospace, "Cascadia Mono", "Cascadia Code", Consolas,
+            "DejaVu Sans Mono", "Liberation Mono", "Courier New", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    font-variant-ligatures: none;
+  }
+  body { overflow: hidden; }
+
+  /* faint scanline field, the one atmospheric liberty */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 3; pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(77, 240, 138, 0.028) 0px,
+      rgba(77, 240, 138, 0.028) 1px,
+      transparent 1px,
+      transparent 3px);
+  }
+
+  .term {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  /* --------------------------------------------------------- chrome */
+
+  .titlebar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 30px;
+    padding: 0 12px;
+    background: var(--panel-2);
+    border-bottom: 1px solid var(--hair);
+    color: var(--dim);
+    font-size: 11px;
+  }
+  .titlebar .dots { display: flex; gap: 6px; }
+  .titlebar .dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+  .titlebar .path { color: var(--faint); }
+  .titlebar .path b { color: var(--dim); font-weight: 400; }
+  .titlebar .right { margin-left: auto; display: flex; gap: 18px; }
+  .titlebar .right span::before { content: "["; color: var(--faint); }
+  .titlebar .right span::after  { content: "]"; color: var(--faint); }
+
+  .menubar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 34px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--hair);
+    background: var(--panel);
+  }
+  .wordmark {
+    display: flex; align-items: baseline; gap: 8px;
+    padding-right: 22px; margin-right: 8px;
+    border-right: 1px solid var(--hair);
+    height: 100%;
+  }
+  .wordmark b {
+    font-size: 14px; font-weight: 700; color: var(--phos); letter-spacing: -0.02em;
+    align-self: center;
+  }
+  .wordmark .caret {
+    width: 7px; height: 14px; background: var(--phos); align-self: center;
+    box-shadow: 0 0 8px rgba(77,240,138,0.65);
+  }
+  .wordmark span { align-self: center; color: var(--faint); font-size: 11px; }
+
+  .menubar nav { display: flex; }
+  .menubar nav a {
+    color: var(--dim); text-decoration: none; font-size: 11.5px;
+    padding: 0 13px; height: 34px; display: inline-flex; align-items: center;
+    border-right: 1px solid var(--hair);
+  }
+  .menubar nav a:first-child { border-left: 1px solid var(--hair); }
+  .menubar nav a.on { color: var(--phos); background: var(--panel-2); }
+  .menubar nav a u { text-decoration: underline; text-underline-offset: 2px; }
+  .menubar .cta {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--bg); background: var(--phos);
+    text-decoration: none; font-size: 11.5px; font-weight: 700;
+    padding: 5px 12px;
+  }
+  .menubar .cta:hover { background: #6affa0; }
+
+  /* ----------------------------------------------------------- body */
+
+  .split {
+    display: grid;
+    grid-template-columns: 396px 1fr;
+    min-height: 0;
+  }
+
+  .pitch {
+    border-right: 1px solid var(--hair);
+    padding: 26px 24px 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .prompt { color: var(--faint); font-size: 11.5px; margin-bottom: 18px; }
+  .prompt b { color: var(--phos-dim); font-weight: 400; }
+  .prompt i { font-style: normal; color: var(--ink); }
+
+  h1 {
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+    color: #e6f4e6;
+  }
+  h1 em { font-style: normal; color: var(--phos); }
+  h1 .cur {
+    display: inline-block; width: 12px; height: 21px; vertical-align: -3px;
+    background: var(--phos); margin-left: 5px;
+    box-shadow: 0 0 10px rgba(77,240,138,0.6);
+  }
+
+  .blurb {
+    margin-top: 16px;
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--dim);
+  }
+  .blurb b { color: var(--ink); font-weight: 400; }
+
+  .install {
+    margin-top: 20px;
+    border: 1px solid var(--hair-2);
+    background: #060806;
+  }
+  .install .lbl {
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--hair);
+    color: var(--faint);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; justify-content: space-between;
+  }
+  .install code {
+    display: block;
+    padding: 10px;
+    font-size: 12px;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .install code .c { color: var(--phos); }
+  .install code .f { color: var(--amber); }
+
+  .watch { margin-top: 22px; }
+  .watch .cap {
+    color: var(--faint); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; display: flex; justify-content: space-between;
+    padding-bottom: 7px; border-bottom: 1px solid var(--hair);
+  }
+  .spark {
+    display: flex; align-items: flex-end; gap: 2px;
+    height: 44px; margin-top: 12px;
+  }
+  .spark i { flex: 1; background: var(--phos-dim); display: block; }
+  .spark i.pk { background: var(--phos); }
+  .spark i.wn { background: var(--amber); }
+  .spark-axis {
+    display: flex; justify-content: space-between;
+    margin-top: 6px; color: var(--faint); font-size: 10px;
+  }
+
+  .facts {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--hair);
+  }
+  /* the nested list already sits under .watch's own rule */
+  .watch .facts { margin-top: 0; padding-top: 7px; border-top: 0; }
+  .facts .r {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding: 4px 0;
+    font-size: 11.5px;
+  }
+  .facts .r span:first-child { color: var(--faint); }
+  .facts .r span:last-child  { color: var(--ink); }
+  .facts .r span:last-child b { color: var(--phos); font-weight: 400; }
+
+  /* ---------------------------------------------------------- panes */
+
+  /* Four children, so four rows named explicitly. Leaving this at
+     `auto 1fr auto` hands the 1fr to the flamegraph and strands a void. */
+  .panes { display: grid; grid-template-rows: auto auto 1fr auto; min-height: 0; }
+
+  .panehead {
+    display: flex; align-items: center; gap: 12px;
+    height: 26px; padding: 0 12px;
+    border-bottom: 1px solid var(--hair);
+    background: var(--panel-2);
+    color: var(--faint); font-size: 10.5px;
+    letter-spacing: 0.06em;
+  }
+  .panehead b { color: var(--dim); font-weight: 400; }
+  .panehead .sp { margin-left: auto; }
+  .panehead .live { color: var(--phos); }
+
+  /* flame graph */
+  .flame { padding: 10px 12px 12px; border-bottom: 1px solid var(--hair); }
+  .flame .row { position: relative; height: 21px; margin-bottom: 2px; }
+  .flame .cell {
+    position: absolute; top: 0; bottom: 0;
+    border: 1px solid rgba(0,0,0,0.55);
+    font-size: 10.5px; line-height: 19px;
+    padding: 0 5px;
+    color: #06200f;
+    white-space: nowrap; overflow: hidden;
+  }
+  .flame .axis {
+    display: flex; justify-content: space-between;
+    margin-top: 6px; color: var(--faint); font-size: 10px;
+  }
+
+  /* hot table */
+  .hot { overflow: hidden; padding: 0 0 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  thead th {
+    text-align: left; font-weight: 400; color: var(--faint);
+    font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 6px 12px; border-bottom: 1px solid var(--hair);
+    background: var(--panel);
+  }
+  thead th.n, tbody td.n { text-align: right; }
+  tbody td {
+    padding: 4.5px 12px;
+    border-bottom: 1px solid rgba(29,37,29,0.55);
+    color: var(--dim);
+    white-space: nowrap;
+  }
+  tbody td.sym { color: var(--ink); }
+  tbody td.sym s { text-decoration: none; color: var(--faint); }
+  tbody tr.hi td { background: rgba(77,240,138,0.05); }
+  tbody td .bar {
+    display: inline-block; height: 7px; vertical-align: 1px; margin-right: 7px;
+    background: var(--phos-dim);
+  }
+  tbody td .pct { color: var(--phos); }
+  tbody td .warn { color: var(--amber); }
+
+  /* log strip */
+  .log {
+    border-top: 1px solid var(--hair);
+    background: #050705;
+    padding: 6px 12px 8px;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--faint);
+  }
+  .log div span.t { color: #35452f; }
+  .log div span.ok { color: var(--phos-dim); }
+  .log div span.wn { color: var(--amber); }
+  .log div span.er { color: var(--red); }
+  .log div span.m  { color: var(--dim); }
+
+  /* -------------------------------------------------------- statusbar */
+
+  .statusbar {
+    display: flex; align-items: center; gap: 0;
+    height: 24px;
+    background: var(--phos);
+    color: #052a13;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .statusbar .seg { padding: 0 11px; height: 100%; display: flex; align-items: center; }
+  .statusbar .seg.dark { background: #072b16; color: var(--phos); font-weight: 400; }
+  .statusbar .seg.mid  { background: #0f4d28; color: #b9ffd4; font-weight: 400; }
+  .statusbar .keys { margin-left: auto; display: flex; }
+  .statusbar .keys .seg { font-weight: 400; }
+  .statusbar .keys .seg b { font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="term">
+
+    <div class="titlebar">
+      <span class="dots" aria-hidden="true">
+        <i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i>
+      </span>
+      <span class="path"><b>corefile</b> attach :: ap-south-1 / checkout-api / pid 4471</span>
+      <span class="right">
+        <span>agent 1.9.4</span>
+        <span>overhead 0.31%</span>
+        <span>uptime 19d 04h</span>
+      </span>
+    </div>
+
+    <div class="menubar">
+      <div class="wordmark">
+        <b>corefile</b>
+        <span class="caret" aria-hidden="true"></span>
+        <span>v1.9</span>
+      </div>
+      <nav>
+        <a class="on" href="#"><u>P</u>rofiler</a>
+        <a href="#"><u>D</u>iff</a>
+        <a href="#"><u>A</u>lerts</a>
+        <a href="#">Doc<u>s</u></a>
+        <a href="#"><u>P</u>ricing</a>
+      </nav>
+      <a class="cta" href="#">install &#9654;</a>
+    </div>
+
+    <div class="split">
+
+      <section class="pitch">
+        <p class="prompt"><b>$</b> <i>corefile attach --pid 4471 --hz 99</i></p>
+
+        <h1>Find the 3% of your code<br>burning <em>61% of the box</em>.<span class="cur" aria-hidden="true"></span></h1>
+
+        <p class="blurb">
+          A sampling profiler that stays attached in production. 99 Hz, eBPF, <b>0.31% overhead</b>
+          measured on the fleet. No recompile, no restart, no agent in your import path.
+        </p>
+
+        <div class="install">
+          <div class="lbl"><span>install</span><span>linux / darwin</span></div>
+          <code><span class="c">curl</span> -fsSL corefile.sh <span class="f">|</span> sh</code>
+        </div>
+
+        <div class="watch">
+          <div class="cap"><span>cpu, 24 h</span><span>peak 71.4%</span></div>
+          <div class="spark" aria-hidden="true">
+            <i style="height:38%"></i><i style="height:31%"></i><i style="height:44%"></i>
+            <i style="height:52%"></i><i style="height:41%"></i><i style="height:35%"></i>
+            <i style="height:48%"></i><i style="height:57%"></i><i style="height:50%"></i>
+            <i style="height:43%"></i><i style="height:61%"></i><i style="height:55%"></i>
+            <i style="height:47%"></i><i style="height:66%"></i><i style="height:72%"></i>
+            <i class="wn" style="height:88%"></i><i class="wn" style="height:100%"></i>
+            <i class="wn" style="height:92%"></i><i class="pk" style="height:79%"></i>
+            <i style="height:68%"></i><i style="height:74%"></i><i style="height:81%"></i>
+            <i style="height:77%"></i><i style="height:85%"></i>
+          </div>
+          <div class="spark-axis"><span>-24 h</span><span>deploy 2026.7.9</span><span>now</span></div>
+        </div>
+
+        <div class="watch">
+          <div class="cap"><span>attached</span><span>12 / 12</span></div>
+          <div class="facts">
+            <div class="r"><span>checkout-api</span><span>4 hosts &#183; <b>ok</b></span></div>
+            <div class="r"><span>ledger-worker</span><span>3 hosts &#183; <b>ok</b></span></div>
+            <div class="r"><span>search-indexer</span><span>3 hosts &#183; <b>ok</b></span></div>
+            <div class="r"><span>webhook-fanout</span><span>2 hosts &#183; <b>ok</b></span></div>
+          </div>
+        </div>
+
+        <div class="facts">
+          <div class="r"><span>sample rate</span><span>99 Hz, adaptive to <b>19 Hz</b></span></div>
+          <div class="r"><span>runtimes</span><span>go, rust, c, java, python, node</span></div>
+          <div class="r"><span>retention</span><span>rolling <b>30 d</b>, 4 s granularity</span></div>
+          <div class="r"><span>egress</span><span>symbols only, <b>never source</b></span></div>
+          <div class="r"><span>licence</span><span>apache-2.0, self-host free</span></div>
+        </div>
+      </section>
+
+      <section class="panes">
+
+        <div class="panehead">
+          <b>[1] flamegraph</b>
+          <span>cpu &#183; on-cpu &#183; 60 s window &#183; 5,941 samples</span>
+          <span class="sp live">&#9679; live</span>
+        </div>
+
+        <div class="flame" aria-hidden="true">
+          <div class="row">
+            <div class="cell" style="left:0;width:100%;background:#1c6b3f;color:#d6ffe6">checkout-api (all)</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="left:0;width:61%;background:#4df08a">net/http.(*conn).serve</div>
+            <div class="cell" style="left:61.4%;width:21%;background:#3ac877;color:#052a13">runtime.gcBgMarkWorker</div>
+            <div class="cell" style="left:82.8%;width:10%;background:#2fa663;color:#052a13">sql.(*DB).conn</div>
+            <div class="cell" style="left:93.2%;width:6.8%;background:#28854f;color:#d6ffe6">misc</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="left:0;width:44%;background:#5ff59a">handler.PostCheckout</div>
+            <div class="cell" style="left:44.4%;width:16.6%;background:#46d886;color:#052a13">mw.Authenticate</div>
+            <div class="cell" style="left:61.4%;width:21%;background:#35b96e;color:#052a13">runtime.scanobject</div>
+            <div class="cell" style="left:82.8%;width:10%;background:#2b9a5c;color:#d6ffe6">pq.(*conn).query</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="left:0;width:29.5%;background:#7dffb0">pricing.Recalculate</div>
+            <div class="cell" style="left:29.9%;width:14.1%;background:#5ff59a">tax.Resolve</div>
+            <div class="cell" style="left:44.4%;width:16.6%;background:#ffb44a;color:#3a2200">jwt.ParseRSA</div>
+            <div class="cell" style="left:61.4%;width:13.2%;background:#3fca7c;color:#052a13">runtime.markroot</div>
+            <div class="cell" style="left:74.9%;width:7.7%;background:#2f9e63;color:#d6ffe6">gcDrain</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="left:0;width:23.8%;background:#a6ffc9;color:#052a13">decimal.(*Big).Quo</div>
+            <div class="cell" style="left:29.9%;width:9.4%;background:#7dffb0">geo.LookupZone</div>
+            <div class="cell" style="left:44.4%;width:16.6%;background:#ffc978;color:#3a2200">big.nat.expNN</div>
+          </div>
+          <div class="row">
+            <div class="cell" style="left:0;width:19.1%;background:#c9ffdd;color:#052a13">big.nat.div</div>
+            <div class="cell" style="left:44.4%;width:11.2%;background:#ffdca4;color:#3a2200">big.nat.montgomery</div>
+          </div>
+          <div class="axis"><span>0 s</span><span>15 s</span><span>30 s</span><span>45 s</span><span>60 s</span></div>
+        </div>
+
+        <div class="hot">
+          <div class="panehead">
+            <b>[2] hot symbols</b>
+            <span>self time, descending &#183; sorted by delta vs. release 2026.7.9</span>
+            <span class="sp">q to quit</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>symbol</th>
+                <th>module</th>
+                <th class="n">self</th>
+                <th class="n">total</th>
+                <th class="n">samples</th>
+                <th class="n">&#916; 7d</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hi">
+                <td class="sym"><s>math/big.</s>nat.div</td>
+                <td>decimal</td>
+                <td class="n"><span class="bar" style="width:52px"></span><span class="pct">19.1%</span></td>
+                <td class="n">23.8%</td>
+                <td class="n">1,134</td>
+                <td class="n warn">+11.4</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>crypto/rsa.</s>nat.montgomery</td>
+                <td>jwt</td>
+                <td class="n"><span class="bar" style="width:31px"></span><span class="pct">11.2%</span></td>
+                <td class="n">16.6%</td>
+                <td class="n">665</td>
+                <td class="n warn">+9.8</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>geo.</s>LookupZone</td>
+                <td>tax</td>
+                <td class="n"><span class="bar" style="width:26px"></span><span class="pct">9.4%</span></td>
+                <td class="n">14.1%</td>
+                <td class="n">558</td>
+                <td class="n">+0.3</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>runtime.</s>scanobject</td>
+                <td>runtime</td>
+                <td class="n"><span class="bar" style="width:22px"></span><span class="pct">7.9%</span></td>
+                <td class="n">21.0%</td>
+                <td class="n">469</td>
+                <td class="n">-1.2</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>pq.</s>(*conn).readMsg</td>
+                <td>sql</td>
+                <td class="n"><span class="bar" style="width:17px"></span><span class="pct">6.1%</span></td>
+                <td class="n">10.0%</td>
+                <td class="n">362</td>
+                <td class="n">+0.0</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>pricing.</s>Recalculate</td>
+                <td>checkout</td>
+                <td class="n"><span class="bar" style="width:12px"></span><span class="pct">4.4%</span></td>
+                <td class="n">29.5%</td>
+                <td class="n">261</td>
+                <td class="n">-0.7</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>encoding/json.</s>(*decodeState).object</td>
+                <td>stdlib</td>
+                <td class="n"><span class="bar" style="width:9px"></span><span class="pct">3.2%</span></td>
+                <td class="n">5.8%</td>
+                <td class="n">190</td>
+                <td class="n">-2.9</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>runtime.</s>mallocgc</td>
+                <td>runtime</td>
+                <td class="n"><span class="bar" style="width:8px"></span><span class="pct">2.8%</span></td>
+                <td class="n">4.1%</td>
+                <td class="n">166</td>
+                <td class="n">-0.4</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>tax.</s>Resolve</td>
+                <td>checkout</td>
+                <td class="n"><span class="bar" style="width:6px"></span><span class="pct">2.1%</span></td>
+                <td class="n">14.1%</td>
+                <td class="n">125</td>
+                <td class="n">+0.9</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>net/http.</s>(*conn).readRequest</td>
+                <td>stdlib</td>
+                <td class="n"><span class="bar" style="width:5px"></span><span class="pct">1.7%</span></td>
+                <td class="n">61.0%</td>
+                <td class="n">101</td>
+                <td class="n">+0.1</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>redis.</s>(*Conn).WriteArgs</td>
+                <td>cache</td>
+                <td class="n"><span class="bar" style="width:4px"></span><span class="pct">1.4%</span></td>
+                <td class="n">2.6%</td>
+                <td class="n">83</td>
+                <td class="n">-0.2</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>runtime.</s>memmove</td>
+                <td>runtime</td>
+                <td class="n"><span class="bar" style="width:3px"></span><span class="pct">1.1%</span></td>
+                <td class="n">1.1%</td>
+                <td class="n">65</td>
+                <td class="n">+0.0</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>ledger.</s>(*Journal).Append</td>
+                <td>checkout</td>
+                <td class="n"><span class="bar" style="width:3px"></span><span class="pct">0.9%</span></td>
+                <td class="n">3.4%</td>
+                <td class="n">53</td>
+                <td class="n">-0.1</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>runtime.</s>futex</td>
+                <td>runtime</td>
+                <td class="n"><span class="bar" style="width:2px"></span><span class="pct">0.8%</span></td>
+                <td class="n">0.8%</td>
+                <td class="n">47</td>
+                <td class="n">+0.3</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>otel.</s>(*batchProcessor).export</td>
+                <td>telemetry</td>
+                <td class="n"><span class="bar" style="width:2px"></span><span class="pct">0.6%</span></td>
+                <td class="n">1.9%</td>
+                <td class="n">36</td>
+                <td class="n">-0.5</td>
+              </tr>
+              <tr>
+                <td class="sym"><s>fraud.</s>ScoreBasket</td>
+                <td>checkout</td>
+                <td class="n"><span class="bar" style="width:1px"></span><span class="pct">0.4%</span></td>
+                <td class="n">2.2%</td>
+                <td class="n">24</td>
+                <td class="n">+0.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="log">
+          <div><span class="t">14:22:07.114</span> <span class="ok">ok  </span> <span class="m">attached to pid 4471 (go1.24.2), symbols resolved from .gopclntab in 41ms</span></div>
+          <div><span class="t">14:22:07.119</span> <span class="ok">ok  </span> <span class="m">unwinder=frame-pointer, kernel stacks enabled, perf_event_open ok</span></div>
+          <div><span class="t">14:23:02.880</span> <span class="wn">warn</span> <span class="m">decimal.nat.div self time +11.4pp vs release 2026.7.9 &#8594; regression candidate</span></div>
+          <div><span class="t">14:23:02.881</span> <span class="er">high</span> <span class="m">jwt.ParseRSA on the request path: 16.6% total, cache hit rate 0.00</span></div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="statusbar">
+      <span class="seg">PROFILING</span>
+      <span class="seg dark">checkout-api</span>
+      <span class="seg mid">ap-south-1 &#183; 12 hosts &#183; 5,941 samples/60s</span>
+      <span class="seg dark">cpu 61.3%</span>
+      <span class="keys">
+        <span class="seg mid"><b>f</b> flame</span>
+        <span class="seg dark"><b>d</b> diff</span>
+        <span class="seg mid"><b>/</b> filter</span>
+        <span class="seg dark"><b>?</b> help</span>
+      </span>
+    </footer>
+  </div>
+</body>
+</html>
