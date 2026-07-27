@@ -111,6 +111,23 @@ default, `prototype` for the prototype-typed tickets, `frontend-design` or
   [`004-extraction-schema.ts`](assets/004-extraction-schema.ts), commentary in
   [`004-schema-commentary.md`](assets/004-schema-commentary.md).
   ([ticket](tickets/004-extraction-schema.md))
+- **007** The clipboard gets a **design brief, never an instruction**: one
+  template **rendered on demand** from the stored Item and nothing else, so
+  editing it improves every prompt retroactively and an **Override** reaches the
+  prompt where a stored string could not. Structured as labelled sections of
+  English clauses (schema shape is *not* prompt shape), with enum members
+  rendered as the same English 004's `description` used to define them. Every
+  eyeballed hex is hedged **per value** as "around #c8452d", which 004 section
+  3.4 forced: a single footnote cannot un-hedge one swatch without un-hedging
+  four. Undetermined and Not applicable both render as **silence**, so length
+  tracks what was actually read. The Source is named **last** with an
+  anti-pastiche clause, and **labels never appear** (CONTEXT: a label describes
+  an item rather than contributing to a prompt). **010's partial prompts are the
+  same code path**, not a second template. **This closes a door in 006:** the
+  store needs no prompt field, cache or invalidation. Candidates in
+  [`007-prompt-candidates.md`](assets/007-prompt-candidates.md), template in
+  [`007-prompt-template.ts`](assets/007-prompt-template.ts).
+  ([ticket](tickets/007-what-the-copied-prompt-is.md))
 
 ## Not yet specified
 
