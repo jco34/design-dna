@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "20260726T203344Z-ed1t0r",
+  "addedAt": "2026-07-26T20:33:44.000Z",
+  "source": {
+    "kind": "file",
+    "originalPath": "seed/philosophies/02-warm-editorial.html",
+    "url": null
+  },
+  "capture": {
+    "file": "20260726T203344Z-ed1t0r.png",
+    "takenAt": "2026-07-26T20:33:42.000Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": "Seed item. Kept for the split: a narrow serif measure against a full-bleed plate, with the drop cap doing the work a heading would usually do. Replace this note with your own.",
+  "authoredBy": {
+    "kind": "hand",
+    "model": "claude-opus-5",
+    "runAt": "2026-07-26T20:34:10.000Z",
+    "promptVersion": null
+  },
+  "dna": {
+    "palette": {
+      "background": { "hex": "#f2ece1", "weight": "dominant", "authorship": "agent" },
+      "surface": { "hex": "#e8dfd0", "weight": "supporting", "authorship": "agent" },
+      "ink": { "hex": "#1c1a17", "weight": "supporting", "authorship": "agent" },
+      "muted": { "hex": "#8a8175", "weight": "supporting", "authorship": "agent" },
+      "accent": { "hex": "#7d1f1f", "weight": "occasional", "authorship": "agent" }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "A high-contrast transitional serif at display size with tight leading, mixing roman and italic inside a single sentence so the italic carries the emphasis instead of a weight change.",
+      "bodyFamily": "",
+      "bodyCharacter": "The same serif at reading size on a narrow measure with generous leading, opened by an oxblood drop cap three lines deep, plus a small-caps register with wide tracking for bylines and issue lines.",
+      "scale": "dramatic",
+      "weightRange": "uniform",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "A hard vertical split at roughly two thirds. Text holds the left on a narrow measure, a full-bleed photographic plate holds the right edge to edge, and a captioned plate line sits under the image in the lower band.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Very generous leading and long rests between the issue line, the headline and the body, with a hairline rule used as a spacer rather than a divider.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "sharp",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Uninterrupted warm paper. No card, no panel and no shadow anywhere. The only edge in the composition is the photograph meeting the paper.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "photography",
+      "treatment": "A single close raking-light photograph of folded fore-edges, warm and shallow-focus, bled off three sides and cropped so the subject is texture rather than object.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The design behaves like print that happens to be on a screen. It trusts a single serif to carry voice, authority and rhythm at once, and it spends its whole budget on the measure and the leading rather than on any interface furniture. Colour is almost absent: warm paper, dark ink, and one oxblood reserved for the drop cap and the single action. The photograph is not an illustration of the article but a piece of evidence for it, bled to the edge so the page feels like a spread rather than a viewport. What makes it work is restraint held for long enough to become confidence.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": { "value": "editorial", "authorship": "agent" },
+      "style": { "values": [], "authorship": "agent" },
+      "mood": { "values": ["calm", "refined"], "authorship": "agent" }
+    }
+  }
+}

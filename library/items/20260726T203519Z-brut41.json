@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "20260726T203519Z-brut41",
+  "addedAt": "2026-07-26T20:35:19.000Z",
+  "source": {
+    "kind": "file",
+    "originalPath": "seed/philosophies/03-neo-brutalist.html",
+    "url": null
+  },
+  "capture": {
+    "file": "20260726T203519Z-brut41.png",
+    "takenAt": "2026-07-26T20:35:17.000Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": "Seed item. The hard offset shadow and the knockout word inside the headline are the two moves worth stealing here. Replace this note with your own.",
+  "authoredBy": {
+    "kind": "hand",
+    "model": "claude-opus-5",
+    "runAt": "2026-07-26T20:35:48.000Z",
+    "promptVersion": null
+  },
+  "dna": {
+    "palette": {
+      "background": { "hex": "#efe9dc", "weight": "dominant", "authorship": "agent" },
+      "surface": { "hex": "#ffffff", "weight": "supporting", "authorship": "agent" },
+      "ink": { "hex": "#000000", "weight": "supporting", "authorship": "agent" },
+      "muted": { "hex": "#2b4bd8", "weight": "occasional", "authorship": "agent" },
+      "accent": { "hex": "#ffc91f", "weight": "supporting", "authorship": "agent" }
+    },
+    "typography": {
+      "headingFamily": "Archivo Black",
+      "headingCharacter": "Very heavy condensed grotesque in full uppercase at enormous size, tight leading, with one word knocked out in white on a tomato block set inside the line rather than behind it.",
+      "bodyFamily": "Inter",
+      "bodyCharacter": "Bold grotesque throughout with no light weights anywhere, short measure, and small uppercase labels inside every coloured panel.",
+      "scale": "dramatic",
+      "weightRange": "uniform",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "A saturated yellow nav bar edge to edge, a left headline stack against a right collage of rotated cards, and a four cell full-width statistic rail in four different flat colours closing the foot.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "balanced",
+      "rhythm": "Generous air around the headline offset by tightly packed coloured blocks, with panels butted directly against each other so colour changes do the dividing instead of gaps.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "sharp",
+      "borders": "heavy",
+      "elevation": "pronounced",
+      "finish": "Every card carries a thick black outline and a hard offset shadow with no blur at all, so depth reads as printed registration rather than as light. Two cards are rotated a few degrees off axis.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "abstract-graphic",
+      "treatment": "No photography. A stylised invoice document and two status chips arranged as an overlapping collage, standing in for a product screenshot without pretending to be one.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The design refuses to be soothing and treats that refusal as the product voice. Everything is stated at maximum volume: uppercase, black outlines, flat primaries and a shadow that is a solid shape rather than a diffusion of light. It borrows its confidence from print and sign painting rather than from software, which is why nothing is rounded and nothing glows. The collage of rotated cards is the one loose gesture in an otherwise rigid system, and it works because everything around it is so tightly held. This is deliberate anti-polish, and the craft is in knowing exactly how far to push it.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": { "value": "landing-page", "authorship": "agent" },
+      "style": { "values": ["brutalist"], "authorship": "agent" },
+      "mood": { "values": ["bold", "playful"], "authorship": "agent" }
+    }
+  }
+}

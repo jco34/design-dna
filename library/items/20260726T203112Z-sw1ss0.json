@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "20260726T203112Z-sw1ss0",
+  "addedAt": "2026-07-26T20:31:12.000Z",
+  "source": {
+    "kind": "file",
+    "originalPath": "seed/philosophies/01-swiss-modernist.html",
+    "url": null
+  },
+  "capture": {
+    "file": "20260726T203112Z-sw1ss0.png",
+    "takenAt": "2026-07-26T20:31:10.000Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": "Seed item. The reference for grid work: the twelve column rules are visible on the page rather than implied, and the whole hierarchy is done with size and one red. Replace this note with your own.",
+  "authoredBy": {
+    "kind": "hand",
+    "model": "claude-opus-5",
+    "runAt": "2026-07-26T20:31:40.000Z",
+    "promptVersion": null
+  },
+  "dna": {
+    "palette": {
+      "background": { "hex": "#ffffff", "weight": "dominant", "authorship": "agent" },
+      "surface": { "hex": "#f4f4f4", "weight": "occasional", "authorship": "agent" },
+      "ink": { "hex": "#111111", "weight": "supporting", "authorship": "agent" },
+      "muted": { "hex": "#8c8c8c", "weight": "supporting", "authorship": "agent" },
+      "accent": { "hex": "#e8291c", "weight": "occasional", "authorship": "agent" }
+    },
+    "typography": {
+      "headingFamily": "Helvetica Neue",
+      "headingCharacter": "Neo-grotesque set very large and very tight, negative tracking, sentence case, with a single clause flipped to the accent colour inside the headline rather than given its own line.",
+      "bodyFamily": "Helvetica Neue",
+      "bodyCharacter": "Same grotesque several sizes down at regular weight, comfortable leading, plus a micro-caps register with wide tracking used for eyebrows and table headers.",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "A twelve column grid drawn as literal hairlines running the full height behind everything. A rule under the masthead, an oversized headline occupying the left two thirds, a right-hand specification table of measured values, and a four step process rail closing the foot.",
+      "contentWidth": "wide",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "balanced",
+      "rhythm": "Large empty bands above and below the headline block, with tight uniform rows inside the spec table, so the page alternates between held silence and dense information.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "sharp",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Nothing is raised off the page. Separation is done entirely with rules of two weights: heavy black under the masthead and foot, hairline grey for the grid and the table rows.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "abstract-graphic",
+      "treatment": "One strip of eight solid colour patches standing in for a printed control bar. The only saturated colour on the page apart from the accent, and it reads as measurement rather than decoration.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The design argues that information ordered well needs no persuasion. It exposes its own grid rather than hiding it, so the structure becomes part of the visual language instead of scaffolding underneath it. Hierarchy comes from scale alone: one enormous headline, one small measured table, and a single red that appears exactly where a decision is being asked for. There is no shadow, no rounded corner and no gradient anywhere, which leaves contrast and alignment to carry the whole page. The result reads as instrument documentation that happens to be beautiful, which is precisely the Swiss claim: that clarity and beauty are the same problem.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": { "value": "landing-page", "authorship": "agent" },
+      "style": { "values": ["swiss"], "authorship": "agent" },
+      "mood": { "values": ["serious", "refined"], "authorship": "agent" }
+    }
+  }
+}
