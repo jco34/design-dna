@@ -218,6 +218,23 @@ default, `prototype` for the prototype-typed tickets, `frontend-design` or
   [`008-cli-and-boundary.md`](assets/008-cli-and-boundary.md) and
   [`008-cli-usage.txt`](assets/008-cli-usage.txt).
   ([ticket](tickets/008-producer-cli-and-import-boundary.md))
+- **011** The app is **two routes plus one overlay** (library grid, item detail,
+  a Mix drawer reachable from either), with **no add surface** because the app
+  writes nothing; the empty state names the `dna add` CLI. Identity is the strict
+  reading of "neutral": **zero saturated colour in the chrome**, so every
+  selected state is an inversion of ink and the Captures plus their palette bars
+  are the only colour on screen, with type carrying the character (a grotesque
+  for the interface, a monospace for every read value). The card is
+  **Capture-dominant with a palette weight bar** beneath it, each role sized by
+  its ordinal weight so a 2 percent accent reads as a sliver and an Undetermined
+  swatch is a hatched blank, which answers 011's hardest question without the
+  swatches fighting the screenshot. Every eyeballed hex reads `~`-hedged
+  everywhere (004, 007). Uniform grid, because 003 fixed the Capture at 1.6:1.
+  The whole surface is **subtractive and URL-addressable**: 009's facets disable
+  their zero-count values, and 009's query and 010's rack share one URL by
+  patching disjoint keys. Prototyped as the real v1 app under
+  [`web/`](../web), not a throwaway.
+  ([ticket](tickets/011-ui-surfaces.md))
 
 ## Not yet specified
 
