@@ -1,0 +1,419 @@
+Design DNA - the producer CLI, help output in full.
+
+Ticket 008. This file is the command surface as a build session should implement
+it verbatim: every verb, every flag, every default. The reasoning behind each
+choice is in 008-cli-and-boundary.md.
+
+The binary is `dna`. The npm package is `design-dna`. Nothing is aliased.
+
+================================================================================
+$ dna --help
+================================================================================
+
+dna - the Design DNA producer. The only thing that writes the library.
+
+USAGE
+  dna <command> [options]
+
+COMMANDS
+  add         Capture a URL or take a file, extract its DNA, write a new Item
+  re-extract  Re-read the stored Capture of an existing Item and merge the result
+  relabel     Re-ask the label question only, against the stored Capture
+  note        Write, replace or clear your Note on an existing Item
+  validate    Validate one record, several, or the whole library, against the schema
+  check       Run every library integrity rule
+  migrate     Run pending schema migrations over the whole library
+  id          Print a fresh Item id
+
+GLOBAL OPTIONS
+  --library <dir>  Library root. Default: $LIBRARY_DIR if set, else ./library
+  -h, --help       Show help for the command
+  -V, --version    Print the CLI version, the schema version it writes, and the
+                   taxonomy version it labels with
+
+EXIT CODES
+  0  everything asked for succeeded
+  1  at least one target was refused, or at least one check failed
+  2  the command was used wrongly and nothing was attempted
+
+Every command that writes prints exactly one line per Item when that Item is
+finished. There is no spinner, no percentage and no ETA: extraction took 18s to
+48s per Item when it was measured (ticket 002), and the spread is wide enough
+that any estimate would be a lie.
+
+The library format is specified in wayfinder/assets/006-storage-contract.md.
+The record shape is packages/core/src/item.ts, and that file is authoritative.
+
+================================================================================
+$ dna add --help
+================================================================================
+
+dna add - write new Items into the library.
+
+USAGE
+  dna add <target>...          [options]
+  dna add <directory>          [options]
+  dna add --from <list-file>   [options]
+
+A target is either an http(s) URL or a path to an image file.
+
+A bare host with no scheme is refused rather than guessed. Write
+`https://example.com` for a URL or `./example.com` for a file. Nothing else is
+ambiguous, so there are no --url and --file flags.
+
+A directory target expands to every image file directly inside it, in sorted
+filename order. Non-image files are ignored and counted in the run header.
+--from reads one target per line; blank lines and lines beginning with # are
+ignored.
+
+Accepted input extensions: .png .jpg .jpeg .webp. The stored Capture is always
+a PNG named <id>.png, so a supplied .jpg or .webp is re-encoded to PNG once at
+ingest. This keeps 006's "captures are PNG" invariant and the png-only orphan
+scan in schema/check-library.ts true for every Item, however it was made.
+
+`add` only ever creates Items. It never modifies an Item that already exists,
+whatever you point it at.
+
+CAPTURE OPTIONS (URL targets only)
+  --selector <css>            Capture one element rather than the viewport,
+                              via locator.screenshot(). Requires --scope.
+  --clip <x,y,w,h>            Capture a pixel rectangle rather than the
+                              viewport. Requires --scope.
+  --headed                    Run the browser visibly. Forces --concurrency 1.
+  --wait-before-capture <ms>  Pause after the wait recipe and before the shot,
+                              so you can dismiss a consent banner yourself.
+                              Consent banners are otherwise captured as noise.
+
+ITEM OPTIONS
+  --scope <page|section|component>
+                              How much of a design this Capture holds. Default
+                              page. Required with --selector or --clip, where it
+                              must be section or component. Decides which traits
+                              the Item can have at all, and is frozen at write
+                              time.
+  --source <url>              Provenance for a file target: where the image came
+                              from. Refused for a URL target, which has one.
+  --note <text>               Your Note. Refused for a batch.
+  --note-file <path>          Your Note, read from a file. Refused for a batch.
+
+RUN OPTIONS
+  --no-extract                Capture and write the Item, but never call the
+                              agent. The DNA is written entirely Undetermined
+                              and authoredBy.kind is "hand". Costs nothing and
+                              is the first half of the hand-written path.
+  --model <id>                Model for the extraction. Default: the SDK's.
+  --concurrency <n>           Targets in flight at once, 1 to 4. Default 1.
+  --resume                    Skip a target already in the library. On by
+                              default for a batch. Unavailable for a single
+                              target, because one explicit target is one
+                              deliberate act of saving.
+  --no-resume                 Do not skip. Deliberately saves a second Item for
+                              a source you already have.
+  --recursive                 Descend into subdirectories of a directory target.
+  --dry-run                   Do everything except write, and print the Item
+                              that would have been written. Still spends an
+                              extraction unless combined with --no-extract.
+
+WHAT IT PRINTS
+  One header line, one line per finished target, one summary line. Refusals and
+  warnings go to stderr, results go to stdout.
+
+    $ dna add ./shots/ --scope component
+    50 targets from ./shots (50 images, 3 other files ignored), resume on
+    skip  01-nav.png                          already in library as 20260727T0910Z-b2k9wq
+    ok    02-pricing.png  20260727T142233Z-k3m9qa  component  22.4s  $0.061
+    warn  03-hero.png     20260727T142301Z-p7w1de  component  31.0s  $0.088
+          3 first-viewport elements at opacity < 0.05 after the scroll pass
+    fail  04-card.png     nothing written
+          philosophy must be one paragraph of at least 80 characters, or ""
+          for undetermined (dna.philosophy.text), twice. Re-run this one file.
+    ...
+    48 written, 1 skipped, 1 refused, 24m 51s, $3.42
+
+EXAMPLES
+  dna add https://linear.app
+  dna add https://linear.app --selector "header" --scope component
+  dna add ./nav-bar.png --source https://linear.app --scope component
+  dna add ./shots/ --concurrency 3
+  dna add --from ./urls.txt --concurrency 3
+  dna add ./old-screenshots/ --no-extract --recursive
+
+================================================================================
+$ dna re-extract --help
+================================================================================
+
+dna re-extract - re-read the stored Capture of an existing Item.
+
+USAGE
+  dna re-extract <id>... [options]
+
+Reads library/captures/<id>.<ext> and never visits the network, so a re-run
+works offline and works after the site has been redesigned or deleted. The
+Capture is fixed at the moment of saving and is never re-taken.
+
+The result is merged, not written over the top:
+  - a trait whose authorship is "override" is kept verbatim
+  - the palette merges per swatch, so a corrected accent survives while the
+    other four are refreshed
+  - note, id, addedAt, source and capture are never touched
+  - scope and notApplicable change only if you pass --scope
+  - authoredBy and taxonomyVersion are replaced by this run
+
+Re-extraction is not idempotent. The same image gives different hexes and
+sometimes a different typography.scale (ticket 002), so this command changes
+values you may have preferred. It refuses to write an Item file with
+uncommitted changes, because git history is the only thing that can give them
+back.
+
+There is no --all. A library-wide re-extraction costs $0.05 to $0.13 per Item
+and discards every agent-authored value in one command. If you mean it, expand
+the ids in your shell.
+
+OPTIONS
+  --scope <page|section|component>
+                     Correct the Scope. Recomputes notApplicable, and resets any
+                     trait that the new Scope excludes to Undetermined, naming
+                     each one it reset.
+  --model <id>       Model for the extraction. Default: the SDK's.
+  --concurrency <n>  Items in flight at once, 1 to 4. Default 1.
+  --dry-run          Print the merged Item and the traits that would change.
+                     Write nothing. Still spends an extraction.
+  --force            Write even though the Item file has uncommitted changes.
+
+WHAT IT PRINTS
+    $ dna re-extract 20260726T210311Z-k3m9qa
+    ok  20260726T210311Z-k3m9qa  5 traits replaced, 2 kept (override)  27.1s  $0.074
+        palette.accent kept: #5e6ad2 (override)
+        typography kept (override)
+
+================================================================================
+$ dna relabel --help
+================================================================================
+
+dna relabel - re-ask the label question only.
+
+USAGE
+  dna relabel <id>... [options]
+  dna relabel --stale [options]
+  dna relabel --all   [options]
+
+Writes dna.labels and taxonomyVersion. Every trait is left byte-identical. This
+is the backfill path for a taxonomy that has grown a value, and it is
+deliberately not the same command as re-extract: re-running extraction to fix
+one label would destroy a palette you were happy with.
+
+Only an axis whose authorship is "agent" is rewritten. An axis you overrode is
+kept, and an Item whose three axes are all overridden skips the agent entirely
+and only has its taxonomyVersion bumped, which costs nothing.
+
+An Item labelled under an older vocabulary is valid and merely stale. Nothing
+relabels automatically.
+
+OPTIONS
+  --stale            Every Item whose taxonomyVersion is behind the current one.
+  --all              Every Item in the library.
+  --model <id>       Model for the labelling. Default: the SDK's.
+  --concurrency <n>  Items in flight at once, 1 to 4. Default 1.
+  --dry-run          Print the labels that would change. Write nothing.
+  --force            Write even though an Item file has uncommitted changes.
+
+WHAT IT PRINTS
+    $ dna relabel --stale
+    7 stale Items (taxonomyVersion 1, current 2)
+    ok    20260726T210311Z-k3m9qa  style [technical] -> [technical, swiss]  9.8s  $0.021
+    same  20260726T214402Z-p7w1de  no change, taxonomyVersion 1 -> 2        9.1s  $0.019
+    free  20260727T081190Z-x4t0mn  all axes overridden, taxonomyVersion 1 -> 2
+    ...
+    7 relabelled, 1m 12s, $0.118
+
+================================================================================
+$ dna note --help
+================================================================================
+
+dna note - write your words on why an Item was worth saving.
+
+USAGE
+  dna note <id>                  Open your editor on the current Note
+  dna note <id> --set <text>     Replace it with this text
+  dna note <id> --from <path>    Replace it with the contents of a file
+  dna note <id> --clear          Set it to null
+  dna note <id> --print          Print it and change nothing
+
+The Note is the one field the agent never writes and the one field you are
+expected to write on a machine-authored file. It is usually written after you
+have looked at the Capture, which is why `add` never stops to ask for it.
+
+The editor is $VISUAL, then $EDITOR, then notepad on Windows and nano
+elsewhere. The buffer holds the Note text alone, not the JSON, so the record
+cannot be broken by an editing accident. It is written back canonically and
+validated before it replaces the file.
+
+Hand-editing the "note" field in library/items/<id>.json remains fully
+supported. This verb exists because it cannot leave the file malformed.
+
+OPTIONS
+  --set <text>   Replace the Note with this text
+  --from <path>  Replace the Note with the contents of this file
+  --clear        Set the Note to null
+  --print        Print the current Note and exit
+  --force        Write even though the Item file has uncommitted changes
+
+================================================================================
+$ dna validate --help
+================================================================================
+
+dna validate - does this record have the right shape?
+
+USAGE
+  dna validate                Every Item in the library
+  dna validate <path>...      These files, or every .json file in these
+                              directories. A path may be anywhere on disk.
+
+This is the gate for a hand-written entry. Point it at a candidate file before
+it goes anywhere near library/items/, and it will name the exact Zod path that
+is wrong. Nothing is written and nothing is fixed.
+
+It runs every rule that can be judged from one record:
+  1. the file is valid JSON
+  2. Item.parse accepts it (this is schema/dna.ts, and it also checks that
+     notApplicable agrees with what the Scope excludes)
+  3. schemaVersion is one this build knows
+  4. the file is in canonical form: two-space indent, LF, one trailing
+     newline, keys in the declaration order of Item
+  5. no absolute path appears anywhere in the record
+  6. capture.file is a bare filename ending .png
+  7. the Capture exists in the library and its own PNG header agrees with
+     pixelWidth and pixelHeight. Once capture.sha256 exists (it arrives at
+     schemaVersion 2, see 008-cli-and-boundary.md), its bytes are hashed and
+     compared too
+  8. when the file is inside the library, its stem equals the record's id
+
+Rules 7 and 8 are skipped for a candidate outside the library, since there is
+nothing yet for them to be consistent with. Rules that need the whole library,
+such as duplicate ids and orphan Captures, belong to `dna check`.
+
+`schema/check-library.ts` is the existing implementation of the library-wide
+pass. `dna validate` shares its Item.parse and notApplicable checks and adds the
+per-record rules above.
+
+OPTIONS
+  --json     One JSON object per file on stdout, everything else on stderr
+  --quiet    Print nothing; the exit code is the answer
+
+WHAT IT PRINTS
+    $ dna validate ./candidate.json
+    fail  ./candidate.json
+          dna.philosophy.text: philosophy must be one paragraph of at least 80
+          characters, or "" for undetermined
+          capture.pixelHeight: record says 900, the PNG header says 1800
+
+================================================================================
+$ dna check --help
+================================================================================
+
+dna check - is the library as a whole intact?
+
+USAGE
+  dna check [options]
+
+Every rule `dna validate` runs, over every Item, plus the rules that only make
+sense across the whole library:
+
+  9.  no two Items share an id
+  10. every Capture belongs to an Item, and every Item's Capture exists
+  11. nothing else lives under captures/ or items/, which catches a .tmp file
+      left behind by a crashed run
+  12. every id is [0-9A-Za-z-] only, so the library stays portable
+  13. Items whose taxonomyVersion is behind the current vocabulary are counted
+      and named. This is a note, not a failure: a stale Item is valid.
+
+This extends `schema/check-library.ts`, which already implements JSON validity,
+Item.parse, stem equals id, Capture exists, no orphan Captures, and
+notApplicable agreeing with Scope. 008 adds canonical form, the absolute-path
+scan, duplicate ids, the id alphabet, the unexpected-file check, the pixel
+dimension check, and the stale-taxonomy note.
+
+--fix rewrites canonical form and nothing else. Every other failure is a
+decision: a Capture whose header no longer matches its record has either been
+replaced or been corrupted, and a program cannot tell you which. No Capture is
+ever deleted by this command, because a Capture is the only irreplaceable thing
+in the library.
+
+`npm run library:check` is `dna check`, and `npm run library:format` is
+`dna check --fix`.
+
+OPTIONS
+  --fix      Rewrite files that are not in canonical form
+  --json     One JSON report on stdout, everything else on stderr
+
+WHAT IT PRINTS
+    $ dna check
+    ok    312 Items, 312 Captures, 0.34 GB
+    fail  library/items/20260727T142233Z-k3m9qa.json
+          dna.palette.accent.hex: must be lowercase #rrggbb, or "" for
+          undetermined
+    fail  captures/20260726T210311Z-p7w1de.png
+          orphaned, no Item references it
+    note  4 Items are labelled under taxonomyVersion 1, current is 2.
+          Run `dna relabel --stale` to bring them forward.
+    2 failures
+
+================================================================================
+$ dna migrate --help
+================================================================================
+
+dna migrate - move every Item to the current schema version.
+
+USAGE
+  dna migrate [options]
+
+A schema change is one numbered script under migrations/, exporting
+{ from, to, up(record: unknown): unknown }. This runner owns everything else:
+finding the pending scripts, ordering them, applying them, validating the
+result and writing it. A migration author writes a pure function.
+
+It is all or nothing. Every Item is read, transformed and validated against the
+current schema in memory before the first byte is written, so a script that
+fails on Item 200 leaves the library untouched rather than half migrated.
+
+It refuses to run when anything under library/ has uncommitted changes, which
+is also what stops two migrations running at once. It never commits: review the
+result with `git diff`, then commit the script and its effect together, so the
+change is revertable as one thing.
+
+An Item at a version higher than this build knows is refused by name rather
+than downgraded.
+
+OPTIONS
+  --dry-run   Write the migrated library into a scratch directory and report
+              what changed. Touch nothing under library/.
+  --force     Run even though the work tree is dirty.
+
+WHAT IT PRINTS
+    $ dna migrate
+    312 Items at schemaVersion 1, current is 2
+    migrations/002-add-capture-sha256.ts  1 -> 2
+    ok  312 Items migrated, 312 files written
+    Review with `git diff library/` and commit the script with its effect.
+
+================================================================================
+$ dna id --help
+================================================================================
+
+dna id - print a fresh Item id.
+
+USAGE
+  dna id
+
+Prints one id in the library's format and exits:
+
+    $ dna id
+    20260727T142233Z-k3m9qa
+
+A compact UTC instant, a hyphen, and six base36 characters. Sortable, so
+`ls library/items/` comes out in save order. Opaque, so nothing about the
+source contributes. Typeable, which is why it is not a UUID: a Claude session
+hand-writing an entry needs to be able to produce one.
+
+The id is authoritative and opaque. The timestamp prefix is a sorting
+convenience and nothing may parse it.

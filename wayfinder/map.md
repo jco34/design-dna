@@ -167,6 +167,38 @@ default, `prototype` for the prototype-typed tickets, `frontend-design` or
   [`006-storage-contract.md`](assets/006-storage-contract.md), root decision in
   [ADR 0002](../docs/adr/0002-library-as-committed-files.md).
   ([ticket](tickets/006-storage-and-persistence.md))
+- **010** A **Mix is a partial map from Trait to Item**: seven named slots, at
+  most one Item each, so 001's atomic-trait rule makes two-palette conflict
+  **unrepresentable rather than resolved**, and the primary/accent merge is
+  sub-trait selection in disguise and refused. It is **transient** (the URL is
+  the save, holding `(trait, itemId)` pairs and never content, per 006), which
+  **dissolves the map's parked deletion question** since nothing stored can
+  dangle. The prompt is **assembled mechanically** by calling 007's
+  `renderPrompt` once per slot (the map forbids a model call in the app), and a
+  Mix of one donor is byte-identical to 007's subset prompt. **Cross-trait prose
+  contradiction is the real, only-partly-mitigated cost**: a mix carrying
+  `philosophy` can contradict itself where a single-source prompt cannot,
+  defended by a frame, a demoted and labelled intent paragraph, and an advisory.
+  Model in [`010-mixing-model.md`](assets/010-mixing-model.md), render in
+  [`010-mix-render.ts`](assets/010-mix-render.ts).
+  ([ticket](tickets/010-mixing-elements.md))
+- **009** Browsing beats searching at this scale, so there is **one grid in a
+  stable order and every control subtracts from it**, not a query engine: 006's
+  31ms scan means a facet pass over 300 Items measures **0.035ms** and the worst
+  case (text + facets + colour + hue sort) **0.38ms**, so "no index needed" is
+  measured. Search and filters compose by **conjunction** (text AND facets AND
+  colour); within a facet values **OR**, across facets they **AND**, and
+  OR-within is forced because 005's two-value caps make AND-within provably empty
+  at a fixed click count. Colour is a whole-palette **minimum distance in OKLab**
+  (`deltaEOK`), chosen over CIEDE2000 because 002's eyeballed hexes sit
+  ~0.004-0.06 apart so lab-grade precision is measuring noise. **Light/dark and
+  temperature are derived at read time** (005's "the best facet is the one you
+  must not store"), favourites are the existing **`note`** because the app cannot
+  write (006), and empty results are a **diagnosis** (`facetCounts` disables
+  dead-end values, `explainEmpty` names what to clear). Model in
+  [`009-search-and-filter.md`](assets/009-search-and-filter.md), module in
+  [`009-query.ts`](assets/009-query.ts).
+  ([ticket](tickets/009-search-and-filter-model.md))
 
 ## Not yet specified
 

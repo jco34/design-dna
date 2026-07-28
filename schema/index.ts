@@ -18,6 +18,8 @@
  */
 export * from './dna';
 export * from './prompt';
+export * from './mix';
+export * from './query';
 
 /*
  * `Scope` is deliberately re-exported from `./dna` above rather than from
