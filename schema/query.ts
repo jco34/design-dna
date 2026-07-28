@@ -31,7 +31,7 @@
  * else. Colour maths is written out rather than pulled in, since it is 40 lines
  * of arithmetic and this module is on the app's read path.
  */
-import type { Item, SwatchAuthorship, SwatchWeight } from './dna.js';
+import type { Item, SwatchAuthorship, SwatchWeight } from './dna';
 import {
   Borders,
   ContentWidth,
@@ -41,8 +41,8 @@ import {
   ImageryKind,
   TypeScale,
   WeightRange,
-} from './dna.js';
-import { GENRES, MOODS, SCOPES, STYLES } from './taxonomy.js';
+} from './dna';
+import { GENRES, MOODS, SCOPES, STYLES } from './taxonomy';
 
 /* ------------------------------------------------------------------ */
 /* The record this module reads                                        */

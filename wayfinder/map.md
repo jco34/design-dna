@@ -199,6 +199,25 @@ default, `prototype` for the prototype-typed tickets, `frontend-design` or
   [`009-search-and-filter.md`](assets/009-search-and-filter.md), module in
   [`009-query.ts`](assets/009-query.ts).
   ([ticket](tickets/009-search-and-filter-model.md))
+- **008** The library is written by **one binary `dna` that writes `library/`
+  directly**, the boundary being the shared **`schema/` module** rather than a
+  wire format, since 006 already made the app a pure reader and there is no
+  importer to decouple from. Input kind is **sniffed, not a verb**
+  (`add <url|file>`); `dna add --no-extract`, `dna id` and `dna validate` make
+  the hand-authored path cheap. **Resume is observed from the library, not
+  journalled** (each Item is atomic, so a re-run skips what is present), which
+  carries none of 002's non-idempotence because resume skips and never re-runs;
+  that risk lives only in `re-extract`, which has **no `--all`** while the
+  non-destructive `relabel` does. Validation residue after the SDK's self-retry
+  **refuses the Item** rather than writing it degraded, keeping the no-`failed`-
+  state rule. **Drift is two counters that must never merge:** `schemaVersion`
+  (`z.literal`, governs shape, old is invalid, moved by `migrate`) and
+  `taxonomyVersion` (integer, governs vocabulary, old is stale, moved by
+  `relabel`); the rule is "if `Item.parse` would reject it, it is
+  `schemaVersion`". **No ADR: this is ADR 0002 applied.** CLI in
+  [`008-cli-and-boundary.md`](assets/008-cli-and-boundary.md) and
+  [`008-cli-usage.txt`](assets/008-cli-usage.txt).
+  ([ticket](tickets/008-producer-cli-and-import-boundary.md))
 
 ## Not yet specified
 

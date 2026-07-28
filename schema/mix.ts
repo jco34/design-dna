@@ -41,9 +41,9 @@
  *
  * Depends on `004-extraction-schema.ts` and `007-prompt-template.ts`.
  */
-import type { Item, TraitName } from './dna.js';
-import { traitState } from './dna.js';
-import { renderPrompt } from './prompt.js';
+import type { Item, TraitName } from './dna';
+import { traitState } from './dna';
+import { renderPrompt } from './prompt';
 
 /* ------------------------------------------------------------------ */
 /* Public surface                                                      */

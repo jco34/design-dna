@@ -32,8 +32,8 @@
  * "describes an item rather than contributing to a prompt", so labels are how
  * you find an item and never part of what it says.
  */
-import type { Item, TraitName } from './dna.js';
-import { isApproximate, traitState } from './dna.js';
+import type { Item, TraitName } from './dna';
+import { isApproximate, traitState } from './dna';
 
 /* ------------------------------------------------------------------ */
 /* Public surface                                                      */
