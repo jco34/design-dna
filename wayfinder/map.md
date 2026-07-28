@@ -235,6 +235,23 @@ default, `prototype` for the prototype-typed tickets, `frontend-design` or
   patching disjoint keys. Prototyped as the real v1 app under
   [`web/`](../web), not a throwaway.
   ([ticket](tickets/011-ui-surfaces.md))
+- **012** The map is assembled into [`SPEC.md`](../SPEC.md) at the repo root:
+  every resolution 001-011 represented in a numbered section, `schema/` recorded
+  as the authoritative running code, the read-only-and-no-AI lock stated first,
+  and the five ungraduated "Not yet specified" patches carried as a
+  "deliberately deferred" section. **This closes the map.** Assembly forced one
+  integration no ticket owned - reconciling 004's flat `labels` with 005's three
+  axes in the shared module - which is done in `schema/` and typechecks.
+  ([ticket](tickets/012-assemble-the-spec.md))
+
+## Destination reached
+
+Every ticket on this map is closed and `SPEC.md` exists. Beyond the spec the map
+promised, this session also built the running artifacts the spec points at: the
+shared `schema/` module, a seeded five-item `library/`, and the reader app under
+`web/`, verified end to end in a browser. The one program the map deliberately
+left for a build session is the producer `dna` CLI, specified in full in section
+6 of the spec and ticket 008.
 
 ## Not yet specified
 

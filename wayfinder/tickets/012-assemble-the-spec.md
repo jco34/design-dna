@@ -2,8 +2,8 @@
 id: 012
 title: Assemble the v1 spec
 label: wayfinder:task
-status: open
-assignee: unassigned
+status: closed
+assignee: jeb
 blocked-by: 001, 003, 004, 005, 006, 007, 008, 009, 010, 011
 parent: map
 ---
@@ -48,3 +48,45 @@ Any patch of the map's "Not yet specified" that never graduated gets a short
 and left alone rather than forgotten.
 
 Closing this ticket reaches the destination and ends the map.
+
+## Resolution
+
+**[`SPEC.md`](../../SPEC.md) is written at the repo root, gathering all eleven
+prior resolutions into one buildable document, and this closes the map.**
+
+### The two checks the ticket required
+
+- **Every ticket's resolution is represented.** SPEC.md has a numbered section
+  per decision area: the two-program architecture (008), the domain model (001,
+  extended), the extraction contract and palette fidelity (002, 004), the
+  taxonomy (005), storage (006), the producer CLI and capture (003, 008), prompt
+  generation single and mixed (007, 010), search and filter (009), the UI
+  surfaces and card (011), the restated out-of-scope list, the deliberately
+  deferred patches, and a build order. Every closed ticket 001-011 is cited in
+  at least one section.
+- **No gaps left for the builder to improvise.** The spec points at `schema/` as
+  the authoritative running code rather than paraphrasing it, states plainly and
+  first that the app is read-only and contains no AI, and carries a "deliberately
+  deferred" section so the five ungraduated "Not yet specified" patches read as
+  seen-and-left rather than forgotten.
+
+### What changed during assembly, beyond gathering
+
+Assembling the spec required one real integration that no single ticket owned:
+reconciling 004's provisional flat `labels` array with 005's three-axis object in
+the actual shared module. That was done in `schema/` (not left as prose): `Dna`
+and `ExtractedDna` now carry 005's `Labels`, the Item carries `taxonomyVersion`,
+and `Scope` is re-exported from the taxonomy. The module typechecks under zod
+4.4.3, and `schema/check-library.ts` validates the five seed Items. The spec
+records `schema/` as authoritative over the `wayfinder/assets/00N-*` files, which
+remain the record of how each decision was reached.
+
+### What was not verified
+
+- The spec is complete against the tickets, but it has not been read back by an
+  independent build session, which is the only real test that "no gaps remain".
+  The build order in section 12 is the suggested path, not a validated one.
+- The producer `dna` binary is specified but not implemented; only the capture
+  step exists (`seed/capture.mjs`) and the validator (`schema/check-library.ts`).
+  The app and the schema module are built and running; the CLI is the one program
+  the map specified and left for the build session.
