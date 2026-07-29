@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 2,
+  "id": "20260729T091632Z-b67u3j",
+  "addedAt": "2026-07-29T09:17:41.648Z",
+  "source": {
+    "kind": "url",
+    "url": "https://www.paulkalkbrenner.net/"
+  },
+  "capture": {
+    "file": "20260729T091632Z-b67u3j.png",
+    "takenAt": "2026-07-29T09:16:19.955Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-sonnet-5",
+    "runAt": "2026-07-29T10:45:20.549Z",
+    "promptVersion": "2.0.0-motion"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#ffffff",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#111111",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#8c8c8c",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "",
+        "weight": "undetermined",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Extremely heavy grotesk sans at huge display size, tight tracking, straight/square terminals, mixed case, letters set close enough that an inset photo can substitute for one",
+      "bodyFamily": "",
+      "bodyCharacter": "Small bold grotesk sans for nav links and teaser copy, tight leading, short measure, all set in the same family as the headline",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-width thin top nav; one giant centred two-line wordmark spans the viewport, its two words split by a small inset photo standing in for a letter; utility text pinned to the four corners.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Vast open canvas surrounding one dominant central wordmark; small utility text (nav, now-playing, sound toggle, teaser) held tightly to the four corners",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "sharp",
+      "borders": "none",
+      "elevation": "flat",
+      "finish": "plain flat fills, solid black type on white, no shadow or texture anywhere visible",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "photography",
+      "treatment": "One small grayscale photo bled directly into the display wordmark in place of a letterform, no frame or border, otherwise no imagery on the page",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "pervasive",
+      "triggers": [
+        "page-load",
+        "scroll",
+        "ambient"
+      ],
+      "easing": "mixed",
+      "pace": "measured",
+      "character": "PK roundel spins continuously (12s); equalizer bars flash on a 1s loop. Scroll (GSAP/Lenis) drives staggered reveals, parallax shifts, and a sticky header down the 12-viewport page, eased on a custom snappy cubic-bezier curve.",
+      "choreography": "Content reveals arrive in stages while scrolling rather than all at once - about a quarter of tracked elements fade or slide in at their own depth, a smaller set of images and text drift at different rates than the scroll or pin in place, and the header stays fixed and resizes.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The page treats the artist's name as the entire interface: a single poster-scale wordmark fills the frame while chrome is reduced to thin utility text anchored at the four corners, so nothing competes with typographic scale. Splicing a small monochrome photo into the wordmark, in place of a letter, fuses portrait and brand mark into one typographic object rather than pairing image and headline as separate elements. Ambient details — a slowly spinning mark, a flashing now-playing indicator — signal that the site is alive and audio-driven without introducing any color or ornament that would dilute the black-on-white restraint. The trade is legibility of navigation and content preview: almost everything is deferred behind a single dominant gesture, betting entirely on scale and confidence over immediate wayfinding.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "swiss",
+          "experimental"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "bold",
+          "calm"
+        ],
+        "authorship": "agent"
+      }
+    }
+  }
+}

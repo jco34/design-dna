@@ -82,6 +82,7 @@ export const MIX_TRAIT_ORDER: readonly TraitName[] = [
   'spacing',
   'surfaceTreatment',
   'imagery',
+  'motion',
   'philosophy',
 ];
 
@@ -413,6 +414,7 @@ const TRAIT_ENGLISH: Record<TraitName, string> = {
   spacing: 'the spacing',
   surfaceTreatment: 'the surface treatment',
   imagery: 'the imagery',
+  motion: 'the motion',
   philosophy: 'the design intent',
 };
 

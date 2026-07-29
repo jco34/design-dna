@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 2,
+  "id": "20260728T120832Z-v6dkfx",
+  "addedAt": "2026-07-28T12:08:32.000Z",
+  "source": {
+    "kind": "url",
+    "url": "https://landonorris.com/"
+  },
+  "capture": {
+    "file": "20260728T120832Z-v6dkfx.png",
+    "takenAt": "2026-07-28T12:06:05.267Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "hand",
+    "model": "claude-opus-5",
+    "runAt": "2026-07-28T12:08:32.000Z",
+    "promptVersion": null
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#f4f4ed",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#dde1d2",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#282c20",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#535450",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#d2ff00",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "Brier",
+      "headingCharacter": "A two-line wordmark lockup that pairs a high-contrast display serif with a heavy grotesque on the line below, both set in caps and optically tight, so one name carries two voices at once.",
+      "bodyFamily": "Mona Sans",
+      "bodyCharacter": "Almost nothing else: a grotesque at ten to fourteen pixels in caps for the next-race furniture, set in a warm mid grey against the cream so it sits far below the wordmark.",
+      "scale": "dramatic",
+      "weightRange": "wide",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "An almost empty field with everything pushed to the edges: the wordmark top left, a monogram centred on the top edge, a lime store button and a menu tile top right, and a single notched next-race card in the bottom left corner. The centre is left completely open.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Close to nine tenths of the frame is empty. Every element is pinned to an edge or a corner with a tight internal margin, and nothing occupies the middle, so the negative space is the composition rather than a gap between things.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "slight",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Entirely flat: there is no box shadow anywhere on the page. Separation is done with hairline outlines and one filled lime tile. The card's top corners are cut by an ellipse clip rather than rounded, giving a moulded panel edge.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "abstract-graphic",
+      "treatment": "The background is one WebGL layer behind the page: soft camouflage shapes barely a shade off the cream, overlaid with fine survey contour lines. It reads as terrain seen from above and never competes with the type.",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "undetermined",
+      "triggers": [],
+      "easing": "undetermined",
+      "pace": "undetermined",
+      "character": "",
+      "choreography": "",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The design opens by withholding almost everything. A whole viewport is given to a pale cream field carrying nothing but a wordmark, a monogram, one button and a small next-race card, all pinned to the edges so the middle stays completely empty. What fills that emptiness is not content but terrain: soft camouflage shapes barely a shade off the background, crossed by fine survey contour lines, drawn in a layer that sits behind the page rather than in it. Colour is withheld just as hard, which leaves a single acid lime tile in the corner to do all the work of saying where to act. The one place the design does speak loudly is the name itself, where a high-contrast serif sits directly on top of a heavy grotesque, two voices in one lockup. The argument is that confidence reads as restraint: a driver's site that does not need to shout on its first screen.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "portfolio",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "organic"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "calm",
+          "refined"
+        ],
+        "authorship": "agent"
+      }
+    }
+  }
+}

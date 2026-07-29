@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -25,6 +25,7 @@ import { readMix, withMix } from "@/lib/url-state";
 import { PaletteBar } from "./palette-bar";
 import { CopyButton } from "./copy-button";
 import { MixPanel } from "./mix-panel";
+import { DeleteItemDialog } from "./delete-item-dialog";
 
 export function ItemDetail({ item, allItems }: { item: Item; allItems: Item[] }) {
   const router = useRouter();
@@ -39,7 +40,8 @@ export function ItemDetail({ item, allItems }: { item: Item; allItems: Item[] })
     () => readMix(search, itemsById),
     [search, itemsById],
   );
-  const rackOpen = searchParams.get("rack") === "1" || searchParams.get("mix") !== null;
+  const rackOpen = searchParams.get("rack") === "1";
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const commit = useCallback(
     (next: URLSearchParams) => {
@@ -190,6 +192,18 @@ export function ItemDetail({ item, allItems }: { item: Item; allItems: Item[] })
             <span className="text-[12px] text-muted">
               the whole design as one brief, rendered on demand
             </span>
+            {/*
+              Pushed to the far right and styled as quiet text rather than a button,
+              because it is the one irreversible control on this page and should not
+              sit next to Copy looking like a peer of it.
+            */}
+            <button
+              type="button"
+              onClick={() => setConfirmingDelete(true)}
+              className="ml-auto text-[12px] text-faint underline decoration-line-2 underline-offset-4 hover:text-ink"
+            >
+              Delete
+            </button>
           </div>
 
           {item.note && (
@@ -229,7 +243,7 @@ export function ItemDetail({ item, allItems }: { item: Item; allItems: Item[] })
             type="button"
             aria-label="Close mix"
             onClick={() => setRackOpen(false)}
-            className="fixed inset-0 z-30 bg-black/30 lg:hidden"
+            className="fixed inset-0 z-30 bg-black/30 lg:bg-transparent"
           />
           <div className="fixed right-0 top-0 z-40 h-full w-[380px] max-w-[90vw] border-l border-line shadow-[var(--shadow-lift)]">
             <MixPanel
@@ -240,6 +254,15 @@ export function ItemDetail({ item, allItems }: { item: Item; allItems: Item[] })
             />
           </div>
         </>
+      )}
+
+      {confirmingDelete && (
+        <DeleteItemDialog
+          id={item.id}
+          title={itemTitle(item)}
+          captureFile={item.capture.file}
+          onClose={() => setConfirmingDelete(false)}
+        />
       )}
     </div>
   );
@@ -351,11 +374,71 @@ function TraitBody({ item, trait }: { item: Item; trait: TraitName }) {
           {dna.imagery.treatment}
         </span>
       );
+    case "motion":
+      return <MotionBody item={item} />;
     case "philosophy":
       return <span>{dna.philosophy.text}</span>;
     default:
       return null;
   }
+}
+
+/**
+ * Motion is the only trait whose absence needs explaining rather than hiding.
+ *
+ * Every other trait is read off the Capture, so "no value" means the analysis
+ * could not read the image. Motion is read off the live page instead, which gives
+ * it a third case the others do not have: the Item may simply never have had a
+ * live page to observe, because its Capture was a supplied still image. Rendering
+ * that as blank space invites the reader to conclude the design does not move.
+ *
+ * So an Undetermined motion trait says which of the two situations it is in, and
+ * `presence: 'none'` is stated positively rather than left implicit, because "this
+ * design deliberately does not move" is a finding.
+ */
+function MotionBody({ item }: { item: Item }) {
+  const m = item.dna.motion;
+  const suppliedStill = item.capture.mode === "supplied";
+  const unread =
+    m.presence === "undetermined" &&
+    m.triggers.length === 0 &&
+    m.character.trim() === "" &&
+    m.choreography.trim() === "";
+
+  if (unread) {
+    return (
+      <span className="text-muted">
+        {suppliedStill
+          ? "Not observed. This item was saved from a still image, and a single frame cannot show whether a design moves."
+          : "Not observed. Re-run the capture with the exploration pass to read it."}
+      </span>
+    );
+  }
+
+  const timing = [
+    m.easing === "undetermined" ? null : m.easing,
+    m.pace === "undetermined" ? null : `${m.pace} pace`,
+  ].filter((part): part is string => part !== null);
+
+  return (
+    <span>
+      {m.presence === "none" ? (
+        <span className="text-muted">Nothing moves; the stillness is deliberate.</span>
+      ) : (
+        <span className="text-muted">{cap(m.presence)}.</span>
+      )}{" "}
+      {m.character}{" "}
+      {m.choreography && <span>{m.choreography} </span>}
+      {(m.triggers.length > 0 || timing.length > 0) && (
+        <span className="text-muted">
+          {m.triggers.length > 0 && (
+            <>Triggered by {m.triggers.map((t) => t.replace(/-/g, " ")).join(", ")}.</>
+          )}
+          {timing.length > 0 && <> {cap(timing.join(", "))}.</>}
+        </span>
+      )}
+    </span>
+  );
 }
 
 function describeFamily(family: string, role: string): string {

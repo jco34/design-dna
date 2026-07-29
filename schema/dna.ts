@@ -76,6 +76,15 @@ export const Hex = z
 /** A free-text leaf. Empty string means Undetermined. */
 const text = (max: number) => z.string().max(max);
 
+/**
+ * The record shape this build reads and writes.
+ *
+ * Exported so the migration runner and the CLI's `--version` report the same
+ * number the validator enforces, rather than each carrying its own copy. Bumping
+ * this is half of a schema change; the other half is a script in `migrations/`.
+ */
+export const SCHEMA_VERSION = 2;
+
 /** An ISO-8601 instant, e.g. `2026-07-26T14:03:11.000Z`. */
 export const Instant = z
   .string()
@@ -147,6 +156,83 @@ export const ImageryKind = z.enum([
 
 export const ExtractedImagery = z.object({ kind: ImageryKind, treatment: text(240) }).strict();
 
+/* --- Motion, new at schemaVersion 2 -------------------------------- */
+
+/*
+ * Motion is the one trait that cannot be read off the Capture, and that is not
+ * an inconsistency but the reason it needed its own field.
+ *
+ * 003 fixed the Capture at `animations: 'disabled'` and `reducedMotion:
+ * 'reduce'` so that a Capture is reproducible, and 001 locked one Capture per
+ * Item. Both stand. What produces this trait is the CLI's exploration pass: a
+ * read-only reconnaissance over hover, focus, safe clicks, scroll and load,
+ * which happens before the shutter and changes nothing about the shot. The
+ * findings land here as prose and enums rather than as pixels.
+ *
+ * The consequence for a supplied still image is that every leaf below is
+ * Undetermined, and `docs/EXTRACTION.md` section B.3 makes that a rule rather
+ * than a preference. `presence: 'none'` asserts that the design does not move;
+ * `presence: 'undetermined'` admits the evidence could not say. A still frame
+ * cannot tell a deliberately static page from an animated one caught at rest,
+ * so claiming the former from a single frame is a fabrication.
+ */
+
+export const MotionPresence = z.enum([
+  'none',
+  'restrained',
+  'prominent',
+  'pervasive',
+  'undetermined',
+]);
+export type MotionPresence = z.infer<typeof MotionPresence>;
+
+export const MotionTrigger = z.enum([
+  'hover',
+  'scroll',
+  'click',
+  'page-load',
+  'focus',
+  'ambient',
+]);
+export type MotionTrigger = z.infer<typeof MotionTrigger>;
+
+export const MotionEasing = z.enum(['linear', 'eased', 'spring', 'abrupt', 'mixed', 'undetermined']);
+export const MotionPace = z.enum(['instant', 'brisk', 'measured', 'slow', 'undetermined']);
+
+/** How many triggers one Item may name. Past four it is a list, not a reading. */
+export const MAX_MOTION_TRIGGERS = 4;
+
+/**
+ * Local twin of the helper in `taxonomy.ts`, for the same reason it exists
+ * there: `uniqueItems` is outside the JSON Schema keyword budget 002 proved
+ * against the SDK, so a repeated value cannot be prevented at generation and is
+ * caught at the Zod boundary instead.
+ */
+const distinct = <T extends z.ZodTypeAny>(item: T, max: number) =>
+  z
+    .array(item)
+    .max(max)
+    .refine((values) => new Set(values).size === values.length, {
+      message: 'triggers must not repeat a value',
+    });
+
+export const ExtractedMotion = z
+  .object({
+    presence: MotionPresence,
+    /** Empty is a legitimate answer: nothing observed, or nothing to observe. */
+    triggers: distinct(MotionTrigger, MAX_MOTION_TRIGGERS),
+    easing: MotionEasing,
+    pace: MotionPace,
+    /** What moves and how it feels. Real durations and curves where read. */
+    character: text(240),
+    /** Sequencing: what leads, what follows, whether things stagger. */
+    choreography: text(300),
+  })
+  .strict();
+
+/** Exported as a type too, because `re-explore` validates motion on its own. */
+export type ExtractedMotion = z.infer<typeof ExtractedMotion>;
+
 /** The one open field. Bounded, single, and with a stated job. */
 export const ExtractedPhilosophy = z
   .object({ text: z.string().max(1200) })
@@ -164,6 +250,7 @@ export const ExtractedDna = z
     spacing: ExtractedSpacing,
     surfaceTreatment: ExtractedSurfaceTreatment,
     imagery: ExtractedImagery,
+    motion: ExtractedMotion,
     philosophy: ExtractedPhilosophy,
     /** 005 replaced 004's provisional flat array with three closed axes. */
     labels: ExtractedLabels,
@@ -206,6 +293,7 @@ export const SurfaceTreatment = ExtractedSurfaceTreatment.extend({
   authorship: Authorship,
 }).strict();
 export const Imagery = ExtractedImagery.extend({ authorship: Authorship }).strict();
+export const Motion = ExtractedMotion.extend({ authorship: Authorship }).strict();
 export const Philosophy = z
   .object({ text: z.string().max(1200), authorship: Authorship })
   .strict()
@@ -222,6 +310,7 @@ export const Dna = z
     spacing: Spacing,
     surfaceTreatment: SurfaceTreatment,
     imagery: Imagery,
+    motion: Motion,
     philosophy: Philosophy,
     labels: Labels,
   })
@@ -241,6 +330,7 @@ export const TraitName = z.enum([
   'spacing',
   'surfaceTreatment',
   'imagery',
+  'motion',
   'philosophy',
 ]);
 export type TraitName = z.infer<typeof TraitName>;
@@ -297,8 +387,16 @@ export const AuthoredBy = z
 
 export const Item = z
   .object({
-    /** Bumped by 008 when this shape changes. */
-    schemaVersion: z.literal(1),
+    /**
+     * Bumped by 008 when this shape changes. A `literal` rather than an integer
+     * because an Item carrying an older shape is *invalid* and must be refused
+     * by name, not tolerated. Contrast `taxonomyVersion` below, where being
+     * behind is merely stale. 008 decision 7: if `Item.parse` would reject the
+     * old file it belongs here, otherwise it belongs there.
+     *
+     * 2 adds the `motion` trait. Migration: `migrations/002-add-motion.ts`.
+     */
+    schemaVersion: z.literal(SCHEMA_VERSION),
     /** Opaque, assigned at save time. Nothing about the source contributes. */
     id: z.string().min(1),
     addedAt: Instant,
@@ -313,7 +411,7 @@ export const Item = z
      */
     taxonomyVersion: z.number().int().positive(),
     /** Traits this Item's Scope structurally excludes. Frozen at write time. */
-    notApplicable: z.array(TraitName).max(7),
+    notApplicable: z.array(TraitName).max(8),
     /** Your words on why this was worth saving. Never written by the agent. */
     note: z.string().max(4000).nullable(),
     authoredBy: AuthoredBy,
@@ -358,7 +456,18 @@ export type Item = z.infer<typeof Item>;
  */
 export type TraitState = 'present' | 'not_applicable' | 'undetermined';
 
-const isEmptyLeaf = (v: unknown): boolean => v === '' || v === 'undetermined';
+/**
+ * An empty array counts as empty, and that clause arrived with `motion`.
+ *
+ * Before it, a fully Undetermined motion trait read as `present`: its five
+ * scalar leaves were all empty but `triggers: []` matched neither `''` nor
+ * `'undetermined'`, so `every` returned false and 007 would have rendered a
+ * section with nothing in it. No other trait has an array leaf, so this
+ * generalises the rule rather than special-casing motion. (`labels` has two, but
+ * it is not a `TraitName` and never reaches here.)
+ */
+const isEmptyLeaf = (v: unknown): boolean =>
+  v === '' || v === 'undetermined' || (Array.isArray(v) && v.length === 0);
 
 export function traitState(item: Item, trait: TraitName): TraitState {
   if (item.notApplicable.includes(trait)) return 'not_applicable';
@@ -401,6 +510,7 @@ export function stampAuthorship(extracted: ExtractedDna): Dna {
     spacing: { ...extracted.spacing, authorship: 'agent' },
     surfaceTreatment: { ...extracted.surfaceTreatment, authorship: 'agent' },
     imagery: { ...extracted.imagery, authorship: 'agent' },
+    motion: { ...extracted.motion, authorship: 'agent' },
     philosophy: { ...extracted.philosophy, authorship: 'agent' },
     labels: stampLabelAuthorship(extracted.labels),
   };

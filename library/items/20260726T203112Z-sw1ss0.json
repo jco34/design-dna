@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "20260726T203112Z-sw1ss0",
   "addedAt": "2026-07-26T20:31:12.000Z",
   "source": {
@@ -26,11 +26,31 @@
   },
   "dna": {
     "palette": {
-      "background": { "hex": "#ffffff", "weight": "dominant", "authorship": "agent" },
-      "surface": { "hex": "#f4f4f4", "weight": "occasional", "authorship": "agent" },
-      "ink": { "hex": "#111111", "weight": "supporting", "authorship": "agent" },
-      "muted": { "hex": "#8c8c8c", "weight": "supporting", "authorship": "agent" },
-      "accent": { "hex": "#e8291c", "weight": "occasional", "authorship": "agent" }
+      "background": {
+        "hex": "#ffffff",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#f4f4f4",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#111111",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#8c8c8c",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#e8291c",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
     },
     "typography": {
       "headingFamily": "Helvetica Neue",
@@ -63,14 +83,37 @@
       "treatment": "One strip of eight solid colour patches standing in for a printed control bar. The only saturated colour on the page apart from the accent, and it reads as measurement rather than decoration.",
       "authorship": "agent"
     },
+    "motion": {
+      "presence": "undetermined",
+      "triggers": [],
+      "easing": "undetermined",
+      "pace": "undetermined",
+      "character": "",
+      "choreography": "",
+      "authorship": "agent"
+    },
     "philosophy": {
       "text": "The design argues that information ordered well needs no persuasion. It exposes its own grid rather than hiding it, so the structure becomes part of the visual language instead of scaffolding underneath it. Hierarchy comes from scale alone: one enormous headline, one small measured table, and a single red that appears exactly where a decision is being asked for. There is no shadow, no rounded corner and no gradient anywhere, which leaves contrast and alignment to carry the whole page. The result reads as instrument documentation that happens to be beautiful, which is precisely the Swiss claim: that clarity and beauty are the same problem.",
       "authorship": "agent"
     },
     "labels": {
-      "genre": { "value": "landing-page", "authorship": "agent" },
-      "style": { "values": ["swiss"], "authorship": "agent" },
-      "mood": { "values": ["serious", "refined"], "authorship": "agent" }
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "swiss"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "serious",
+          "refined"
+        ],
+        "authorship": "agent"
+      }
     }
   }
 }

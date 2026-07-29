@@ -34,7 +34,7 @@ export function LibraryView({ items }: { items: Item[] }) {
     () => readMix(search, itemsById),
     [search, itemsById],
   );
-  const mixOpen = searchParams.get("mix") !== null || searchParams.get("rack") === "1";
+  const mixOpen = searchParams.get("rack") === "1";
 
   const result = useMemo(() => runQuery(items, query), [items, query]);
   const counts = useMemo(() => facetCounts(items, query), [items, query]);
@@ -156,7 +156,7 @@ export function LibraryView({ items }: { items: Item[] }) {
             type="button"
             aria-label="Close mix"
             onClick={() => setRackOpen(false)}
-            className="fixed inset-0 z-30 bg-black/30 lg:hidden"
+            className="fixed inset-0 z-30 bg-black/30 lg:bg-transparent"
           />
           <div className="fixed right-0 top-0 z-40 h-full w-[380px] max-w-[90vw] border-l border-line shadow-[var(--shadow-lift)]">
             <MixPanel

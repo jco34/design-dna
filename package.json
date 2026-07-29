@@ -1,21 +1,33 @@
 {
   "name": "design-dna",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A local-first library of the web design worth keeping, analysed into its design DNA.",
+  "type": "module",
+  "bin": {
+    "dna": "producer/bin/dna.mjs"
+  },
   "directories": {
     "doc": "docs"
   },
   "scripts": {
+    "dna": "tsx producer/src/cli.ts",
+    "library:check": "tsx producer/src/cli.ts check",
+    "library:format": "tsx producer/src/cli.ts check --fix",
+    "library:migrate": "tsx migrations/run.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.220",
+    "playwright": "^1.62.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "tsx": "^4.23.1"
+    "@types/node": "^26.1.2",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
   }
 }

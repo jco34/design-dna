@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 2,
+  "id": "20260728T103715Z-ub1p66",
+  "addedAt": "2026-07-28T10:39:59.988Z",
+  "source": {
+    "kind": "url",
+    "url": "https://jeremiahcomeda.vercel.app/"
+  },
+  "capture": {
+    "file": "20260728T103715Z-ub1p66.png",
+    "takenAt": "2026-07-28T10:37:30.552Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "hand",
+    "model": "claude-opus-5",
+    "runAt": "2026-07-28T10:39:59.988Z",
+    "promptVersion": null
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#141414",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#242424",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#fafafa",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#8c8c8c",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#ffffff",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "Poppins",
+      "headingCharacter": "Geometric sans set very large at medium weight, centred over two lines with leading close to the cap height, normal tracking and sentence case, in near-white on near-black.",
+      "bodyFamily": "Geist Sans",
+      "bodyCharacter": "A neutral grotesk two to four times smaller at regular weight with roomy 1.5 leading, near-white for navigation and a mid grey for secondary prose.",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "A fixed top bar with a monogram left and four links right, the active one underlined. Below it a single centred column holding a small greeting, an oversized two-line headline and one pill button, with a floating now-playing card pinned to the bottom right corner.",
+      "contentWidth": "contained",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Roughly a third of the viewport is left empty above and below the headline block, so two lines of type and one button hold an entire screen. Only the navigation is tight, sitting small and close to the top edge.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "pill",
+      "borders": "hairline",
+      "elevation": "pronounced",
+      "finish": "Frosted glass throughout: backdrop blur with a saturation lift, a one-pixel light inset along top edges, and wide soft glows. Surfaces read as physical lozenges floating over a bokeh field, with one chrome blob fringing into rainbow.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "3d-render",
+      "treatment": "Out-of-focus spheres scattered at several depths and scales in cool blue-grey, making a bokeh field rather than a picture. One chrome liquid-metal blob sits directly behind the headline, its stripes splitting into rainbow at the edges.",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "undetermined",
+      "triggers": [],
+      "easing": "undetermined",
+      "pace": "undetermined",
+      "character": "",
+      "choreography": "",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The design argues that depth alone can carry a page with almost nothing on it. One headline, one button and a scattering of out-of-focus spheres fill an entire viewport, and the interest comes from how light behaves rather than from content: orbs receding at different depths, frosted lozenges that let the field show through them, and a chrome blob behind the type whose reflections split into rainbow fringes at the edge. Colour is withheld almost completely, near-black against near-white with a single grey, so every bit of visual richness has to be produced by blur, translucency and reflection instead of by hue. The type stays plain and geometric in the middle of all this, centred and unhurried, and that restraint is what keeps the page from tipping into a screensaver: the rendering is atmospheric, but the reading order is entirely ordinary.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "portfolio",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "glassmorphism"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "bold",
+          "refined"
+        ],
+        "authorship": "agent"
+      }
+    }
+  }
+}

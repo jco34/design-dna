@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "20260726T203955Z-t3rm1n",
   "addedAt": "2026-07-26T20:39:55.000Z",
   "source": {
@@ -26,11 +26,31 @@
   },
   "dna": {
     "palette": {
-      "background": { "hex": "#0b0f0d", "weight": "dominant", "authorship": "agent" },
-      "surface": { "hex": "#131a17", "weight": "supporting", "authorship": "agent" },
-      "ink": { "hex": "#d8e6de", "weight": "supporting", "authorship": "agent" },
-      "muted": { "hex": "#5f7a6c", "weight": "supporting", "authorship": "agent" },
-      "accent": { "hex": "#35e08a", "weight": "supporting", "authorship": "agent" }
+      "background": {
+        "hex": "#0b0f0d",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#131a17",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#d8e6de",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#5f7a6c",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#35e08a",
+        "weight": "supporting",
+        "authorship": "agent"
+      }
     },
     "typography": {
       "headingFamily": "JetBrains Mono",
@@ -63,14 +83,37 @@
       "treatment": "The interface is the imagery. A live flamegraph with an amber hot path, a sparkline and a scrolling log stand in for any product photograph, rendered as real interface rather than as a picture of one.",
       "authorship": "agent"
     },
+    "motion": {
+      "presence": "undetermined",
+      "triggers": [],
+      "easing": "undetermined",
+      "pace": "undetermined",
+      "character": "",
+      "choreography": "",
+      "authorship": "agent"
+    },
     "philosophy": {
       "text": "The design collapses the distance between the marketing page and the tool it is selling by simply making them the same object. There is no screenshot because the page is the screen. Every convention it borrows is from the terminal rather than the web: a title bar, a menu row, a status bar, and colour used as a strict semantic code where amber means hot and green means healthy. Density is not an accident of fitting too much in, it is the claim being made, because the audience reads dense output for a living and would distrust anything airier. The single piece of persuasion, the headline, is set in the same monospace as the data so that even the sales pitch submits to the grid.",
       "authorship": "agent"
     },
     "labels": {
-      "genre": { "value": "landing-page", "authorship": "agent" },
-      "style": { "values": ["technical"], "authorship": "agent" },
-      "mood": { "values": ["serious", "bold"], "authorship": "agent" }
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "technical"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "serious",
+          "bold"
+        ],
+        "authorship": "agent"
+      }
     }
   }
 }

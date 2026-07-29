@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "20260726T203747Z-aur0r4",
   "addedAt": "2026-07-26T20:37:47.000Z",
   "source": {
@@ -26,11 +26,31 @@
   },
   "dna": {
     "palette": {
-      "background": { "hex": "#150d28", "weight": "dominant", "authorship": "agent" },
-      "surface": { "hex": "#2a1f47", "weight": "supporting", "authorship": "agent" },
-      "ink": { "hex": "#f4f1fb", "weight": "supporting", "authorship": "agent" },
-      "muted": { "hex": "#a99fc4", "weight": "supporting", "authorship": "agent" },
-      "accent": { "hex": "#4fc9e8", "weight": "occasional", "authorship": "agent" }
+      "background": {
+        "hex": "#150d28",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#2a1f47",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#f4f1fb",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#a99fc4",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#4fc9e8",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
     },
     "typography": {
       "headingFamily": "Inter",
@@ -63,14 +83,37 @@
       "treatment": "No photography. A gradient mesh background carrying violet, teal and rose blooms, combined with a rendered interface panel and thin concentric orbit rings used as abstract structure.",
       "authorship": "agent"
     },
+    "motion": {
+      "presence": "undetermined",
+      "triggers": [],
+      "easing": "undetermined",
+      "pace": "undetermined",
+      "character": "",
+      "choreography": "",
+      "authorship": "agent"
+    },
     "philosophy": {
       "text": "The design treats depth as the whole medium. Nothing sits flat on the background because the background is not a colour but a field of light, and every surface is a pane held some distance in front of it. The gradient is the unifying device rather than an effect applied once: it runs through the mesh, through one clause of the headline and through the waveform, so the page reads as a single continuous light source rather than a dark theme with accents dropped on top. Restraint shows up in the type, which stays plain and humanist while everything around it glows, and that contrast is what keeps the result feeling engineered rather than decorative.",
       "authorship": "agent"
     },
     "labels": {
-      "genre": { "value": "landing-page", "authorship": "agent" },
-      "style": { "values": ["glassmorphism"], "authorship": "agent" },
-      "mood": { "values": ["calm", "refined"], "authorship": "agent" }
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "glassmorphism"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "calm",
+          "refined"
+        ],
+        "authorship": "agent"
+      }
     }
   }
 }

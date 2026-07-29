@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "20260726T203344Z-ed1t0r",
   "addedAt": "2026-07-26T20:33:44.000Z",
   "source": {
@@ -26,11 +26,31 @@
   },
   "dna": {
     "palette": {
-      "background": { "hex": "#f2ece1", "weight": "dominant", "authorship": "agent" },
-      "surface": { "hex": "#e8dfd0", "weight": "supporting", "authorship": "agent" },
-      "ink": { "hex": "#1c1a17", "weight": "supporting", "authorship": "agent" },
-      "muted": { "hex": "#8a8175", "weight": "supporting", "authorship": "agent" },
-      "accent": { "hex": "#7d1f1f", "weight": "occasional", "authorship": "agent" }
+      "background": {
+        "hex": "#f2ece1",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#e8dfd0",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#1c1a17",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#8a8175",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#7d1f1f",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
     },
     "typography": {
       "headingFamily": "",
@@ -63,14 +83,35 @@
       "treatment": "A single close raking-light photograph of folded fore-edges, warm and shallow-focus, bled off three sides and cropped so the subject is texture rather than object.",
       "authorship": "agent"
     },
+    "motion": {
+      "presence": "undetermined",
+      "triggers": [],
+      "easing": "undetermined",
+      "pace": "undetermined",
+      "character": "",
+      "choreography": "",
+      "authorship": "agent"
+    },
     "philosophy": {
       "text": "The design behaves like print that happens to be on a screen. It trusts a single serif to carry voice, authority and rhythm at once, and it spends its whole budget on the measure and the leading rather than on any interface furniture. Colour is almost absent: warm paper, dark ink, and one oxblood reserved for the drop cap and the single action. The photograph is not an illustration of the article but a piece of evidence for it, bled to the edge so the page feels like a spread rather than a viewport. What makes it work is restraint held for long enough to become confidence.",
       "authorship": "agent"
     },
     "labels": {
-      "genre": { "value": "editorial", "authorship": "agent" },
-      "style": { "values": [], "authorship": "agent" },
-      "mood": { "values": ["calm", "refined"], "authorship": "agent" }
+      "genre": {
+        "value": "editorial",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "calm",
+          "refined"
+        ],
+        "authorship": "agent"
+      }
     }
   }
 }

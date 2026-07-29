@@ -26,8 +26,16 @@ Two producers, both going through the same schema and the same validator:
 - a Claude session writing an entry by hand, which is a first-class path and
   not a workaround
 
-**The web app writes nothing here.** It is a pure reader. If you find the app
-modifying this folder, that is a bug rather than a feature.
+**The web app writes nothing here except deletions.** It is a reader, with one
+deliberate exception recorded in
+[ADR 0003](../docs/adr/0003-deletion-from-the-app.md): the item detail surface can
+delete an Item and its Capture, behind a confirmation dialog. That is the only
+write it performs, it lives in the single file `web/lib/mutate.ts`, and it is
+gated to loopback requests.
+
+Adding or editing an Item is still the producer's job. If you find the app
+*creating* or *modifying* anything in this folder, that is a bug rather than a
+feature.
 
 ## Checking it after a hand edit
 

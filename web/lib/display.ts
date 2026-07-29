@@ -72,6 +72,7 @@ export const TRAIT_LABEL: Record<TraitName, string> = {
   spacing: "Space",
   surfaceTreatment: "Surfaces",
   imagery: "Imagery",
+  motion: "Motion",
   philosophy: "Philosophy",
 };
 
@@ -119,6 +120,7 @@ export const TRAIT_ORDER: readonly TraitName[] = [
   "spacing",
   "surfaceTreatment",
   "imagery",
+  "motion",
   "philosophy",
 ];
 

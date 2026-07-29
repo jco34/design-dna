@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "20260726T203519Z-brut41",
   "addedAt": "2026-07-26T20:35:19.000Z",
   "source": {
@@ -26,11 +26,31 @@
   },
   "dna": {
     "palette": {
-      "background": { "hex": "#efe9dc", "weight": "dominant", "authorship": "agent" },
-      "surface": { "hex": "#ffffff", "weight": "supporting", "authorship": "agent" },
-      "ink": { "hex": "#000000", "weight": "supporting", "authorship": "agent" },
-      "muted": { "hex": "#2b4bd8", "weight": "occasional", "authorship": "agent" },
-      "accent": { "hex": "#ffc91f", "weight": "supporting", "authorship": "agent" }
+      "background": {
+        "hex": "#efe9dc",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#000000",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#2b4bd8",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#ffc91f",
+        "weight": "supporting",
+        "authorship": "agent"
+      }
     },
     "typography": {
       "headingFamily": "Archivo Black",
@@ -63,14 +83,37 @@
       "treatment": "No photography. A stylised invoice document and two status chips arranged as an overlapping collage, standing in for a product screenshot without pretending to be one.",
       "authorship": "agent"
     },
+    "motion": {
+      "presence": "undetermined",
+      "triggers": [],
+      "easing": "undetermined",
+      "pace": "undetermined",
+      "character": "",
+      "choreography": "",
+      "authorship": "agent"
+    },
     "philosophy": {
       "text": "The design refuses to be soothing and treats that refusal as the product voice. Everything is stated at maximum volume: uppercase, black outlines, flat primaries and a shadow that is a solid shape rather than a diffusion of light. It borrows its confidence from print and sign painting rather than from software, which is why nothing is rounded and nothing glows. The collage of rotated cards is the one loose gesture in an otherwise rigid system, and it works because everything around it is so tightly held. This is deliberate anti-polish, and the craft is in knowing exactly how far to push it.",
       "authorship": "agent"
     },
     "labels": {
-      "genre": { "value": "landing-page", "authorship": "agent" },
-      "style": { "values": ["brutalist"], "authorship": "agent" },
-      "mood": { "values": ["bold", "playful"], "authorship": "agent" }
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "brutalist"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "bold",
+          "playful"
+        ],
+        "authorship": "agent"
+      }
     }
   }
 }

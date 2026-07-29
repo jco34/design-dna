@@ -1,0 +1,22 @@
+{
+  "//": "Typechecks the two things that run under tsx: the producer CLI and the migration runner. `web/` has its own config and is excluded here. `lib` includes dom because capture.ts contains page.evaluate callbacks, which are browser code that happens to live in a Node file.",
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "types": ["node"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["producer/**/*.ts", "migrations/**/*.ts", "schema/**/*.ts"],
+  "exclude": ["node_modules", "web", "seed", "wayfinder"]
+}

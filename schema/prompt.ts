@@ -72,6 +72,11 @@ export const PROMPT_TRAIT_ORDER: readonly TraitName[] = [
   'spacing',
   'surfaceTreatment',
   'imagery',
+  // Motion last of the readings: everything above it is true of a single frame,
+  // and this is the only section describing what happens over time. Reading it
+  // after the static picture is established is the same order the CLI observes
+  // it in.
+  'motion',
 ];
 
 export function renderPrompt(item: Item, options: PromptOptions = {}): string {
@@ -164,6 +169,8 @@ function renderTrait(item: Item, trait: TraitName): string | null {
       return section('Surfaces', surfaces(item));
     case 'imagery':
       return section('Imagery', imagery(item));
+    case 'motion':
+      return section('Motion', motion(item));
   }
 }
 
@@ -382,6 +389,74 @@ function imagery(item: Item): string | null {
   return parts.length === 0 ? null : parts.join(' ');
 }
 
+/* --- Motion -------------------------------------------------------- */
+
+/*
+ * `presence: 'none'` is the one member here that renders as a full sentence on
+ * its own, because "nothing moves" is a real and actionable instruction: it
+ * tells the receiving model to resist adding motion it would otherwise supply
+ * by default. `undetermined` stays silent, per the rule at the top of this file,
+ * and the difference between the two is exactly the difference between a fact
+ * about the design and a gap in the reading.
+ */
+const PRESENCE_PHRASE: Record<Item['dna']['motion']['presence'], string | null> = {
+  none: 'Nothing moves. Treat stillness as deliberate rather than unfinished.',
+  restrained: 'Motion is restrained, used only where it clarifies.',
+  prominent: 'Motion is prominent and part of the design language.',
+  pervasive: 'Motion is pervasive; almost everything responds.',
+  undetermined: null,
+};
+
+const EASING_PHRASE: Record<Item['dna']['motion']['easing'], string | null> = {
+  linear: 'linear timing',
+  eased: 'eased timing',
+  spring: 'spring physics rather than fixed curves',
+  abrupt: 'abrupt state changes rather than transitions',
+  mixed: 'mixed timing functions',
+  undetermined: null,
+};
+
+const PACE_PHRASE: Record<Item['dna']['motion']['pace'], string | null> = {
+  instant: 'an instant pace',
+  brisk: 'a brisk pace',
+  measured: 'a measured pace',
+  slow: 'a slow pace',
+  undetermined: null,
+};
+
+const TRIGGER_PHRASE: Record<Item['dna']['motion']['triggers'][number], string> = {
+  hover: 'hover',
+  scroll: 'scroll',
+  click: 'click',
+  'page-load': 'page load',
+  focus: 'keyboard focus',
+  ambient: 'nothing at all, running ambiently',
+};
+
+function motion(item: Item): string | null {
+  const m = item.dna.motion;
+  const parts: string[] = [];
+
+  const presence = PRESENCE_PHRASE[m.presence];
+  if (presence !== null) parts.push(presence);
+
+  // Suppressed when nothing moves: naming what would trigger motion in a design
+  // that has none is a contradiction, and the agent can emit both.
+  if (m.presence !== 'none' && m.triggers.length > 0) {
+    parts.push(`Triggered by ${list(m.triggers.map((t) => TRIGGER_PHRASE[t]))}.`);
+  }
+
+  const timing = [EASING_PHRASE[m.easing], PACE_PHRASE[m.pace]].filter(
+    (p): p is string => p !== null,
+  );
+  if (timing.length > 0) parts.push(`${capitalise(timing.join(' at '))}.`);
+
+  if (m.character.trim() !== '') parts.push(asSentence(m.character));
+  if (m.choreography.trim() !== '') parts.push(asSentence(m.choreography));
+
+  return parts.length === 0 ? null : parts.join(' ');
+}
+
 /* ------------------------------------------------------------------ */
 /* Provenance                                                          */
 /* ------------------------------------------------------------------ */
@@ -427,6 +502,7 @@ const TRAIT_ENGLISH: Record<TraitName, string> = {
   spacing: 'the spacing',
   surfaceTreatment: 'the surface treatment',
   imagery: 'the imagery',
+  motion: 'the motion',
   philosophy: 'the design intent',
 };
 const traitEnglish = (trait: TraitName): string => TRAIT_ENGLISH[trait];

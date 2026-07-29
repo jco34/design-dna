@@ -20,6 +20,7 @@ export * from './dna';
 export * from './prompt';
 export * from './mix';
 export * from './query';
+export * from './generation';
 
 /*
  * `Scope` is deliberately re-exported from `./dna` above rather than from

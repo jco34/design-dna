@@ -39,6 +39,10 @@ import {
   Density,
   Elevation,
   ImageryKind,
+  MotionEasing,
+  MotionPace,
+  MotionPresence,
+  MotionTrigger,
   TypeScale,
   WeightRange,
 } from './dna';
@@ -443,7 +447,11 @@ export type FacetId =
   | 'corners'
   | 'borders'
   | 'elevation'
-  | 'imagery';
+  | 'imagery'
+  | 'motion'
+  | 'motionTrigger'
+  | 'motionEasing'
+  | 'motionPace';
 
 export interface FacetDef {
   readonly id: FacetId;
@@ -574,6 +582,45 @@ export const FACETS: readonly FacetDef[] = [
     tier: 'secondary',
     values: options(ImageryKind),
     valuesOf: (item) => [item.dna.imagery.kind],
+  },
+  /*
+   * Motion is primary and its three elaborations are secondary, on this file's
+   * own tier rule: "does this design move" is a half-remembered-design question,
+   * whereas its easing curve is something you check once you have found it.
+   *
+   * Note that `undetermined` will be the honest answer for every Item whose
+   * Capture was a supplied still image, and there is no NOT_APPLICABLE bucket
+   * here because no Scope excludes motion: a component crop has hover states
+   * too. That is the distinction `contentWidth` above needs and this does not.
+   */
+  {
+    id: 'motion',
+    label: 'Motion',
+    tier: 'primary',
+    values: options(MotionPresence),
+    valuesOf: (item) => [item.dna.motion.presence],
+  },
+  {
+    id: 'motionTrigger',
+    label: 'Triggered by',
+    tier: 'secondary',
+    values: [...options(MotionTrigger), NONE],
+    valuesOf: (item) =>
+      item.dna.motion.triggers.length === 0 ? [NONE] : item.dna.motion.triggers,
+  },
+  {
+    id: 'motionEasing',
+    label: 'Easing',
+    tier: 'secondary',
+    values: options(MotionEasing),
+    valuesOf: (item) => [item.dna.motion.easing],
+  },
+  {
+    id: 'motionPace',
+    label: 'Pace',
+    tier: 'secondary',
+    values: options(MotionPace),
+    valuesOf: (item) => [item.dna.motion.pace],
   },
 ];
 

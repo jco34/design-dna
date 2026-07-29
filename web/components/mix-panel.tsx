@@ -60,7 +60,7 @@ export function MixPanel({
             type="button"
             onClick={onClose}
             aria-label="Close mix"
-            className="mono text-muted hover:text-ink lg:hidden"
+            className="mono text-muted hover:text-ink"
           >
             close
           </button>
