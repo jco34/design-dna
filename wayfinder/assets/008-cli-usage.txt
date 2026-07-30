@@ -218,7 +218,7 @@ WHAT IT PRINTS
     ok    20260728T093015Z-h8n2wr  $0.004
           was: react, tailwind, framer-motion
           now: react, tailwind, gsap (scroll pin)
-    1 rebuilt, 4.2s, $0.004
+    1 updated, 0 kept, 0 refused, 4s, $0.00
 
 ================================================================================
 $ dna relabel --help
