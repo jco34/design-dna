@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "20260730T062539Z-28jc44",
   "addedAt": "2026-07-30T06:27:12.978Z",
   "source": {
@@ -120,5 +120,10 @@
         "authorship": "agent"
       }
     }
+  },
+  "build": {
+    "stack": [],
+    "techniques": "",
+    "authorship": "suggested"
   }
 }
