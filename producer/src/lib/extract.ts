@@ -386,6 +386,13 @@ export async function extractDna(
     timeoutMs: options.timeoutMs,
   });
 
+  if (typeof result.structured !== 'object' || result.structured === null) {
+    throw new ExtractionFailed(
+      'the agent output does not satisfy the schema',
+      [`expected an object, got ${typeof result.structured}`],
+    );
+  }
+
   // `build` sits beside the nine trait keys in the one flat object the SDK
   // returns, so it has to come off before the rest validates as
   // `ExtractedDna`, which is `.strict()` with exactly nine keys.
