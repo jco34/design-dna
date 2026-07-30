@@ -325,6 +325,44 @@ export const MOTION_JSON_SCHEMA = {
 };
 
 /* ------------------------------------------------------------------ */
+/* The Build                                                           */
+/* ------------------------------------------------------------------ */
+
+/**
+ * New at schemaVersion 3, and the one block that is a suggestion rather than
+ * a reading. Exported for the same reason `MOTION_JSON_SCHEMA` is: both the
+ * full schema and a slim schema for a dedicated re-run (`dna re-build`) need
+ * to describe it identically.
+ */
+export const BUILD_JSON_SCHEMA = {
+  type: 'object',
+  description:
+    'Your suggested toolset for REPLICATING this design, not a fact about it. Candidate libraries and the few techniques that matter for this specific design. Key off imagery, motion and composition: a still, static, typographic page needs almost nothing distinctive here, and an empty stack with empty techniques is the honest answer for it. A 3D or heavily animated design is where this earns its keep. Never invent internals you cannot see from the design alone - no state-management or backend claims.',
+  additionalProperties: false,
+  required: ['stack', 'techniques'],
+  properties: {
+    stack: {
+      type: 'array',
+      description:
+        'Candidate tools and libraries, most load-bearing first, for example ["Three.js", "React Three Fiber", "GSAP"]. Empty array if nothing distinctive is called for.',
+      minItems: 0,
+      maxItems: 12,
+      items: {
+        type: 'string',
+        maxLength: 40,
+        description: 'One tool or library name.',
+      },
+    },
+    techniques: {
+      type: 'string',
+      maxLength: 600,
+      description:
+        'The 2-4 techniques that matter for replicating THIS design specifically, for example "scroll-linked camera dolly, instanced meshes for the particle field, a pinned hero section". Not a generic build plan. Empty string if the stack is empty. Hard limit: 600 characters, and going over means the whole extraction is rejected. Be concise rather than exhaustive.',
+    },
+  },
+};
+
+/* ------------------------------------------------------------------ */
 /* Philosophy                                                          */
 /* ------------------------------------------------------------------ */
 
@@ -375,6 +413,7 @@ export const GENERATION_SCHEMA = {
     'motion',
     'philosophy',
     'labels',
+    'build',
   ],
   properties: {
     palette: PALETTE_JSON_SCHEMA,
@@ -386,6 +425,7 @@ export const GENERATION_SCHEMA = {
     motion: MOTION_JSON_SCHEMA,
     philosophy: PHILOSOPHY_JSON_SCHEMA,
     labels: LABELS_JSON_SCHEMA,
+    build: BUILD_JSON_SCHEMA,
   },
 } as const;
 
@@ -412,6 +452,22 @@ export const MOTION_ONLY_SCHEMA = {
 } as const;
 
 /**
+ * Just the Build, for `dna re-build`.
+ *
+ * Built from the same `BUILD_JSON_SCHEMA` the full schema uses, so the two
+ * can never describe the Build differently. Mirrors `MOTION_ONLY_SCHEMA`.
+ */
+export const BUILD_ONLY_SCHEMA = {
+  title: 'Design DNA build suggestion',
+  description:
+    'A suggested toolset for replicating one design, given its stored analysis. Report only what is distinctive about this design. Undetermined (empty stack, empty techniques) is correct when nothing about the design calls for particular tools.',
+  type: 'object',
+  additionalProperties: false,
+  required: ['build'],
+  properties: { build: BUILD_JSON_SCHEMA },
+} as const;
+
+/**
  * The prompt version stamped onto every Item this build writes.
  *
  * `authoredBy.promptVersion` exists so prompt tuning is legible after the fact:
@@ -419,4 +475,4 @@ export const MOTION_ONLY_SCHEMA = {
  * you which instructions produced it. Bump it whenever the extraction
  * instructions or this schema change in a way that would alter output.
  */
-export const PROMPT_VERSION = '2.0.0-motion';
+export const PROMPT_VERSION = '3.0.0-build';
