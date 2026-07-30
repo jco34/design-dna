@@ -19,9 +19,9 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-haiku-4-5-20251001+claude-sonnet-5",
-    "runAt": "2026-07-29T10:45:20.549Z",
-    "promptVersion": "2.0.0-motion"
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:53:58.290Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -121,8 +121,12 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "GSAP",
+      "Lenis",
+      "React"
+    ],
+    "techniques": "GSAP ScrollTrigger with staggered reveals and parallax depth layers (elements move at different rates than scroll); sticky header that shrinks/repositions on scroll; pinned sections and looped continuous animations (12s roundel spin, 1s equalizer pulse) on custom snappy cubic-bezier easing.",
     "authorship": "suggested"
   }
 }

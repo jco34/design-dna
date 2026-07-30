@@ -19,9 +19,9 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-haiku-4-5-20251001+claude-sonnet-5",
-    "runAt": "2026-07-30T06:18:48.245Z",
-    "promptVersion": "2.0.0-motion"
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:53:33.157Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -121,8 +121,13 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "Three.js",
+      "GSAP (ScrollTrigger)",
+      "Lenis",
+      "React or Vanilla JS"
+    ],
+    "techniques": "WebGL terrain backdrop with procedurally-rendered soft camouflage shapes and independent 30s drifting contour-line loop; scroll-linked parallax with elements at differing depths and speeds, some also scaling; CSS transitions (0.75s decelerating easing) on UI chrome; full-bleed edge-pushed layout leaving the center completely open.",
     "authorship": "suggested"
   }
 }

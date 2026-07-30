@@ -19,10 +19,10 @@
   "notApplicable": [],
   "note": "Seed item. The gradient runs through the headline and the waveform as well as the background, which is what stops the glass reading as a sticker. Replace this note with your own.",
   "authoredBy": {
-    "kind": "hand",
-    "model": "claude-opus-5",
-    "runAt": "2026-07-26T20:38:15.000Z",
-    "promptVersion": null
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:52:07.334Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -117,8 +117,12 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "CSS",
+      "SVG",
+      "Canvas (optional)"
+    ],
+    "techniques": "Layered radial gradients or Canvas 2D for gradient mesh blooms; glassmorphism with backdrop-filter blur on the player card; SVG concentric orbit rings positioned absolutely; gradient text using background-clip and linear-gradient.",
     "authorship": "suggested"
   }
 }

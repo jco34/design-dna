@@ -19,10 +19,10 @@
   "notApplicable": [],
   "note": "Seed item. Proof that a marketing page can be the product interface rather than a picture of it. The status bar at the foot is the whole trick. Replace this note with your own.",
   "authoredBy": {
-    "kind": "hand",
-    "model": "claude-opus-5",
-    "runAt": "2026-07-26T20:40:22.000Z",
-    "promptVersion": null
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:52:39.633Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -117,8 +117,14 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "React",
+      "D3.js",
+      "SVG",
+      "CSS Grid/Flexbox",
+      "React Window"
+    ],
+    "techniques": "Flamegraph as SVG hierarchy with time-to-color intensity mapping (amber hot paths). Inline bar charts in table cells via SVG. Monospace terminal aesthetic (Monaco, dark background, bright green accents). Two-column layout with pinned status bar.",
     "authorship": "suggested"
   }
 }

@@ -19,9 +19,9 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-haiku-4-5-20251001+claude-opus-5",
-    "runAt": "2026-07-30T06:41:49.489Z",
-    "promptVersion": "2.0.0-motion"
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:55:24.647Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -119,8 +119,10 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "SVG"
+    ],
+    "techniques": "Full-viewport fixed layout with corner-anchored chrome (nav bar top-center, coordinates top-left, email top-right, cookie banner bottom-left). Centered 2×2 SVG geometric mark with hairline white strokes. CSS cubic-bezier transitions: 200–300ms for color/background/border/fill (0.4, 0, 0.2, 1), 100–150ms for opacity, 500ms for transform/scale/rotate. Keyboard focus rings on interactive elements.",
     "authorship": "suggested"
   }
 }

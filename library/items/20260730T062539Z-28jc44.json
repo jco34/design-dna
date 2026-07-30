@@ -19,9 +19,9 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-sonnet-5+claude-haiku-4-5-20251001",
-    "runAt": "2026-07-30T06:27:12.978Z",
-    "promptVersion": "2.0.0-motion"
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:54:22.748Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -122,8 +122,12 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "Three.js",
+      "GSAP",
+      "React"
+    ],
+    "techniques": "Render the glossy 3D wordmark as a dimensional composite using Three.js with lighting and post-processing (glow/bloom for the hot pink tones); choreograph entrance animations with GSAP using custom ease-out curves for translate/scale over 0.5s paired with faster linear opacity fades (~0.1s). Overlay a procedural grain flicker animation on a 2-step loop at the composition level. Bind scroll reveals to depth-uniform stagger using GSAP's ScrollTrigger, resetting header and hero keyframes independently on each section.",
     "authorship": "suggested"
   }
 }

@@ -19,9 +19,9 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-haiku-4-5-20251001+claude-opus-5",
-    "runAt": "2026-07-30T07:39:59.468Z",
-    "promptVersion": "2.0.0-motion"
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:56:03.115Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -121,8 +121,13 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "GSAP",
+      "React",
+      "Scroll Observer API",
+      "Canvas effects"
+    ],
+    "techniques": "Full-bleed pixel-art canvas with floating UI overlaid; timeline-sequenced staggered reveals across 3+ depth layers; script-driven parallax on ~79 elements at non-scroll rates; micro-state flips (20–120ms) on button hover; shimmer loop (2.8s) and step-blink carets (0.9–1s) via precise animation intervals; sticky header with resize callback.",
     "authorship": "suggested"
   }
 }

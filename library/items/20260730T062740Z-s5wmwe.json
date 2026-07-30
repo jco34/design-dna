@@ -19,9 +19,9 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-haiku-4-5-20251001+claude-sonnet-5",
-    "runAt": "2026-07-30T06:29:14.686Z",
-    "promptVersion": "2.0.0-motion"
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:54:50.018Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -122,8 +122,13 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "Three.js",
+      "GSAP + ScrollTrigger",
+      "React Three Fiber",
+      "Lenis (smooth scroll)"
+    ],
+    "techniques": "Spring-eased hero sequence on load with staggered element lifts; scroll-triggered parallax depth reveals (sequential layered fades at ~3 distinct depths); infinite linear marquee loop via GSAP timeline; 3D letterform rendering with PBR materials/shadow maps for glossy realism; sticky header with dynamic height shrink on scroll (CSS + scroll listener); collision-aware z-index layering to preserve overlap order across tilted collage elements",
     "authorship": "suggested"
   }
 }

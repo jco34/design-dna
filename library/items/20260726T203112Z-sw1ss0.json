@@ -19,10 +19,10 @@
   "notApplicable": [],
   "note": "Seed item. The reference for grid work: the twelve column rules are visible on the page rather than implied, and the whole hierarchy is done with size and one red. Replace this note with your own.",
   "authoredBy": {
-    "kind": "hand",
-    "model": "claude-opus-5",
-    "runAt": "2026-07-26T20:31:40.000Z",
-    "promptVersion": null
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:50:50.325Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -118,7 +118,7 @@
   },
   "build": {
     "stack": [],
-    "techniques": "",
+    "techniques": "12-column grid with visible hairlines anchoring all content; two-column text split (headline + body left, specification table right); 8-color swatch row as accent; four-step process footer rail with numbered labels aligned to grid.",
     "authorship": "suggested"
   }
 }

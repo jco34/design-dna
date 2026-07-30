@@ -19,9 +19,9 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-haiku-4-5-20251001+claude-opus-5",
-    "runAt": "2026-07-30T07:41:57.447Z",
-    "promptVersion": "2.0.0-motion"
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:56:24.852Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -121,8 +121,13 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "GSAP",
+      "ScrollTrigger",
+      "React",
+      "Canvas or SVG"
+    ],
+    "techniques": "Looping background grid with continuous linear offset on a long unsynchronized loop (60–110s), independent of reader scroll. Scroll-linked staggered reveals across 18 viewports using ScrollTrigger, with ~120 elements shifting position. Discrete element arrival transitions using cubic-bezier(0.2,0.8,0.2,1) easing over 0.25–0.45s for settle effect.",
     "authorship": "suggested"
   }
 }

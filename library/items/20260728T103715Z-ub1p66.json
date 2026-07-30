@@ -19,9 +19,9 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-haiku-4-5-20251001+claude-sonnet-5",
-    "runAt": "2026-07-30T06:16:49.298Z",
-    "promptVersion": "2.0.0-motion"
+    "model": "claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T10:53:06.457Z",
+    "promptVersion": "3.0.0-build"
   },
   "dna": {
     "palette": {
@@ -121,8 +121,12 @@
     }
   },
   "build": {
-    "stack": [],
-    "techniques": "",
+    "stack": [
+      "Three.js",
+      "GSAP (+ ScrollTrigger)",
+      "React"
+    ],
+    "techniques": "Bokeh field via procedural sphere placement at varying Z-depths with depth-based Gaussian blur; iridescent liquid-metal blob using custom WebGL shader with vertex displacement for morphing and Fresnel/rim-light for rainbow edge gradients; scroll-linked parallax using GSAP ScrollTrigger on text layers (3 depths); continuous drift animation on orbs via sine-wave timeline, all choreographed on a single GSAP master timeline",
     "authorship": "suggested"
   }
 }
