@@ -14,19 +14,22 @@
  * every re-run. Labels belong to `relabel`. Both are carried through
  * byte-identical from what `readItem` returned.
  *
- * The remaining 11 units (5 palette swatches, 6 traits) are merged one at a
- * time: an `override` is kept verbatim, anything else is replaced by the fresh
- * reading and stamped `agent`. A `--scope` correction can then force a unit
- * back to Undetermined regardless of authorship, when the new Scope excludes
- * a trait the old one did not - that is a third outcome, `reset`, kept apart
- * from `replaced` and `kept` in both the counts and the log lines.
+ * The remaining 12 units (5 palette swatches, 6 traits, and the Build) are
+ * merged one at a time: an `override` (or, for the Build, `written`) is kept
+ * verbatim, anything else is replaced by the fresh reading and re-stamped.
+ * A `--scope` correction can then force a unit back to Undetermined regardless
+ * of authorship, when the new Scope excludes a trait the old one did not -
+ * that is a third outcome, `reset`, kept apart from `replaced` and `kept` in
+ * both the counts and the log lines.
  */
 import {
   CURRENT_TAXONOMY_VERSION,
   notApplicableFor,
   PROMPT_VERSION,
   type Authorship,
+  type Build,
   type Dna,
+  type ExtractedBuild,
   type ExtractedDna,
   type Item,
   type Scope,
@@ -90,6 +93,19 @@ function mergeTrait<T extends { authorship: Authorship }>(
     return { value: stored, replaced: false, keptLine: `${name} kept (override)` };
   }
   return { value: { ...fresh, authorship: 'agent' } as T, replaced: true, keptLine: null };
+}
+
+/**
+ * The Build's own merge rule, parallel to `mergeTrait` but keyed on
+ * `'written'` rather than `'override'`: a Build you wrote by hand is kept
+ * verbatim, anything `'suggested'` is refreshed. There is no scope-driven
+ * reset for the Build - it is not a `TraitName` and no Scope excludes it.
+ */
+function mergeBuild(stored: Build, fresh: ExtractedBuild): MergeResult<Build> {
+  if (stored.authorship === 'written') {
+    return { value: stored, replaced: false, keptLine: 'build kept (written)' };
+  }
+  return { value: { ...fresh, authorship: 'suggested' }, replaced: true, keptLine: null };
 }
 
 /* ------------------------------------------------------------------ */
@@ -167,6 +183,7 @@ export async function reExtract(options: ReExtractOptions): Promise<ReExtractOut
       );
       const imagery = mergeTrait('imagery', item.dna.imagery, extracted.dna.imagery);
       const philosophy = mergeTrait('philosophy', item.dna.philosophy, extracted.dna.philosophy);
+      const build = mergeBuild(item.build, extracted.build);
 
       // Which trait names a `--scope` correction newly excludes. `motion` is
       // filtered out on purpose: it is never touched by this command, scope
@@ -228,6 +245,9 @@ export async function reExtract(options: ReExtractOptions): Promise<ReExtractOut
           ? { ...und.philosophy, authorship: 'agent' as const }
           : null,
       );
+      // The Build never resets on a `--scope` change: it is not a TraitName,
+      // and no Scope excludes it.
+      const buildFinal = finalize(build, null);
 
       const dna: Dna = {
         palette: {
@@ -260,6 +280,7 @@ export async function reExtract(options: ReExtractOptions): Promise<ReExtractOut
         surfaceTreatmentFinal,
         imageryFinal,
         philosophyFinal,
+        buildFinal,
       ];
       const replacedCount = allFinals.filter((f) => f.fate === 'replaced').length;
       const keptCount = allFinals.filter((f) => f.fate === 'kept').length;
@@ -283,6 +304,7 @@ export async function reExtract(options: ReExtractOptions): Promise<ReExtractOut
           promptVersion: PROMPT_VERSION,
         },
         dna,
+        build: buildFinal.value,
       };
 
       const summaryParts = [`${replacedCount} replaced`, `${keptCount} kept (override)`];
