@@ -357,7 +357,7 @@ export const BUILD_JSON_SCHEMA = {
       type: 'string',
       maxLength: 600,
       description:
-        'The 2-4 techniques that matter for replicating THIS design specifically, for example "scroll-linked camera dolly, instanced meshes for the particle field, a pinned hero section". Not a generic build plan. Empty string if the stack is empty. Hard limit: 600 characters, and going over means the whole extraction is rejected. Be concise rather than exhaustive.',
+        'The 2-4 techniques that matter for replicating THIS design specifically, for example "scroll-linked camera dolly, instanced meshes for the particle field, a pinned hero section". Not a generic build plan. Empty string only if nothing here is worth saying - a non-empty stack does not require this to be non-empty, and vice versa. Hard limit: 600 characters, and going over means the whole extraction is rejected. Be concise rather than exhaustive.',
     },
   },
 };
