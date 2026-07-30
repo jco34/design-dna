@@ -22,6 +22,7 @@ import {
 import { add } from './commands/add.js';
 import { reExplore } from './commands/re-explore.js';
 import { reExtract } from './commands/re-extract.js';
+import { reBuild } from './commands/re-build.js';
 import { relabel } from './commands/relabel.js';
 import { note, type NoteMode } from './commands/note.js';
 import { migrate } from './commands/migrate.js';
@@ -46,6 +47,7 @@ COMMANDS
   add         Capture a URL or take a file, extract its DNA, write a new Item
   re-explore  Revisit a live URL and rewrite only the motion trait
   re-extract  Re-read the stored Capture of an existing Item and merge the result
+  re-build    Regenerate the Build: suggested stack and techniques, for an existing Item
   relabel     Re-ask the label question only, against the stored Capture
   note        Write, replace or clear your Note on an existing Item
   list        Report every Item in the library, for finding an id to act on
@@ -441,6 +443,28 @@ OPTIONS
                      Write nothing. Still spends an extraction.
   --force            Write even though the Item file has uncommitted changes.`;
 
+const RE_BUILD_USAGE = `dna re-build - regenerate the Build: suggested stack and techniques.
+
+USAGE
+  dna re-build <id>... [options]
+  dna re-build --all    [options]
+
+Reads library/captures/<id>.png plus the Item's already-stored DNA (imagery,
+motion, composition) and asks only for the Build: candidate tools and the
+techniques that matter for replicating this design. Never visits the network.
+Every trait, the Note, the Scope, the id and addedAt are left byte-identical;
+only build and authoredBy move.
+
+A Build you wrote by hand (authorship "written") is kept. --force replaces it.
+
+OPTIONS
+  --all         Every Item in the library.
+  --model <id>  Model for the suggestion. Default: the SDK's.
+  --dry-run     Print the new Build and what would change. Write nothing.
+                Still spends a reading.
+  --force       Replace a written Build, and write even though the file is
+                dirty.`;
+
 function parseOptionalScope(raw: string | undefined): Scope | undefined {
   if (raw === undefined) return undefined;
   if ((SCOPES as readonly string[]).includes(raw)) return raw as Scope;
@@ -455,6 +479,32 @@ async function runReExtract(parsed: Parsed, library: LibraryPaths): Promise<numb
     library,
     ids: parsed.positional,
     scope: parseOptionalScope(str(parsed, '--scope')),
+    model: str(parsed, '--model'),
+    dryRun: bool(parsed, '--dry-run'),
+    force: bool(parsed, '--force'),
+  });
+  return outcome.refused > 0 ? 1 : 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* re-build                                                            */
+/* ------------------------------------------------------------------ */
+
+async function runReBuild(parsed: Parsed, library: LibraryPaths): Promise<number> {
+  const all = bool(parsed, '--all');
+  const ids = parsed.positional;
+
+  if (ids.length === 0 && !all) {
+    throw new UsageError('re-build needs at least one Item id, or --all.');
+  }
+  if (ids.length > 0 && all) {
+    throw new UsageError('pass either Item ids or --all, not both.');
+  }
+
+  const outcome = await reBuild({
+    library,
+    ids,
+    all,
     model: str(parsed, '--model'),
     dryRun: bool(parsed, '--dry-run'),
     force: bool(parsed, '--force'),
@@ -657,6 +707,7 @@ async function main(): Promise<number> {
     if (command === 'add') console.log(ADD_USAGE);
     else if (command === 're-explore') console.log(RE_EXPLORE_USAGE);
     else if (command === 're-extract') console.log(RE_EXTRACT_USAGE);
+    else if (command === 're-build') console.log(RE_BUILD_USAGE);
     else if (command === 'relabel') console.log(RELABEL_USAGE);
     else if (command === 'note') console.log(NOTE_USAGE);
     else if (command === 'migrate') console.log(MIGRATE_USAGE);
@@ -677,6 +728,8 @@ async function main(): Promise<number> {
       return runReExplore(parsed, library);
     case 're-extract':
       return runReExtract(parsed, library);
+    case 're-build':
+      return runReBuild(parsed, library);
     case 'relabel':
       return runRelabel(parsed, library);
     case 'note':
