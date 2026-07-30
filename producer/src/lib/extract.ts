@@ -29,11 +29,12 @@
  *                               the second, redundant check at the boundary.
  */
 import { query } from '@anthropic-ai/claude-agent-sdk';
-import { ExtractedDna, GENERATION_SCHEMA, PROMPT_VERSION } from '../../../schema/index.js';
+import { ExtractedBuild, ExtractedDna, GENERATION_SCHEMA, PROMPT_VERSION } from '../../../schema/index.js';
 import type { MotionObservations } from './capture.js';
 
 export interface ExtractionResult {
   readonly dna: ExtractedDna;
+  readonly build: ExtractedBuild;
   readonly model: string | null;
   readonly costUsd: number | null;
   readonly durationMs: number;
@@ -95,6 +96,26 @@ of its parts. Say what it is for and what it trades away to get there. Test it
 before you finish: if the paragraph would still be true pasted onto a different
 design, it is not specific enough yet. Do not restate the fields above and do not
 praise.`;
+
+/**
+ * The one instruction that asks the agent to infer rather than read. Kept
+ * separate from `POSTURE` because it governs a field with a fundamentally
+ * different honesty rule: everywhere else "I cannot tell" is the failure
+ * mode to avoid guessing around; here a *plausible, well-reasoned* guess is
+ * the actual job, and the honesty rule is narrower - never invent internals
+ * that are not visible in the design itself.
+ */
+const BUILD_POSTURE = `THE BUILD: alongside the nine design traits above, suggest how you would actually
+replicate this design - the toolset and the few techniques that matter for it
+specifically, not a generic build plan.
+
+This is the one field where you are allowed to infer rather than read. Key off
+what you are seeing: a 3D or heavily animated design calls for a real 3D/motion
+stack (for example Three.js, React Three Fiber, GSAP); a plain static page calls
+for almost nothing distinctive, and an empty stack with empty techniques is the
+honest answer for it. Never invent internals you cannot see from the design
+alone - no state management, no backend, no data layer claims. Name candidate
+tools, most load-bearing first, then the 2-4 techniques specific to this design.`;
 
 /**
  * Motion is the only trait whose evidence is handed over rather than looked at,
@@ -235,6 +256,8 @@ function buildPrompt(imagePath: string, observations: MotionObservations | null)
     POSTURE,
     '',
     motionBriefing(observations),
+    '',
+    BUILD_POSTURE,
   ].join('\n');
 }
 
@@ -363,16 +386,31 @@ export async function extractDna(
     timeoutMs: options.timeoutMs,
   });
 
-  const parsed = ExtractedDna.safeParse(lowercaseHexes(result.structured));
-  if (!parsed.success) {
+  // `build` sits beside the nine trait keys in the one flat object the SDK
+  // returns, so it has to come off before the rest validates as
+  // `ExtractedDna`, which is `.strict()` with exactly nine keys.
+  const payload = result.structured as Record<string, unknown>;
+  const { build, ...dnaPayload } = payload;
+
+  const parsedDna = ExtractedDna.safeParse(lowercaseHexes(dnaPayload));
+  if (!parsedDna.success) {
     throw new ExtractionFailed(
       'the agent output does not satisfy the schema',
-      parsed.error.issues.map((i) => `${i.path.join('.') || '(root)'}: ${i.message}`),
+      parsedDna.error.issues.map((i) => `${i.path.join('.') || '(root)'}: ${i.message}`),
+    );
+  }
+
+  const parsedBuild = ExtractedBuild.safeParse(build);
+  if (!parsedBuild.success) {
+    throw new ExtractionFailed(
+      'the agent output does not satisfy the build schema',
+      parsedBuild.error.issues.map((i) => `${i.path.join('.') || '(root)'}: ${i.message}`),
     );
   }
 
   return {
-    dna: parsed.data,
+    dna: parsedDna.data,
+    build: parsedBuild.data,
     model: result.model,
     costUsd: result.costUsd,
     durationMs: result.durationMs,
@@ -444,4 +482,9 @@ export function undeterminedDna(): ExtractedDna {
     philosophy: { text: '' },
     labels: { genre: 'undetermined', style: [], mood: [] },
   });
+}
+
+/** The all-Undetermined Build `--no-extract` writes. */
+export function undeterminedBuild(): ExtractedBuild {
+  return ExtractedBuild.parse({ stack: [], techniques: '' });
 }
