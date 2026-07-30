@@ -47,8 +47,15 @@ export interface ReBuildOutcome {
   readonly costUsd: number;
 }
 
-const summarise = (b: Item['build']): string =>
-  b.stack.length === 0 ? 'undetermined' : b.stack.join(' + ');
+const summarise = (b: Item['build']): string => {
+  if (b.stack.length > 0) return b.stack.join(' + ');
+  if (b.techniques.trim() !== '') {
+    const snippet =
+      b.techniques.length > 40 ? `${b.techniques.slice(0, 40)}...` : b.techniques;
+    return `techniques only: ${snippet}`;
+  }
+  return 'undetermined';
+};
 
 /**
  * The Build's only grounding, since this command never re-reads the Capture
