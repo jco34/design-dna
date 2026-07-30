@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 2,
+  "id": "20260730T073849Z-16a28d",
+  "addedAt": "2026-07-30T07:39:59.468Z",
+  "source": {
+    "kind": "url",
+    "url": "https://cofounder.co/"
+  },
+  "capture": {
+    "file": "20260730T073849Z-16a28d.png",
+    "takenAt": "2026-07-30T07:38:32.319Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-07-30T07:39:59.468Z",
+    "promptVersion": "2.0.0-motion"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#2b9ce9",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#2e3a2c",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#ffffff",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#dcecf8",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#fdfcf7",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Geometric-leaning grotesque, double-storey a, straight-cut descenders, tall x-height, medium weight, slightly tight tracking, sentence case, leading close to 1.1",
+      "bodyFamily": "",
+      "bodyCharacter": "Same grotesque at regular weight, normal tracking, generous ~1.5 leading, measure held to roughly 45 characters so it wraps well short of the artwork",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-bleed illustrated canvas with the interface floated on top: wordmark top-left, a segmented nav cluster pinned top-right, all hero copy stacked on a single left rail in the flat sky region. The right half is left to the artwork, with status chips overlapping it.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Large uninterrupted emptiness in the upper-left sky; tight grouping inside clusters (heading to subhead, button pair, chip stack) with big gaps between those clusters. Nav items pack close together.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "rounded",
+      "borders": "hairline",
+      "elevation": "subtle",
+      "finish": "A hard-edged pixel raster backdrop with no antialiasing, overlaid by smooth dark translucent chrome — nav segments and status chips tinted so the scene reads through them — plus one opaque warm-white button",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "illustration",
+      "treatment": "16-bit pixel-art landscape as the entire hero canvas, bled to all four edges, unframed and uncropped; product state is implied by floating chips rather than screenshots",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "pervasive",
+      "triggers": [
+        "hover",
+        "scroll",
+        "page-load",
+        "ambient"
+      ],
+      "easing": "mixed",
+      "pace": "brisk",
+      "character": "Hero arrives once on load over 600ms on a near-expo curve; micro-states (colour, opacity, border) flip in 20-120ms; carets blink on steps(1) at 0.9-1s and a 2.8s shimmer loops. Buttons only shift background on hover.",
+      "choreography": "Script-driven rather than CSS-declared: hundreds of elements carry inline transform/opacity, ~79 move at a rate other than the scroll (parallax or pinning), 8 fade in and 3 scale, and reveals land at several distinct depths rather than as one batch. Header sticks and resizes.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The argument is that an AI operations product can be introduced as a place rather than a dashboard: a sunlit pixel-art park, drawn coarse enough to read as a game world, doing the job a gradient or a product screenshot normally does. Everything functional is then treated as an overlay guest — smooth translucent dark chrome, one warm-white pill, hairline-divided nav segments — so the interface never competes with the art, and the only place text can sit is the empty sky at upper left. That is the trade: half the frame is surrendered to atmosphere and the copy is confined to a single narrow rail, buying charm and memorability at the cost of hierarchy and density. Credibility is smuggled back in through motion craft rather than layout — scroll-linked parallax across dozens of elements, sequenced reveals at staggered depths, blinking carets that make the scene feel live, and a genuine reduced-motion fallback that withdraws most of it for anyone who asks.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "retro"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "playful",
+          "calm"
+        ],
+        "authorship": "agent"
+      }
+    }
+  }
+}

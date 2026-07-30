@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 2,
+  "id": "20260730T074045Z-wgrlqy",
+  "addedAt": "2026-07-30T07:41:57.447Z",
+  "source": {
+    "kind": "url",
+    "url": "https://www.ohhmydesign.com/"
+  },
+  "capture": {
+    "file": "20260730T074045Z-wgrlqy.png",
+    "takenAt": "2026-07-30T07:40:15.505Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-07-30T07:41:57.447Z",
+    "promptVersion": "2.0.0-motion"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#f6fafc",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#131b24",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#dbe8f1",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#f2551d",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Very heavy neutral grotesk logotype, near-black weight, closed apertures, negative tracking so letters almost touch; mixed case, single-storey g with an open hooked tail, flat-cut terminals",
+      "bodyFamily": "",
+      "bodyCharacter": "Only body-scale text visible is a small monospace label in the dimension badge: uppercase-height figures, wide even letterfit, no descender action, set tiny against the display mark",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "A single wordmark centred on both axes of a full-bleed graph-paper canvas, wrapped in a vector-editor selection frame with corner handles and a dimension badge tabbed below it; everything symmetrical about the centre, no nav or chrome in view.",
+      "contentWidth": "contained",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "One object in an otherwise empty viewport; the mark takes roughly a third of the width and a sixth of the height, with the remaining space left deliberately unfilled. Only tight spacing is between the frame and its badge.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "slight",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Flat matte fills, no gradient or shading. A faint blue graph-paper grid of hairlines with heavier ruling every few cells; all overlay chrome is crisp 1px vector line in a single saturated blue.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "none",
+      "treatment": "",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "prominent",
+      "triggers": [
+        "scroll",
+        "ambient",
+        "page-load"
+      ],
+      "easing": "mixed",
+      "pace": "measured",
+      "character": "Grid layers drift on 60-110s linear loops so the canvas never sits still; scroll shifts ~120 elements against the page, and discrete elements settle on 0.25-0.45s cubic-bezier(0.2,0.8,0.2,1). Hover was inert everywhere tested.",
+      "choreography": "Reveals land at several different scroll depths rather than arriving as one group, so sections come in sequence down an 18-viewport page; the ambient grid drift runs underneath all of it on its own long loop, unsynchronised with the reader. Reduced-motion is declared but not honoured.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The design stages its own logotype as an object still under the cursor: the mark sits inside a vector editor's selection rectangle, complete with corner handles and a live dimension readout, on blueprint graph paper that fills the viewport. The argument is that craft is more persuasive shown mid-construction than finished, so instead of framing the mark it borrows the chrome of the tool that made it. Everything is spent to hold that one illusion — no navigation, no copy, no call to action in frame, and a viewport that is over 90% empty. Two colours carry the whole reading: a single orange counter in the first letter as the only chromatic event, and one saturated UI blue that is reserved strictly for the measurement layer, never for content. The result is that the interface furniture is the decoration. The grid then drifts on a minute-long ambient loop and the page below moves in parallax against the scroll, which quietly contradicts the stillness of the frame — the artboard is alive even while nothing appears to be happening.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "technical",
+          "swiss"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "refined",
+          "bold"
+        ],
+        "authorship": "agent"
+      }
+    }
+  }
+}

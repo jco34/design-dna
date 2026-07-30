@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "id": "20260730T062539Z-28jc44",
+  "addedAt": "2026-07-30T06:27:12.978Z",
+  "source": {
+    "kind": "url",
+    "url": "https://www.warmnfuzzy.tv/"
+  },
+  "capture": {
+    "file": "20260730T062539Z-28jc44.png",
+    "takenAt": "2026-07-30T06:25:22.974Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-sonnet-5+claude-haiku-4-5-20251001",
+    "runAt": "2026-07-30T06:27:12.978Z",
+    "promptVersion": "2.0.0-motion"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#cda8c8",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#f4f1ea",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#ffffff",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#e6d9e5",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#34d399",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Ultra-bold condensed grotesque, all-caps, very tight tracking, set at a scale that nearly spans the viewport width",
+      "bodyFamily": "",
+      "bodyCharacter": "Small sentence-case sans nav labels, medium-bold weight, tight leading, white on image with an underlined link inline",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-bleed 3D-rendered hero image fills the viewport; a thin fixed nav overlays the top edge (logo left, links right); an oversized headline is pinned to the bottom-left over the image",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Text is confined to thin bands at the very top and bottom edges, leaving the full-bleed image to carry the entire middle of the page uninterrupted",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "slight",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Plain flat white UI chrome (nav labels, underlined links, cookie banner) laid directly over a softly blurred, glossy 3D-rendered scene",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "3d-render",
+      "treatment": "A pastel candy-coloured 3D render of a desert/theme-park set, blurred and vignetted toward the edges, with a glossy inflated 3D wordmark composited at centre",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "prominent",
+      "triggers": [
+        "page-load",
+        "scroll",
+        "click",
+        "ambient"
+      ],
+      "easing": "mixed",
+      "pace": "measured",
+      "character": "Elements translate/scale into place over 0.5s on a snappy custom ease-out curve while opacity fades separately and faster (~0.1s, linear); a grain overlay flickers continuously on a 2-step loop with no input",
+      "choreography": "Scroll-linked reveals all land at the same depth with no stagger; header and hero each run their own independent translate/scale reset keyframes; hover produces no visible change on tested elements",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The site subordinates its own identity to the client work it's showing: rather than describing the agency in text, it drops the visitor straight into the immersive glossy 3D world built for the campaign, with only a hairline nav and one oversized line of copy surviving as site chrome. That trade only works because the imagery itself is doing the persuasion — the page bets its entire first impression on the render's craft rather than on interface polish, which is consistent with hover being left inert everywhere while scroll and load motion (parallax drift, entrance translate/scale, a looping grain flicker) stay active and honour prefers-reduced-motion when asked.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "maximalist",
+          "experimental"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "playful",
+          "bold"
+        ],
+        "authorship": "agent"
+      }
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "id": "20260730T062740Z-s5wmwe",
+  "addedAt": "2026-07-30T06:29:14.686Z",
+  "source": {
+    "kind": "url",
+    "url": "https://benorth.studio/es"
+  },
+  "capture": {
+    "file": "20260730T062740Z-s5wmwe.png",
+    "takenAt": "2026-07-30T06:27:26.702Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-sonnet-5",
+    "runAt": "2026-07-30T06:29:14.686Z",
+    "promptVersion": "2.0.0-motion"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#eeece6",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#18171c",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#6c9d92",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#ef5a26",
+        "weight": "dominant",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "very large bold geometric/grotesk sans, mixed case, tight tracking, letters overlapped by other collage elements",
+      "bodyFamily": "",
+      "bodyCharacter": "small all-caps nav labels with wide letter-spacing and light weight; plain sans body copy in the cookie modal at moderate size and leading",
+      "scale": "dramatic",
+      "weightRange": "wide",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "asymmetric scrapbook collage: a giant centered wordmark anchors overlapping photos, stickers and 3D letterforms scattered at varied angles around a slim top nav",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "dense",
+      "rhythm": "no visible grid; objects are placed and rotated ad hoc like a corkboard, with only the top nav row keeping conventional alignment",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "mixed",
+      "borders": "mixed",
+      "elevation": "pronounced",
+      "finish": "glossy inflated 3D typography and crumpled-paper stickers mixed with plain matte photographs and flat cream background",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "mixed",
+      "treatment": "collaged photos (macro eye, monochrome dolmen, vintage family snapshot, coastline) mixed with glossy inflated 3D letterforms and doodle marks, each tilted independently with drop shadows",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "prominent",
+      "triggers": [
+        "page-load",
+        "scroll",
+        "hover",
+        "ambient"
+      ],
+      "easing": "mixed",
+      "pace": "measured",
+      "character": "elements enter with an ease-out spring-like lift (preBrandUp, ~0.9s), hover swaps background/border-color over ~0.25-0.5s, an infinite 36s linear marquee runs unprompted, scroll drives parallax and reveal fades",
+      "choreography": "hero artifacts pre-animate upward on load, then scroll reveals fire at several distinct depths (sequenced, not simultaneous) alongside parallax on roughly a third of tracked elements and a sticky/resizing header; motion is measurably reduced under prefers-reduced-motion",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The page stages brand identity as a physical corkboard rather than a digital layout: inflated glossy letterforms, sun-faded snapshots and a wax-seal sticker are pinned around a single oversized wordmark, trading grid discipline and clean hierarchy for the texture of a collected, tactile archive. A single orange accent and the giant black wordmark keep the clutter from reading as noise. That looseness is load-bearing rather than decorative — scroll-triggered reveals stagger in at different depths and parallax nudges roughly a third of the tracked elements, so the collage assembles itself progressively as you move down the page instead of arriving all at once, with the motion budget scaled back under reduced-motion preference.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "maximalist",
+          "retro"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "playful",
+          "bold"
+        ],
+        "authorship": "agent"
+      }
+    }
+  }
+}

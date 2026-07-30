@@ -18,10 +18,10 @@
   "notApplicable": [],
   "note": null,
   "authoredBy": {
-    "kind": "hand",
-    "model": "claude-opus-5",
-    "runAt": "2026-07-28T10:39:59.988Z",
-    "promptVersion": null
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-sonnet-5",
+    "runAt": "2026-07-30T06:16:49.298Z",
+    "promptVersion": "2.0.0-motion"
   },
   "dna": {
     "palette": {
@@ -83,12 +83,17 @@
       "authorship": "agent"
     },
     "motion": {
-      "presence": "undetermined",
-      "triggers": [],
-      "easing": "undetermined",
-      "pace": "undetermined",
-      "character": "",
-      "choreography": "",
+      "presence": "prominent",
+      "triggers": [
+        "ambient",
+        "scroll",
+        "hover",
+        "click"
+      ],
+      "easing": "mixed",
+      "pace": "brisk",
+      "character": "Blurred orbs and the iridescent hero blob seem to drift/morph continuously (7 WAAPI animations, 75 elements w/ inline transform). Nav links swap color/border on hover; body links shift via transform. Header stays sticky; tabs swap on click.",
+      "choreography": "No staggering on entrance - reveal elements and the sticky header trigger together at the same scroll depth. Roughly a third of tracked elements (96 of 317) move at a different rate than the scroll itself, reading as parallax/pinning under the fixed header and hero copy.",
       "authorship": "agent"
     },
     "philosophy": {

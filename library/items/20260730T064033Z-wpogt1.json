@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 2,
+  "id": "20260730T064033Z-wpogt1",
+  "addedAt": "2026-07-30T06:41:49.489Z",
+  "source": {
+    "kind": "url",
+    "url": "https://illoca.com/"
+  },
+  "capture": {
+    "file": "20260730T064033Z-wpogt1.png",
+    "takenAt": "2026-07-30T06:39:45.347Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-07-30T06:41:49.489Z",
+    "promptVersion": "2.0.0-motion"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#ece0c5",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#1c1c1c",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#d9c9a5",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#3b5cbe",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Wordmark set in a soft, moderately contrasted serif, lowercase only, tight fit, with a small superscript registered mark; no display headings appear in the frame.",
+      "bodyFamily": "",
+      "bodyCharacter": "Fixed-width mono for nav, button and banner: uniform advance widths, blunt terminals, wide even colour from the monospacing, one size, sentence case. Corner email is hand-drawn all-caps marker script.",
+      "scale": "tight",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-viewport canvas with corner-anchored chrome: a floating outlined nav bar centred at the top, a coordinate readout top-left, a handwritten email top-right, a cookie banner bottom-left, and a single small mark at dead centre of an otherwise empty field.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Emptiness is the layout: one centred mark in a viewport-sized void with all utility pushed to the four corners. Padding inside the bars is tight and even; distance between elements is enormous.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "sharp",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Flat cream fill printed with a fine engineering grid ruling, close-set minor lines with heavier intervals; panels and marks are solid matte fills with thin dark outlines, no gradients or shadows.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "abstract-graphic",
+      "treatment": "One geometric mark: four square tiles in blue and white holding stacked bars, a chevron, a ring and a quarter-arc, several drawn with hairline white inner strokes. Flat, unframed, centred.",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "restrained",
+      "triggers": [
+        "focus"
+      ],
+      "easing": "eased",
+      "pace": "brisk",
+      "character": "Declared crossfades on colour, background, border and fill at 200-300ms and opacity at 100-150ms, all on one cubic-bezier(0.4,0,0.2,1); a separate 500ms transform/scale/rotate channel. Keyboard focus ring appears.",
+      "choreography": "",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The page casts the browser viewport as a sheet of engineering graph paper rather than a document: cream stock, fine ruled grid, and an X/Y coordinate readout idling in the top-left corner as if a cursor were being tracked across an artboard. Everything functional is treated as an instrument set down on that sheet - a hard-outlined white nav bar, a squared-off cookie banner in the opposite corner, an email address written by hand in marker like a note on a drawing. Monospaced text throughout holds the drafting register, and the only pictorial element is the mark itself, four flat blue tiles parked at true centre with vast measured emptiness on every side; a single orange square inside the primary button is the one warm interruption. The trade is explicit: no headline, no proposition, no scrolling argument, and no hover feedback either. It spends the entire first screen on atmosphere and one sighting mark, betting the surface reads as a precision tool before a word is read. Restraint carries into behaviour - short shared easing curves, a visible focus ring, and materially reduced motion under prefers-reduced-motion.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "technical",
+          "swiss"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "calm",
+          "playful"
+        ],
+        "authorship": "agent"
+      }
+    }
+  }
+}
