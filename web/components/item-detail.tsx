@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
+  buildState,
   renderPrompt,
   traitState,
   type Item,
@@ -234,6 +235,30 @@ export function ItemDetail({ item, allItems }: { item: Item; allItems: Item[] })
               {`captured ${formatDate(item.capture.takenAt)} · ${item.capture.pixelWidth}x${item.capture.pixelHeight} · ${item.authoredBy.kind}${item.authoredBy.model ? ` · ${item.authoredBy.model}` : ""}`}
             </p>
           </div>
+
+          {buildState(item) === "present" && (
+            <div className="mt-2">
+              <p className="tag text-faint">How to build</p>
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                {item.build.stack.map((tool) => (
+                  <span
+                    key={tool}
+                    className="rounded border border-line-2 px-2 py-0.5 text-[11px] text-ink-2"
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+              {item.build.techniques && (
+                <p className="mt-1.5 text-[13px] leading-relaxed text-ink-2">
+                  {item.build.techniques}
+                </p>
+              )}
+              <p className="mt-1.5 text-[11px] text-faint">
+                Suggested — inferred from the DNA, not read from the capture.
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
