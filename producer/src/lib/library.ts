@@ -79,6 +79,7 @@ export function canonicalise(item: Item): Item {
       philosophy: item.dna.philosophy,
       labels: item.dna.labels,
     },
+    build: item.build,
   };
 }
 

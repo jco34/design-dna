@@ -83,7 +83,7 @@ const text = (max: number) => z.string().max(max);
  * number the validator enforces, rather than each carrying its own copy. Bumping
  * this is half of a schema change; the other half is a script in `migrations/`.
  */
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
 /** An ISO-8601 instant, e.g. `2026-07-26T14:03:11.000Z`. */
 export const Instant = z
@@ -261,6 +261,50 @@ export const ExtractedDna = z
 export type ExtractedDna = z.infer<typeof ExtractedDna>;
 
 /* ------------------------------------------------------------------ */
+/* The Build, new at schemaVersion 3                                   */
+/* ------------------------------------------------------------------ */
+
+/*
+ * The Build is not a Trait and is deliberately outside `Dna`. Every trait
+ * above is design content read off the Capture; the Build is the agent's
+ * suggestion for how to replicate the design, and it is labelled as a
+ * suggestion everywhere it appears - never as a trait, never in the Prompt
+ * (`schema/prompt.ts` reads only `item.dna` and stays that way). CONTEXT.md
+ * carries the same distinction in its own words.
+ */
+
+/** How many candidate tools one Build may name. Past this it is a list, not a suggestion. */
+export const MAX_BUILD_STACK = 12;
+
+export const ExtractedBuild = z
+  .object({
+    /** Candidate tools, most load-bearing first. Freeform: the tooling universe is open-ended and a closed list would go stale. */
+    stack: z.array(z.string().min(1).max(40)).max(MAX_BUILD_STACK),
+    /** The 2-4 techniques that matter for replicating THIS design. Empty means nothing distinctive is called for. */
+    techniques: text(600),
+  })
+  .strict();
+export type ExtractedBuild = z.infer<typeof ExtractedBuild>;
+
+/**
+ * 'suggested' - the agent proposed it, keyed off the DNA. Replaceable by a
+ *               later `dna re-build`, same as an `agent` trait is replaceable
+ *               by `re-extract`.
+ * 'written'   - you wrote it. Kept verbatim by `re-build` unless `--force`.
+ *
+ * Deliberately not `Authorship`'s `agent` / `override` vocabulary: a Build is
+ * a suggestion, never a reading, and 006's merge rule for a Trait ("an
+ * override is authoritative regardless of how it was arrived at") does not
+ * apply to something that was never a fact about the design in the first
+ * place.
+ */
+export const BuildAuthorship = z.enum(['suggested', 'written']);
+export type BuildAuthorship = z.infer<typeof BuildAuthorship>;
+
+export const Build = ExtractedBuild.extend({ authorship: BuildAuthorship }).strict();
+export type Build = z.infer<typeof Build>;
+
+/* ------------------------------------------------------------------ */
 /* Traits, as they are stored                                          */
 /* ------------------------------------------------------------------ */
 
@@ -395,6 +439,7 @@ export const Item = z
      * old file it belongs here, otherwise it belongs there.
      *
      * 2 adds the `motion` trait. Migration: `migrations/002-add-motion.ts`.
+     * 3 adds `build`. Migration: `migrations/003-add-build.ts`.
      */
     schemaVersion: z.literal(SCHEMA_VERSION),
     /** Opaque, assigned at save time. Nothing about the source contributes. */
@@ -416,6 +461,7 @@ export const Item = z
     note: z.string().max(4000).nullable(),
     authoredBy: AuthoredBy,
     dna: Dna,
+    build: Build,
   })
   .strict()
   .superRefine((item, ctx) => {
@@ -485,6 +531,18 @@ export function traitState(item: Item, trait: TraitName): TraitState {
 }
 
 /**
+ * Whether an Item has a Build worth showing. Same convention as `traitState`:
+ * an empty stack and empty techniques together mean nothing was suggested,
+ * whether because the migration placeholder never ran through `re-build` yet
+ * or because the agent genuinely found nothing distinctive to say.
+ */
+export function buildState(item: Item): 'present' | 'undetermined' {
+  return item.build.stack.length === 0 && item.build.techniques.trim() === ''
+    ? 'undetermined'
+    : 'present';
+}
+
+/**
  * True when 007 must hedge a value rather than assert it: the agent eyeballed
  * it, so "around #ff6b35" is honest and "#ff6b35" is not.
  */
@@ -514,6 +572,11 @@ export function stampAuthorship(extracted: ExtractedDna): Dna {
     philosophy: { ...extracted.philosophy, authorship: 'agent' },
     labels: stampLabelAuthorship(extracted.labels),
   };
+}
+
+/** Lift an agent-suggested Build into the stored shape. Mirrors `stampAuthorship`. */
+export function stampBuildAuthorship(extracted: ExtractedBuild): Build {
+  return { ...extracted, authorship: 'suggested' };
 }
 
 /** The vocabulary version a freshly written Item is stamped with. */
