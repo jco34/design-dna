@@ -18,6 +18,7 @@ USAGE
 COMMANDS
   add         Capture a URL or take a file, extract its DNA, write a new Item
   re-extract  Re-read the stored Capture of an existing Item and merge the result
+  re-build    Regenerate the Build: suggested stack and techniques
   relabel     Re-ask the label question only, against the stored Capture
   note        Write, replace or clear your Note on an existing Item
   validate    Validate one record, several, or the whole library, against the schema
@@ -185,6 +186,39 @@ WHAT IT PRINTS
     ok  20260726T210311Z-k3m9qa  5 traits replaced, 2 kept (override)  27.1s  $0.074
         palette.accent kept: #5e6ad2 (override)
         typography kept (override)
+
+================================================================================
+$ dna re-build --help
+================================================================================
+
+dna re-build - regenerate the Build: suggested stack and techniques.
+
+USAGE
+  dna re-build <id>... [options]
+  dna re-build --all    [options]
+
+Reads library/captures/<id>.png plus the Item's already-stored DNA (imagery,
+motion, composition) and asks only for the Build: candidate tools and the
+techniques that matter for replicating this design. Never visits the network.
+Every trait, the Note, the Scope, the id and addedAt are left byte-identical;
+only build and authoredBy move.
+
+A Build you wrote by hand (authorship "written") is kept. --force replaces it.
+
+OPTIONS
+  --all         Every Item in the library.
+  --model <id>  Model for the suggestion. Default: the SDK's.
+  --dry-run     Print the new Build and what would change. Write nothing.
+                Still spends a reading.
+  --force       Replace a written Build, and write even though the file is
+                dirty.
+
+WHAT IT PRINTS
+    $ dna re-build 20260728T093015Z-h8n2wr
+    ok    20260728T093015Z-h8n2wr  $0.004
+          was: react, tailwind, framer-motion
+          now: react, tailwind, gsap (scroll pin)
+    1 rebuilt, 4.2s, $0.004
 
 ================================================================================
 $ dna relabel --help

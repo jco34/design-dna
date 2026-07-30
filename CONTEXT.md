@@ -116,3 +116,12 @@ _Avoid_: Blend, Combination, Board, Cart
 **Prompt**:
 The text an item or a mix puts on the clipboard. A design brief, never code.
 _Avoid_: Export, Output, Snippet
+
+### The replication
+
+**Build**:
+The agent's *suggested* toolset and techniques for replicating an Item —
+candidate libraries and the few methods that matter for this specific
+design. A suggestion drawn from the DNA, never a fact read off the capture,
+and never part of the Prompt. An Item has one.
+_Avoid_: Stack, Recipe, Implementation, Blueprint
