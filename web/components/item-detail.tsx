@@ -239,16 +239,18 @@ export function ItemDetail({ item, allItems }: { item: Item; allItems: Item[] })
           {buildState(item) === "present" && (
             <div className="mt-2">
               <p className="tag text-faint">How to build</p>
-              <div className="mt-1.5 flex flex-wrap gap-1.5">
-                {item.build.stack.map((tool) => (
-                  <span
-                    key={tool}
-                    className="rounded border border-line-2 px-2 py-0.5 text-[11px] text-ink-2"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
+              {item.build.stack.length > 0 && (
+                <div className="mt-1.5 flex flex-wrap gap-1.5">
+                  {item.build.stack.map((tool) => (
+                    <span
+                      key={tool}
+                      className="rounded border border-line-2 px-2 py-0.5 text-[11px] text-ink-2"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              )}
               {item.build.techniques && (
                 <p className="mt-1.5 text-[13px] leading-relaxed text-ink-2">
                   {item.build.techniques}
