@@ -11,14 +11,13 @@
  * `re-extract` already has its own cost and its own "no --all" rule for a
  * different reason (it re-rolls hexes you may have overridden).
  *
- * Every trait, the Note, the Scope, the id and addedAt are left
- * byte-identical; only `build` and `authoredBy` move. A Build you wrote by
- * hand (`authorship: 'written'`) is kept unless `--force`.
+ * Every trait, the Note, the Scope, the id, addedAt and authoredBy are left
+ * byte-identical; only `build` moves. A Build you wrote by hand
+ * (`authorship: 'written'`) is kept unless `--force`.
  */
 import {
   BUILD_ONLY_SCHEMA,
   ExtractedBuild,
-  PROMPT_VERSION,
   type Item,
 } from '../../../schema/index.js';
 import { runAgent, ExtractionFailed } from '../lib/extract.js';
@@ -173,15 +172,9 @@ export async function reBuild(options: ReBuildOptions): Promise<ReBuildOutcome> 
       const before = summarise(item.build);
       const next: Item = {
         ...item,
-        // Only `authoredBy` and `build` move. Every other trait, the Capture,
-        // the Note, the Scope, the id and `addedAt` are carried through
-        // untouched.
-        authoredBy: {
-          kind: 'cli',
-          model: fresh.model,
-          runAt: new Date().toISOString(),
-          promptVersion: PROMPT_VERSION,
-        },
+        // Only `build` moves. Every other field, including `authoredBy` -
+        // this command changes nothing about how the DNA itself was produced
+        // - is carried through untouched.
         build: { ...fresh.build, authorship: 'suggested' },
       };
       const after = summarise(next.build);
