@@ -20,6 +20,7 @@ import {
   CURRENT_TAXONOMY_VERSION,
   notApplicableFor,
   stampAuthorship,
+  stampBuildAuthorship,
   type Scope,
 } from '../../../schema/index.js';
 import {
@@ -29,7 +30,7 @@ import {
   CaptureRefused,
   type MotionObservations,
 } from '../lib/capture.js';
-import { extractDna, undeterminedDna, ExtractionFailed } from '../lib/extract.js';
+import { extractDna, undeterminedDna, undeterminedBuild, ExtractionFailed } from '../lib/extract.js';
 import { readClipboardImage } from '../lib/clipboard.js';
 import { newId } from '../lib/id.js';
 import { isAcceptedImage, readPngSize } from '../lib/png.js';
@@ -351,7 +352,14 @@ export async function add(options: AddOptions): Promise<AddOutcome> {
 
       const id = newId();
       const extracted = options.noExtract
-        ? { dna: undeterminedDna(), model: null, costUsd: null, durationMs: 0, promptVersion: null }
+        ? {
+            dna: undeterminedDna(),
+            build: undeterminedBuild(),
+            model: null,
+            costUsd: null,
+            durationMs: 0,
+            promptVersion: null,
+          }
         : await extractDna(prepared.pngPath, {
             model: options.model,
             observations: prepared.observations,
@@ -385,6 +393,7 @@ export async function add(options: AddOptions): Promise<AddOutcome> {
           promptVersion: extracted.promptVersion,
         },
         dna: stampAuthorship(extracted.dna),
+        build: stampBuildAuthorship(extracted.build),
       });
 
       if (options.dryRun) {
