@@ -120,8 +120,8 @@ _Avoid_: Export, Output, Snippet
 ### The replication
 
 **Build**:
-The agent's *suggested* toolset and techniques for replicating an Item —
+The agent's *suggested* toolset and techniques for replicating an item, the
 candidate libraries and the few methods that matter for this specific
 design. A suggestion drawn from the DNA, never a fact read off the capture,
-and never part of the Prompt. An Item has one.
+and never part of the Prompt. An item has one.
 _Avoid_: Stack, Recipe, Implementation, Blueprint
