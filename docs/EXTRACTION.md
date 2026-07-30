@@ -310,7 +310,34 @@ design that "uses a modern aesthetic with clean lines" is filler.
 
 ---
 
-## 5. Labels
+## 5. The Build
+
+New alongside the nine traits, and different in kind from all of them: every
+trait above is read off the evidence; the Build is your suggestion, and it is
+labelled as one everywhere it appears - never as a trait, never in the Prompt.
+
+`stack`: candidate tools and libraries, most load-bearing first, for example
+`["Three.js", "React Three Fiber", "GSAP"]`. Freeform, not a closed
+vocabulary: the tooling universe changes constantly and a fixed list would go
+stale.
+
+`techniques`: prose, the 2-4 methods that actually matter for replicating
+this design specifically - "scroll-linked camera dolly, instanced meshes for
+the particle field, a pinned hero section" - not a generic build plan.
+
+Key off `imagery`, `motion` and `composition`. A still, typographic, static
+page calls for almost nothing distinctive, and an empty stack with empty
+`techniques` is the honest answer for it: **Undetermined is a correct answer
+here too.** A 3D or heavily animated design is where the Build earns its
+keep.
+
+**Never invent internals you cannot see.** No state-management, backend or
+data layer claims - a screenshot cannot show you Redux. Suggest from the
+visible design language only.
+
+---
+
+## 6. Labels
 
 Three axes, all closed vocabularies. A label describes an Item so it can be
 found; it is never mixed into a prompt and never contributes design content.
@@ -331,7 +358,7 @@ ordinary. Never stretch a member to fit, and never invent a value.
 
 ---
 
-## 6. Honesty rules
+## 7. Honesty rules
 
 These are the ones that make the library worth having, and every one of them is
 easier to break than to follow.
@@ -362,9 +389,15 @@ an Item file with uncommitted changes.
 **Specificity beats coverage.** A trait left Undetermined costs one field. A
 plausible-sounding fabrication costs the credibility of every field beside it.
 
+**The Build is a suggestion, not a reading.** Everywhere else Undetermined
+means "I looked and could not tell"; for the Build it can also mean "nothing
+about this design calls for anything distinctive", and that is still the
+honest answer. What it must never mean is a guess at internals the design
+cannot show you.
+
 ---
 
-## 7. What this doctrine is worth checking against
+## 8. What this doctrine is worth checking against
 
 After any hand-written or migrated Item:
 
