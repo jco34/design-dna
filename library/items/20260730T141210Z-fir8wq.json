@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 3,
+  "id": "20260730T141210Z-fir8wq",
+  "addedAt": "2026-07-30T14:13:35.789Z",
+  "source": {
+    "kind": "url",
+    "url": "https://zig.ai/"
+  },
+  "capture": {
+    "file": "20260730T141210Z-fir8wq.png",
+    "takenAt": "2026-07-30T14:11:48.517Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-07-30T14:13:35.789Z",
+    "promptVersion": "3.0.0-build"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#edf3f0",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#111619",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#6e7a78",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#d43a1c",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Neo-grotesk at display size, near-vertical terminals, double-storey a, single-storey g, horizontal e bar, tight negative tracking, leading close to 1.0, sentence case, medium weight",
+      "bodyFamily": "",
+      "bodyCharacter": "Same grotesk at regular weight, near-neutral tracking, leading around 1.5, measure held to roughly 55 characters; card labels set noticeably smaller and semibold",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-bleed asymmetric hero: flush-left text rail occupying the left half, a vertically staggered stack of floating cards on the right that overruns the right edge, and a hairline node graph bleeding off all four sides behind both.",
+      "contentWidth": "wide",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Large deliberate voids around the headline and between stacked cards; tight within groups (eyebrow to heading, icon to label), with a consistent step scale between heading, body and button row",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "rounded",
+      "borders": "hairline",
+      "elevation": "pronounced",
+      "finish": "Matte flat fills throughout; white cards lift on large soft diffuse shadows, pastel tinted icon squares inside them, and a faint grey hairline node-graph drawn across the mint field behind everything",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "abstract-graphic",
+      "treatment": "Vector-drawn faux-interface cards (timestamp, icon tile, label, green tick) floating at staggered depths and cropped by the right edge, connected by a thin grey node graph that bleeds off-canvas; no photography anywhere",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "prominent",
+      "triggers": [
+        "scroll",
+        "hover",
+        "click"
+      ],
+      "easing": "eased",
+      "pace": "measured",
+      "character": "Script-driven scroll transforms on 212 elements over a 17.4-viewport page, 16 fade-in reveals, one scale change; cards lift on hover via transform 0.5s cubic-bezier(.215,.61,.355,1); buttons swap background and border over 0.4s",
+      "choreography": "Reveals land at several different scroll depths rather than as one group, so sections are sequenced down the page; Lenis smooths the scroll that drives them, a sticky header resizes throughout, and tab panels open on a 0.3s max-height and opacity ease-out",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The page argues that the product's work is trustworthy by showing its output as calm, already-finished evidence: timestamped cards, each closed with a green tick, drifting at staggered depths over a pale mint field and wired together by a hairline graph that runs off every edge, implying a system larger than the frame. Almost nothing is urgent — the type is a quiet grotesk, the palette is one desaturated tint plus white — which is exactly what buys the single saturated red button its force; the brand green is spent on the second half of the headline and on the ticks, so completion and identity read as the same colour. The cost is that the composition is inert as a still: with 212 elements on scroll-linked transforms and reveals sequenced down a 17-viewport page, the depth and the sense of a live feed exist only in motion, and the same motion is declared under prefers-reduced-motion.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "calm",
+          "refined"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "React",
+      "Next.js",
+      "GSAP",
+      "GSAP ScrollTrigger",
+      "Lenis",
+      "Tailwind CSS",
+      "SVG"
+    ],
+    "techniques": "Lenis smooth scroll feeding ScrollTrigger, which drives per-card parallax at differing rates to fake depth in the hero cluster; staggered fade-and-rise reveals timed to several distinct scroll depths rather than one batch; inline SVG node graph as a fixed full-bleed background layer behind the cards; sticky resizing header; hover lift on cards via transform with a cubic-bezier(.215,.61,.355,1) ease-out.",
+    "authorship": "suggested"
+  }
+}

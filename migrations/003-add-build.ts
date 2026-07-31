@@ -11,7 +11,7 @@
  * fabrication written by a script. `authorship: 'suggested'` rather than
  * `'written'` for the same load-bearing reason `002` chose `agent` over
  * `override` for motion - it has to stay replaceable. `dna re-build --all`
- * is what actually fills this in; see `docs/EXTRACTION.md` section 5.
+ * is what actually fills this in; see `docs/EXTRACTION.md` section 6.
  */
 
 export const from = 2;

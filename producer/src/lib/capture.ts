@@ -291,13 +291,168 @@ export function refuseBeforeNavigation(target: string): string | null {
   return null;
 }
 
+/* ------------------------------------------------------------------ */
+/* Canvas/WebGL handover (docs/EXTRACTION.md Protocol C)               */
+/* ------------------------------------------------------------------ */
+
+/**
+ * A canvas covering roughly this much of the viewport, or positioned to fill
+ * it outright, is treated as the design rather than a decoration on top of one.
+ */
+const CANVAS_DOMINANT_COVERAGE = 0.6;
+
+/**
+ * A structural read of the page, never `null`: a page with no `<canvas>` at
+ * all is a completely ordinary result, not a missing one.
+ *
+ * Fingerprints of a real WebGL/3D-experience stack, read the same way
+ * `detectScriptedMotion` reads animation libraries: known globals, a known
+ * custom element, a canvas class/id, and script filenames. No
+ * `canvas.getContext()` probing here - calling `getContext('webgl')` on a
+ * canvas the page has not yet initialised would create that context
+ * ourselves and could lock out the context type the page's own script goes
+ * on to request, so this reads fingerprints only.
+ *
+ * Bundled apps routinely defeat the script-filename and global checks - the
+ * real Lacoste polo-atelier page ships its whole app as one hash-named
+ * bundle (`app.CVtcvtz339bbc020.js`) and never assigns `window.THREE` - so
+ * the canvas's own class or id is frequently the only signal that actually
+ * fires. That is fine: it is checked unconditionally, whether or not a
+ * canvas exists yet, so a caller can tell "no canvas, and nothing about this
+ * page suggests one is coming" apart from "no canvas yet, but something is
+ * still loading".
+ */
+async function canvasExperienceFingerprint(page: Page): Promise<{
+  readonly canvasPresent: boolean;
+  readonly dominant: boolean;
+  readonly fingerprint: boolean;
+}> {
+  return page.evaluate((threshold) => {
+    const canvases = Array.from(document.querySelectorAll('canvas'));
+
+    const w = window as unknown as Record<string, unknown>;
+    let fingerprint =
+      w.THREE !== undefined ||
+      w.BABYLON !== undefined ||
+      w.PIXI !== undefined ||
+      w.Spline !== undefined ||
+      document.querySelector('spline-viewer') !== null;
+
+    if (!fingerprint) {
+      for (const script of Array.from(document.scripts)) {
+        const name = (script.src.split('/').pop() ?? '').toLowerCase();
+        if (/three|babylon|playcanvas|pixi|spline|webgl/.test(name)) {
+          fingerprint = true;
+          break;
+        }
+      }
+    }
+
+    if (canvases.length === 0) {
+      return { canvasPresent: false, dominant: false, fingerprint };
+    }
+
+    const viewportArea = window.innerWidth * window.innerHeight;
+    let bestCoverage = 0;
+    let anyFullscreen = false;
+    for (const el of canvases) {
+      const r = el.getBoundingClientRect();
+      const style = getComputedStyle(el);
+      const visibleWidth = Math.max(0, Math.min(r.right, window.innerWidth) - Math.max(r.left, 0));
+      const visibleHeight = Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0));
+      const coverage = (visibleWidth * visibleHeight) / viewportArea;
+      bestCoverage = Math.max(bestCoverage, coverage);
+      const fullscreenPositioned =
+        (style.position === 'fixed' || style.position === 'absolute') &&
+        r.width >= window.innerWidth * 0.9 &&
+        r.height >= window.innerHeight * 0.9;
+      if (fullscreenPositioned) anyFullscreen = true;
+      if (/webgl|three|canvas-(scene|stage|experience)|gl-canvas/i.test(el.className + ' ' + el.id)) {
+        fingerprint = true;
+      }
+    }
+
+    return {
+      canvasPresent: true,
+      dominant: bestCoverage >= threshold || anyFullscreen,
+      fingerprint,
+    };
+  }, CANVAS_DOMINANT_COVERAGE);
+}
+
+const CANVAS_HANDOVER_MESSAGE =
+  'this is an interactive WebGL/canvas experience - its design lives in motion you can ' +
+  'only see by driving it, not in a static frame. Open it in a session and hand-write the ' +
+  'Item, following docs/EXTRACTION.md Protocol C. Pass --anyway to capture it as an ordinary ' +
+  'page regardless.';
+
+const isCanvasExperience = (found: {
+  readonly canvasPresent: boolean;
+  readonly dominant: boolean;
+  readonly fingerprint: boolean;
+}): boolean => found.canvasPresent && found.dominant && found.fingerprint;
+
+/**
+ * How long a single-viewport page gets to grow an actual `<canvas>` element
+ * at all, before this pipeline concludes there is not one coming.
+ *
+ * Deliberately shorter than `CANVAS_READY_CEILING_MS`, but not a token
+ * amount: measured against the real Lacoste page, the canvas took 5.2
+ * seconds to appear in the DOM at all after `load` fired, so anything close
+ * to that number is one slow run away from missing it again. This has real
+ * margin above the measurement rather than exactly matching it.
+ */
+const CANVAS_APPEAR_GRACE_MS = 10_000;
+
+/**
+ * How long a canvas that has been seen at all gets to become the design
+ * before this pipeline decides.
+ *
+ * Not a guess: the real Lacoste polo-atelier page was captured mid-loader in
+ * one run of this exact pipeline and fully rendered in the very next -
+ * `load` fired 27 seconds into navigation, and the canvas did not exist in
+ * the DOM at all for another 5 seconds after that. `load` only promises the
+ * document and its synchronous resources are done; an SPA's own DOM
+ * population, and a WebGL scene's asset pipeline behind it, run on their own
+ * clock afterward. `settle()` cannot substitute for this wait:
+ * `waitForStableHeight` watches `scrollHeight` and `waitForAboveFoldImages`
+ * watches `<img>` elements, and a `position: fixed` canvas moves neither, so
+ * a canvas-only page can sail through settle() in under a second having
+ * proven nothing about whether the canvas is actually ready.
+ */
+const CANVAS_READY_CEILING_MS = 20_000;
+
 /**
  * 003 found `linear.app/no-such-page-xyz` returning HTTP 200 with a login screen
  * and dribbble returning 202, so a status check alone creates Items whose Capture
- * is a sign-in form. These three heuristics are what it takes.
+ * is a sign-in form. These three heuristics are what it takes, plus a fourth
+ * that is a handover rather than a refusal.
+ *
+ * The extra waiting below is gated on `scrollHeight` fitting in one viewport,
+ * not on text length. The obvious gate would have been "the page still looks
+ * empty", and it is wrong for exactly the site this exists for: the Lacoste
+ * atelier's loading and prize-draw overlay reads as 5000+ characters of real
+ * text well before its canvas ever appears in the DOM, so a text-length gate
+ * would already have moved on and captured that overlay as an ordinary page.
+ * What stays true through every state of a canvas "app shell" - loader,
+ * gate, the experience itself - is that it never scrolls, because the canvas
+ * fills the viewport and everything else overlays it. An ordinary page
+ * essentially never matches that by accident, so this costs nothing for the
+ * common case.
  */
-async function refuseAfterNavigation(page: Page, status: number): Promise<string | null> {
+async function refuseAfterNavigation(
+  page: Page,
+  status: number,
+  options: { readonly skipCanvasCheck?: boolean } = {},
+): Promise<string | null> {
   if (status >= 400) return `HTTP ${status}`;
+
+  // Cheap fast path: a page that is already, obviously a canvas experience by
+  // the time this runs needs no extra wait at all.
+  if (options.skipCanvasCheck !== true) {
+    const found = await canvasExperienceFingerprint(page);
+    if (isCanvasExperience(found)) return CANVAS_HANDOVER_MESSAGE;
+  }
 
   const passwordVisible = await page
     .locator('input[type="password"]:visible')
@@ -305,10 +460,46 @@ async function refuseAfterNavigation(page: Page, status: number): Promise<string
     .catch(() => 0);
   if (passwordVisible > 0) return 'a visible password field: this is a login screen';
 
-  const thin = await page.evaluate(() => ({
-    text: (document.body.innerText ?? '').trim().length,
-    oneViewport: document.documentElement.scrollHeight <= window.innerHeight + 40,
-  }));
+  const readThin = () =>
+    page.evaluate(() => ({
+      text: (document.body.innerText ?? '').trim().length,
+      oneViewport: document.documentElement.scrollHeight <= window.innerHeight + 40,
+    }));
+
+  let thin = await readThin();
+
+  if (options.skipCanvasCheck !== true && thin.oneViewport) {
+    let sawCanvas = false;
+    const appearDeadline = Date.now() + CANVAS_APPEAR_GRACE_MS;
+    while (!sawCanvas && Date.now() < appearDeadline) {
+      await page.waitForTimeout(500);
+      const found = await canvasExperienceFingerprint(page);
+      if (found.canvasPresent) sawCanvas = true;
+      if (isCanvasExperience(found)) return CANVAS_HANDOVER_MESSAGE;
+    }
+
+    if (sawCanvas) {
+      // A canvas genuinely exists. Worth the much longer wait for it to
+      // resolve into the actual design.
+      const readyDeadline = Date.now() + CANVAS_READY_CEILING_MS;
+      while (Date.now() < readyDeadline) {
+        const found = await canvasExperienceFingerprint(page);
+        if (isCanvasExperience(found)) return CANVAS_HANDOVER_MESSAGE;
+        await page.waitForTimeout(500);
+      }
+      // Never resolved into a dominant, fingerprinted canvas. Handed over
+      // anyway rather than falling through to the thin-text refusal below:
+      // the far more likely explanation is a loader or gate this read-only
+      // pass cannot get past (docs/EXTRACTION.md Protocol C section C.2's
+      // hard boundary), not a mislabelled decorative canvas - a genuinely
+      // small decorative effect rarely sits in a page that stays completely
+      // empty around it for twenty seconds.
+      return CANVAS_HANDOVER_MESSAGE;
+    }
+
+    thin = await readThin();
+  }
+
   if (thin.text < 300 && thin.oneViewport) {
     return `only ${thin.text} characters of text in a single viewport: nothing was rendered`;
   }
@@ -803,6 +994,12 @@ export interface CaptureUrlOptions {
   readonly waitBeforeCapture?: number;
   /** Off for `--no-explore`, which skips the second and third page loads. */
   readonly explore?: boolean;
+  /**
+   * Skip the canvas/WebGL handover and capture the page as an ordinary one
+   * regardless. For a page the fingerprint gets wrong, not a way to force a
+   * genuine 3D experience through the DOM-only pipeline.
+   */
+  readonly anyway?: boolean;
 }
 
 export interface CaptureUrlResult extends CaptureResult {
@@ -840,7 +1037,9 @@ export async function captureUrl(
       const response = await page.goto(url, { waitUntil: 'load', timeout: NAVIGATION_MS });
       const status = response?.status() ?? 0;
 
-      const refusal = await refuseAfterNavigation(page, status);
+      const refusal = await refuseAfterNavigation(page, status, {
+        skipCanvasCheck: options.anyway === true,
+      });
       if (refusal !== null) throw new CaptureRefused(refusal);
 
       warnings = await settle(page);

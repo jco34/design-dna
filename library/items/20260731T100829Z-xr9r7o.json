@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 3,
+  "id": "20260731T100829Z-xr9r7o",
+  "addedAt": "2026-07-31T10:09:26.048Z",
+  "source": {
+    "kind": "url",
+    "url": "https://www.metriccivil.ca/"
+  },
+  "capture": {
+    "file": "20260731T100829Z-xr9r7o.png",
+    "takenAt": "2026-07-31T10:07:15.612Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-07-31T10:09:26.048Z",
+    "promptVersion": "3.1.0-drag-trigger"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#fdf5e5",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "",
+        "weight": "undetermined",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "",
+        "weight": "undetermined",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "",
+        "weight": "undetermined",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "",
+        "weight": "undetermined",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "",
+      "bodyFamily": "",
+      "bodyCharacter": "",
+      "scale": "undetermined",
+      "weightRange": "undetermined",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "A single large photographic plate occupying almost the whole frame, bled off the top and left, with a narrow warm margin held at the right and a wider one at the bottom. No text, chrome or columns in view.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "undetermined",
+      "rhythm": "The only spacing readable is the asymmetric cream margin kept at right and bottom while top and left bleed off; too little content is visible to judge a step scale.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "sharp",
+      "borders": "none",
+      "elevation": "flat",
+      "finish": "Warm matte cream field, completely untextured, with the photograph laid straight onto it as a hard square-cut plate: no frame, rule, radius or shadow at the join. The image's own grain and low winter light supply the only texture.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "photography",
+      "treatment": "One aerial documentary photograph, warm low-sun grade with deep shadows, bled off the top and left edges, square-cut with no border, mask or overlay; its earth tones sit close to the cream page colour.",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "prominent",
+      "triggers": [
+        "scroll",
+        "ambient"
+      ],
+      "easing": "mixed",
+      "pace": "measured",
+      "character": "Script-driven scroll motion dominates: 352 elements travel at rates other than the scroll itself (parallax/pinning), 26 fade up from invisible, 3 scale. Two linear infinite marquees (70s and 35s) run with no input. Hover is inert.",
+      "choreography": "Reveals fire at several different scroll depths rather than one group, so sections arrive in sequence as they are reached; a sticky/resizing header persists throughout, and the marquee and testimonial tracks loop continuously and independently underneath the scroll-triggered reveals.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "This frame spends its entire budget on one photograph and one colour. A warm cream field is the whole visual system, and the aerial site photo is dropped onto it as a hard-edged plate that bleeds off the top and left but stops short of the right and bottom, so the image reads as placed rather than as the page itself and the cream stays a deliberate material instead of leftover margin. The image is graded to sit near the paper tone, which keeps the seam quiet and lets the dark cut of the shadow carry the contrast rather than any rule, frame or shadow. Nothing is layered, rounded or lifted; the only hierarchy is picture against paper. What it trades away is any typographic or interface voice in this view - it has no fallback if the photograph is weak. The compensating craft lives in behaviour instead: scroll is smoothed and almost everything on the long page is moved by script at rates other than the scroll itself, while pointer hover deliberately returns nothing, so the page feels like footage being pulled past rather than a surface being poked at.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "serious"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "GSAP",
+      "GSAP ScrollTrigger",
+      "Lenis",
+      "Swiper"
+    ],
+    "techniques": "Lenis-smoothed scroll driving ScrollTrigger: the full-bleed photo scrubs at a slower rate than the page for parallax inside a fixed-ratio overflow-hidden wrapper, with staggered fade-and-rise reveals batched per section rather than one global group. A CSS-transform marquee looping on a long linear duration, a Swiper testimonial track on continuous autoplay, and a sticky header that resizes on scroll direction. Hover states intentionally left inert.",
+    "authorship": "suggested"
+  }
+}

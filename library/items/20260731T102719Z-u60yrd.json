@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 3,
+  "id": "20260731T102719Z-u60yrd",
+  "addedAt": "2026-07-31T10:28:30.009Z",
+  "source": {
+    "kind": "url",
+    "url": "https://tabasco.abdurrahimali.com/"
+  },
+  "capture": {
+    "file": "20260731T102719Z-u60yrd.png",
+    "takenAt": "2026-07-31T10:26:44.471Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-opus-5+claude-haiku-4-5-20251001",
+    "runAt": "2026-07-31T10:28:30.009Z",
+    "promptVersion": "3.1.0-drag-trigger"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#0d0909",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#2b1413",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#f2ece9",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#a1908d",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#a3352c",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Very heavy grotesque, all-caps at display size, wide slab-like stems, flat terminals, tight enclosed counters, near-zero tracking; set tone-on-tone at a few percent opacity",
+      "bodyFamily": "",
+      "bodyCharacter": "Small neutral sans in caps for the label, wide tracking (~0.15em), light-to-regular weight; the percentage is untracked lining figures, slightly brighter",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Single centred stack on a full-bleed dark canvas: a hairline meter with label left and percentage right, sitting over an outsized wordmark that spans nearly the full width behind it",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "One small object floating in a very large empty field; the only tight relationship is label-to-rule, everything else is deliberate void",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "undetermined",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Matte near-black with a broad off-centre radial maroon glow and heavy vignette; faint grain in the falloff, no panels or gloss",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "none",
+      "treatment": "",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "prominent",
+      "triggers": [
+        "page-load",
+        "scroll"
+      ],
+      "easing": "eased",
+      "pace": "measured",
+      "character": "A hairline rule fills left-to-right against a counter running to 100% as the entry state; state changes elsewhere run 300ms on a decelerating ease-out curve (cubic-bezier(0,0,0.2,1)). Hover tested inert.",
+      "choreography": "Scroll is smoothed (Lenis) and 12 of 15 tracked elements move at rates other than the scroll itself, so most of the page rides scroll-linked transforms/parallax. The single reveal landed with no offset, so no staggering was observed.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "This is a threshold screen that spends its whole budget on withholding. The brand is present at full width but held at a few percent opacity, so it reads as a shape in the dark rather than a logo — you sense the mark before you are allowed to see it, and the only fully lit elements on the entire canvas are a one-pixel rule and a two-digit counter. Everything is staged by light rather than layout: an off-centre maroon glow and a hard vignette do the work a grid or a card would normally do, pushing the eye to the single bright horizontal in the middle. The trade is deliberate — no navigation, no orientation, nothing to click. It buys anticipation and a cinematic register at the cost of telling the visitor anything, and it only works because the smoothed, parallaxed page behind it is built to pay that tension off the moment the meter completes.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "bold",
+          "refined"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "Lenis",
+      "GSAP",
+      "ScrollTrigger",
+      "Next.js",
+      "React",
+      "CSS radial-gradient"
+    ],
+    "techniques": "Lenis-smoothed scroll driving GSAP ScrollTrigger scrubs for parallax across most page elements; a preloader overlay tying a tweened counter to a scaleX hairline rule, gated on asset load; atmosphere from layered radial-gradient plus vignette and a grain overlay rather than an image; wordmark as live text at very low opacity, clamped to viewport width.",
+    "authorship": "suggested"
+  }
+}

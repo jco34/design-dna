@@ -293,8 +293,8 @@ export const MOTION_JSON_SCHEMA = {
       items: {
         type: 'string',
         description:
-          'hover: pointer over an element. scroll: position in the page. click: a press or tap. page-load: an entrance on first paint. focus: keyboard focus. ambient: runs continuously with no input at all.',
-        enum: ['hover', 'scroll', 'click', 'page-load', 'focus', 'ambient'],
+          'hover: pointer over an element. scroll: position in the page. click: a press or tap. page-load: an entrance on first paint. focus: keyboard focus. ambient: runs continuously with no input at all. drag: pointer-drag, swipe or orbit, the dominant interaction on a canvas or 3D experience.',
+        enum: ['hover', 'scroll', 'click', 'page-load', 'focus', 'ambient', 'drag'],
       },
     },
     easing: {
@@ -475,4 +475,4 @@ export const BUILD_ONLY_SCHEMA = {
  * you which instructions produced it. Bump it whenever the extraction
  * instructions or this schema change in a way that would alter output.
  */
-export const PROMPT_VERSION = '3.0.0-build';
+export const PROMPT_VERSION = '3.1.0-drag-trigger';

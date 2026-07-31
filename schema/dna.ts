@@ -193,6 +193,8 @@ export const MotionTrigger = z.enum([
   'page-load',
   'focus',
   'ambient',
+  /** Pointer-drag, swipe or orbit. The dominant interaction on a canvas/3D experience. */
+  'drag',
 ]);
 export type MotionTrigger = z.infer<typeof MotionTrigger>;
 

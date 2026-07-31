@@ -78,6 +78,12 @@ Refuse the Item, write nothing, and exit non-zero when any of these hold:
 Paywall *wording* is explicitly not a refusal trigger. A paywalled page often
 renders a genuinely designed page, and that design is worth keeping.
 
+A fourth kind of refusal is a handover rather than a dead end: a page whose
+design is substantially one WebGL/canvas element is refused with a pointer to
+**section 4, Protocol C**, because nothing in this section's read-only DOM
+exploration can see a design that lives entirely on a canvas. That refusal is
+correct, not a bug to work around - follow Protocol C instead of this one.
+
 Refuse before navigating at all when the design is not at the URL: Figma
 `/file|/design|/proto|/board`, Dribbble `/shots/`, Behance `/gallery/`, Pinterest
 `/pin/`, Google Docs and Drive, `*.notion.so` (but not `*.notion.site`),
@@ -211,7 +217,118 @@ it, then you are reading motion content directly and should record what it says.
 
 ---
 
-## 4. Reading the traits
+## 4. Protocol C: an interactive canvas experience
+
+Some designs are not in the DOM at all. A page whose entire surface is one
+`<canvas>` element - a WebGL scene, a Three.js or Spline experience, a
+drag-to-orbit product configurator - has no elements for Protocol A's
+exploration pass to hover, no CSS transitions to read, and no scroll depth to
+measure, because none of that machinery exists on a canvas. The design lives
+entirely in pixels the GPU draws, which only appear once you drive the thing.
+
+The `dna` CLI recognises this shape and refuses to guess: a canvas that
+dominates the viewport and carries a WebGL/3D fingerprint is hedged over to
+you rather than photographed as a blank loader or misread as "nothing was
+rendered". This protocol is what you follow once it lands in your hands, and
+it applies equally when you found the site yourself rather than through a
+CLI refusal.
+
+### C.1 When this applies
+
+A page whose design is substantially a canvas: a full-viewport `<canvas>`
+element hosting a WebGL/WebGL2 context, whether built with Three.js, Babylon,
+PlayCanvas, Spline, or a hand-rolled renderer. Not a page that merely contains
+a small decorative canvas (a confetti burst, a particle backdrop) behind
+ordinary DOM content - that page is still Protocol A's job, because its
+design is still legible without driving the canvas.
+
+### C.2 Reach it, read-only
+
+Dismiss a consent banner the privacy-preserving way, same as always. Wait past
+a loader the way you would wait for any slow page: give it a real chance to
+finish rather than screenshotting mid-load.
+
+**Hard boundary, stricter than Protocol A's:** many canvas experiences gate
+entry behind a form - an email capture, a prize draw, an age check. Never fill
+one in, whatever it asks for. If the experience is genuinely inaccessible
+without submitting a form, refuse the Item the same way you would refuse a
+login screen: the design is not reachable read-only, and a screenshot of the
+gate is not the Item.
+
+### C.3 Drive it
+
+This is where Protocol A's read-only interaction list gets replaced, not
+supplemented: hover and keyboard-tab mean little on a canvas. Instead:
+
+- **Drag and orbit.** Click-drag across the canvas, in more than one direction.
+  Note whether the camera orbits, the scene pans, or an object rotates in
+  place.
+- **Scroll.** Many canvas experiences advance a timeline or a camera path on
+  scroll rather than scrolling a page. Move through it in stages.
+- **Click hotspots.** Anything that looks interactive within the scene:
+  a product part, a waypoint, a UI overlay drawn on top of the canvas.
+- **Wait for ambient behaviour.** A looping camera drift, an idle animation, a
+  particle system running with no input at all.
+
+Watch across frames, the way you would watch a video rather than read a
+still: what leads, what follows, how camera moves ease in and out, whether
+transitions between states are instant cuts or eased motion.
+
+### C.4 The one Capture
+
+Still exactly one static PNG, at the same 1440x900 @2x convention as every
+other Item. Choose the single frame that most represents what you just drove
+- the "hero moment" the experience keeps returning to, or the state it opens
+on once loaded. This is honestly a still of a moving thing, the same honest
+compromise Protocol B section B.3 makes explicit for a supplied image; the
+difference is that here you drove the motion yourself, so `motion` is read
+from direct observation rather than left Undetermined.
+
+### C.5 Reading the traits for a canvas experience
+
+Most traits read as they would for any design, off the chosen frame and what
+you observed while driving it. Two traits carry the weight here:
+
+- **`imagery.kind`** is `3d-render` for a genuine 3D scene.
+  `surfaceTreatment.finish` is where materials go: matte, glossy, subsurface,
+  metallic, textured.
+- **`motion`** is read, not Undetermined, because you drove the live
+  experience. `presence` is usually `prominent` or `pervasive`. `triggers`
+  will often include `drag` alongside `scroll` or `click`. `character` and
+  `choreography` are where this trait earns its keep: describe camera moves,
+  easing, and what leads what, specifically enough to rebuild - "camera orbits
+  the product on drag with inertia and a soft snap-back", not "smooth 3D
+  interactions".
+- **The Build** is the other place all this driving pays off. A still,
+  typographic page gets an empty Build honestly; a canvas experience is
+  exactly the case section 6 below says a Build "earns its
+  keep" - name the rendering stack you actually recognise in the techniques
+  you observed (for example Three.js plus React Three Fiber for a
+  component-driven scene, GSAP or a scroll-linked timeline for the
+  choreography), and the 2-4 techniques that matter for this scene
+  specifically: an orbit-controlled camera, a scroll-driven timeline, GLTF
+  models, a bloom or depth-of-field pass, instanced meshes for a particle
+  field.
+
+### C.6 Honesty for a canvas experience
+
+The same rules as everywhere else, applied to a medium where they are easier
+to break:
+
+- **Never invent geometry, materials or counts you did not see.** "A
+  detailed engine model" is a description; "a 40,000-polygon engine model" is
+  a fabrication unless you can actually see a polygon count.
+- **Motion is read here, not Undetermined**, because Protocol B's rule about
+  a still image not answering for motion does not apply once you have driven
+  the live thing yourself. Say what you actually saw move.
+- **The Build stays a suggestion**, never an asserted fact about internals.
+  "Likely Three.js" because the render quality and camera behaviour are
+  consistent with it is a reasonable suggestion; claiming to have seen a
+  `THREE.PerspectiveCamera` in code you never read is not.
+
+---
+
+## 5. Reading the traits
 
 Nine traits. Each is read off the evidence and is worth transplanting on its own.
 Enum values below are the ones `schema/dna.ts` will accept; anything else fails
@@ -282,7 +399,8 @@ New at schemaVersion 2. Fully Undetermined for a still image, per B.3.
 
 - `presence`: `none` | `restrained` | `prominent` | `pervasive` | `undetermined`
 - `triggers`: nought to four of `hover`, `scroll`, `click`, `page-load`, `focus`,
-  `ambient`
+  `ambient`, `drag` - `drag` is the dominant interaction on a canvas experience
+  (Protocol C), for a pointer-drag, swipe or camera orbit
 - `easing`: `linear` | `eased` | `spring` | `abrupt` | `mixed` | `undetermined`
 - `pace`: `instant` | `brisk` | `measured` | `slow` | `undetermined`
 - `character` as prose: what actually moves and how it feels, with real durations
@@ -310,7 +428,7 @@ design that "uses a modern aesthetic with clean lines" is filler.
 
 ---
 
-## 5. The Build
+## 6. The Build
 
 New alongside the nine traits, and different in kind from all of them: every
 trait above is read off the evidence; the Build is your suggestion, and it is
@@ -337,7 +455,7 @@ visible design language only.
 
 ---
 
-## 6. Labels
+## 7. Labels
 
 Three axes, all closed vocabularies. A label describes an Item so it can be
 found; it is never mixed into a prompt and never contributes design content.
@@ -358,7 +476,7 @@ ordinary. Never stretch a member to fit, and never invent a value.
 
 ---
 
-## 7. Honesty rules
+## 8. Honesty rules
 
 These are the ones that make the library worth having, and every one of them is
 easier to break than to follow.
@@ -397,7 +515,7 @@ cannot show you.
 
 ---
 
-## 8. What this doctrine is worth checking against
+## 9. What this doctrine is worth checking against
 
 After any hand-written or migrated Item:
 

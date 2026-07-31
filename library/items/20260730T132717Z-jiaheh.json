@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 3,
+  "id": "20260730T132717Z-jiaheh",
+  "addedAt": "2026-07-30T13:28:29.798Z",
+  "source": {
+    "kind": "url",
+    "url": "https://rechroma.com/"
+  },
+  "capture": {
+    "file": "20260730T132717Z-jiaheh.png",
+    "takenAt": "2026-07-30T13:26:43.828Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-07-30T13:28:29.798Z",
+    "promptVersion": "3.0.0-build"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#c2c2c0",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#d8d8d6",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#0d0d0d",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#8c8c8a",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#111111",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Modular display face built from solid black squares on a coarse unit grid; visible seams between cells, lowercase, counters formed by omitted squares, tight fitting",
+      "bodyFamily": "",
+      "bodyCharacter": "Dot-matrix monospaced-feeling face: strokes rendered as stipples of tiny squares, wide even tracking, generous leading, mixed case, low contrast against the grey",
+      "scale": "dramatic",
+      "weightRange": "uniform",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-bleed hero on an implied square grid: oversized tile wordmark set high and spanning most of the width, then a right-aligned two-line subhead and CTA stacked to the right rail, centred scroll cue at the base.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Very large empty margins above and below the wordmark; the type block and button sit tight to each other as one right-hand cluster, so all rest is pushed into a few big gaps rather than spread evenly.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "rounded",
+      "borders": "hairline",
+      "elevation": "pronounced",
+      "finish": "Matte flat grey fills throughout; the only material moment is the CTA, a slightly lighter capsule with a thin light border and a hard offset drop shadow, and the glyph tiles carry faint seam lines where cells abut.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "none",
+      "treatment": "",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "pervasive",
+      "triggers": [
+        "scroll",
+        "hover",
+        "ambient",
+        "page-load"
+      ],
+      "easing": "mixed",
+      "pace": "brisk",
+      "character": "Most state changes are 0.15s eases on background, colour and shadow; entrances run 0.72s ease-out with a springy cubic-bezier(0.34,1.56,0.64,1) overshoot on transform. The scroll cue pulses on a 0.9s loop.",
+      "choreography": "Over a 20.9-viewport page, 112 elements fade in as they are reached and 396 move at a rate other than the scroll, so nearly everything is scroll-linked parallax or pinning. Reveals land at several distinct depths rather than as one batch; header is sticky.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "A colour product that opens in no colour at all: the hero is a single flat grey field, so the first chroma the visitor sees will be one they made themselves. The argument is carried by the unit rather than the palette — both the wordmark and the body type are drawn from the same square cell, one as solid tiles at display size and one as a loose stipple at reading size, so the page demonstrates a generative grid system instead of describing it. That costs it legibility (the dotted subhead barely holds against the grey) and it accepts the cost, buying back attention with the one warm object on screen: a small lifted capsule with a hard shadow, the only thing that looks pressable. Beneath the still frame the page is long and almost entirely scroll-driven — hundreds of elements moving off-rate, reveals sequenced across depths, entrances landing with a slight spring — yet it declares materially less motion under prefers-reduced-motion, which puts the choreography on the craft side rather than the spectacle side.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "technical",
+          "experimental"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "refined",
+          "bold"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "GSAP",
+      "ScrollTrigger",
+      "Lenis",
+      "React",
+      "Canvas 2D / SVG",
+      "CSS Grid"
+    ],
+    "techniques": "Draw the wordmark and body type as cell grids rather than webfonts — an SVG/canvas tile renderer where each glyph is a bitmap of on/off cells, solid at display size and stippled at text size. Drive the long page with ScrollTrigger plus smooth scroll, writing per-element inline transforms for off-rate parallax and depth-staggered reveals; springy entrances on a 0.72s overshoot curve. Gate it all behind a prefers-reduced-motion branch.",
+    "authorship": "suggested"
+  }
+}

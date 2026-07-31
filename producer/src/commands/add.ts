@@ -59,6 +59,7 @@ export interface AddOptions {
   readonly clip?: { x: number; y: number; width: number; height: number };
   readonly headed: boolean;
   readonly waitBeforeCapture?: number;
+  readonly anyway: boolean;
   readonly resume: boolean | undefined;
   readonly recursive: boolean;
   readonly dryRun: boolean;
@@ -187,6 +188,7 @@ async function prepareUrl(target: string, options: AddOptions): Promise<Prepared
     headed: options.headed,
     waitBeforeCapture: options.waitBeforeCapture,
     explore: !options.noExplore,
+    anyway: options.anyway,
   });
   return {
     pngPath: shot.file,

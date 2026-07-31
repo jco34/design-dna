@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 3,
+  "id": "20260730T160501Z-62ibql",
+  "addedAt": "2026-07-30T16:07:05.677Z",
+  "source": {
+    "kind": "url",
+    "url": "https://smeulders-ig.nl/projecten/dvdw"
+  },
+  "capture": {
+    "file": "20260730T160501Z-62ibql.png",
+    "takenAt": "2026-07-30T16:04:38.192Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-07-30T16:07:05.677Z",
+    "promptVersion": "3.0.0-build"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#14120f",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#ffffff",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#9a958c",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#ffffff",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Geometric grotesque at display size, near-touching tracking, mixed case, drawn as an unfilled hairline outline rather than a solid fill so the image reads through the counters",
+      "bodyFamily": "",
+      "bodyCharacter": "Same geometric sans, open round counters, normal tracking, sentence case; a bold term label with its value set regular alongside, on a short measure",
+      "scale": "dramatic",
+      "weightRange": "wide",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-viewport image with a header row over a hairline rule — wordmark left, nav centre-right, language chip far right; all hero content stacked on one left rail near the bottom, plus a centred scroll cue and a corner badge.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "One outer margin sets the left rail everything aligns to; tight leading inside the credit stack, a large gap between headline and credits, and most of the frame left as untouched image.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "sharp",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "The photograph carries every surface; no panels or fills, just white type and thin rules laid straight onto the image, with the lower left falling dark enough to hold the copy.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "photography",
+      "treatment": "One cinematic full-bleed interior photograph, warm brass against near-black, unbordered and unmasked; the display headline sits on it as outline-only type so the room shows through the letterforms.",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "prominent",
+      "triggers": [
+        "scroll",
+        "hover",
+        "page-load",
+        "click"
+      ],
+      "easing": "mixed",
+      "pace": "brisk",
+      "character": "Nearly everything drifts at its own rate against the scroll, separating image and type in depth; the outlined headline arrives as duplicated word layers sliding into register. Transforms run 0.2–0.4s; footer links underline on hover.",
+      "choreography": "Reveals land at several different scroll depths rather than as one group, so sections arrive in sequence down the page, while hero layers move at differing rates simultaneously. The header stays put and does not resize or collapse.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "This puts a single photograph in charge and reduces the interface to the least that can sit on top of it: a hairline rule, a wordmark, four nav words and a left rail of white type. The one real move is drawing the project name as an unfilled outline and animating its word layers into register — the headline occupies display scale without blocking the room behind it, so the image survives being typed over instead of being dimmed by a scrim. The supporting copy is set as a credit block, term in bold and value in regular, which frames the first screen as an index card for a piece of work rather than a pitch. What it trades is robustness and information: legibility depends entirely on the photograph staying dark in the lower left, there is no colour of its own to fall back on, and an entire viewport delivers two lines of fact. The scroll then does the rest of the arguing, moving almost every element at its own rate so the flat frame reads as depth.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "portfolio",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "swiss"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "refined",
+          "calm"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "GSAP",
+      "ScrollTrigger",
+      "Lenis",
+      "SplitType",
+      "Swiper"
+    ],
+    "techniques": "Split the headline into per-word spans and animate duplicated copies into register, the visible layer set with -webkit-text-stroke and transparent fill so the photo reads through. Drive the full-bleed hero image and its overlay layers from one scroll timeline at differing rates for parallax. Register section reveals at staggered scroll depths rather than one shared trigger. Overlay the hairline grid as fixed 1px pseudo-elements above the image, not as element borders.",
+    "authorship": "suggested"
+  }
+}

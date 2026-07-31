@@ -431,6 +431,7 @@ const TRIGGER_PHRASE: Record<Item['dna']['motion']['triggers'][number], string> 
   'page-load': 'page load',
   focus: 'keyboard focus',
   ambient: 'nothing at all, running ambiently',
+  drag: 'drag',
 };
 
 function motion(item: Item): string | null {

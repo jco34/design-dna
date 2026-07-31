@@ -91,6 +91,11 @@ CAPTURE OPTIONS (URL targets only)
   --headed                    Run the browser visibly.
   --wait-before-capture <ms>  Pause before the shot, so you can dismiss a consent
                               banner yourself.
+  --anyway                    Skip the canvas/WebGL handover and capture the page
+                              as an ordinary one regardless. For a page the
+                              fingerprint gets wrong, not a way to force a real
+                              3D experience through this pipeline - that is
+                              docs/EXTRACTION.md Protocol C, a hand-written Item.
 
 ITEM OPTIONS
   --scope <page|section|component>   Default page. Frozen at write time.
@@ -345,6 +350,7 @@ async function runAdd(parsed: Parsed, library: LibraryPaths): Promise<number> {
     clip,
     headed: bool(parsed, '--headed'),
     waitBeforeCapture,
+    anyway: bool(parsed, '--anyway'),
     resume,
     recursive: bool(parsed, '--recursive'),
     dryRun: bool(parsed, '--dry-run'),

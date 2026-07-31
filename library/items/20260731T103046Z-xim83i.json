@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 3,
+  "id": "20260731T103046Z-xim83i",
+  "addedAt": "2026-07-31T10:31:57.388Z",
+  "source": {
+    "kind": "url",
+    "url": "https://orionix.framer.website/"
+  },
+  "capture": {
+    "file": "20260731T103046Z-xim83i.png",
+    "takenAt": "2026-07-31T10:30:04.775Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-07-31T10:31:57.389Z",
+    "promptVersion": "3.1.0-drag-trigger"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#f1efed",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#141414",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#8e8d8b",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#111111",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "High-contrast transitional serif, sharp bracketed serifs, ball terminals, generous x-height, tight tracking, sentence case with a full stop, near-solid leading at display size",
+      "bodyFamily": "",
+      "bodyCharacter": "Neutral geometric-leaning grotesque, double-storey a, near-neutral tracking, roughly 1.5 leading, centred two-line measure; a uppercase mono sets the corner utility text",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-bleed hero image with a narrow centred type column over it; nav splits logo-left, links-centre, pill CTA-right; utility marks pinned to all four corners and a vertical badge on the left edge.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Enormous rest around a small centred type block; nav and hero separated by a deep gap, the two headline lines set tight against each other, corner utilities pushed hard to the page edges",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "pill",
+      "borders": "hairline",
+      "elevation": "subtle",
+      "finish": "Matte paper-like off-white ground with a faint vignette; the only material contrast is the glossy dichroic 3D render and a crisp white floating toolbar with a soft diffuse shadow",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "3d-render",
+      "treatment": "Iridescent dichroic glass discs with heavy chromatic dispersion, stacked into a helix that arcs across the full width and bleeds off both edges; no frames, soft ambient shadowing, seated on the page ground",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "prominent",
+      "triggers": [
+        "scroll",
+        "ambient"
+      ],
+      "easing": "undetermined",
+      "pace": "undetermined",
+      "character": "No declared CSS transitions; ~555 elements carry script-written inline transforms and 80 WAAPI animations run, so movement is continuous rather than state-based. Hover left every tested control visually inert.",
+      "choreography": "Across an 18.8-viewport page, 197 elements travel at rates other than the scroll itself — layered parallax and scroll-linked transforms — while nothing fades in and nothing rescales. Reveals all land at one depth, so there is no stagger and no sticky header.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The page stages a text-editor fiction: the second headline line wears a selection highlight and a floating rich-text toolbar hovers beneath it, so the hero reads as a document caught mid-edit rather than a finished claim — craft asserted by showing the tool, not the outcome. Everything else defers to that gag and to one image. All chroma is quarantined inside the dichroic glass render, which bleeds edge to edge behind the type; the interface itself stays paper-white, near-black and mono-labelled, so the render supplies the entire emotional register while the UI supplies none. The trade is density and proof: the first screen carries no product, no metrics, no sections — a single held image and eight words. Studio credentials are exiled to the margins as corner utilities (local time, email, award badge), present for anyone who looks but refusing to compete with the centre.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "refined",
+          "calm"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "Framer",
+      "React",
+      "Framer Motion",
+      "Lenis",
+      "Three.js",
+      "React Three Fiber",
+      "Blender or Spline"
+    ],
+    "techniques": "Author the disc helix as a dichroic-glass render — transmission material with high dispersion/IOR, thin-film gradient env map — and ship it as a pre-rendered transparent PNG bled full-width, or as R3F if it must respond. Drive the hero with scroll-linked useTransform on several layers at differing rates for parallax rather than opacity reveals; keep hover states genuinely inert. Rebuild the toolbar as a static decorative chip with a spanned ::selection-style highlight on the second headline line. Pin corner utilities as fixed edge elements.",
+    "authorship": "suggested"
+  }
+}

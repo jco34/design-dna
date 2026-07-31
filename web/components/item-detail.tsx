@@ -230,7 +230,18 @@ export function ItemDetail({ item, allItems }: { item: Item; allItems: Item[] })
 
           <div className="mt-2">
             <p className="tag text-faint">Source</p>
-            <p className="mono mt-1 break-all text-[12px] text-muted">{sourceLabel(item)}</p>
+            {item.source.kind === "url" ? (
+              <a
+                href={item.source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mono mt-1 block break-all text-[12px] text-muted underline decoration-line-2 underline-offset-4 hover:text-ink"
+              >
+                {sourceLabel(item)}
+              </a>
+            ) : (
+              <p className="mono mt-1 break-all text-[12px] text-muted">{sourceLabel(item)}</p>
+            )}
             <p className="mono mt-1 text-[11px] text-faint">
               {`captured ${formatDate(item.capture.takenAt)} · ${item.capture.pixelWidth}x${item.capture.pixelHeight} · ${item.authoredBy.kind}${item.authoredBy.model ? ` · ${item.authoredBy.model}` : ""}`}
             </p>
