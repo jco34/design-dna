@@ -19,15 +19,15 @@
   "note": null,
   "authoredBy": {
     "kind": "cli",
-    "model": "claude-haiku-4-5-20251001+claude-opus-5",
-    "runAt": "2026-07-31T10:09:26.048Z",
+    "model": "claude-sonnet-5+claude-haiku-4-5-20251001",
+    "runAt": "2026-08-03T05:25:59.455Z",
     "promptVersion": "3.1.0-drag-trigger"
   },
   "dna": {
     "palette": {
       "background": {
-        "hex": "#fdf5e5",
-        "weight": "dominant",
+        "hex": "#f5efe1",
+        "weight": "supporting",
         "authorship": "agent"
       },
       "surface": {
@@ -52,34 +52,34 @@
       }
     },
     "typography": {
-      "headingFamily": "",
-      "headingCharacter": "",
-      "bodyFamily": "",
-      "bodyCharacter": "",
-      "scale": "undetermined",
-      "weightRange": "undetermined",
-      "authorship": "agent"
+      "headingFamily": "Geom Graphic",
+      "headingCharacter": "A geometric sans set in semibold (600) and always uppercase, large and blocky (64-78px display sizes) with tight leading around 1.2x cap height.",
+      "bodyFamily": "Arial Nova",
+      "bodyCharacter": "Regular weight (400), sentence case, ~1.5x leading at 16-20px. A separate monospace face carries small uppercase eyebrow labels like \"[01] COMPANY\" with heavy tracking (~5px).",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "override"
     },
     "composition": {
-      "structure": "A single large photographic plate occupying almost the whole frame, bled off the top and left, with a narrow warm margin held at the right and a wider one at the bottom. No text, chrome or columns in view.",
+      "structure": "A single full-bleed photograph fills the top of the frame edge to edge, cut off abruptly at a hard horizontal line into a plain empty colour block beneath it; no columns, grid or text are visible yet.",
       "contentWidth": "full-bleed",
       "authorship": "agent"
     },
     "spacing": {
-      "density": "undetermined",
-      "rhythm": "The only spacing readable is the asymmetric cream margin kept at right and bottom while top and left bleed off; too little content is visible to judge a step scale.",
+      "density": "airy",
+      "rhythm": "One large uninterrupted image block followed by one large uninterrupted empty block — the only visible rhythm is that single big break, not a repeating scale.",
       "authorship": "agent"
     },
     "surfaceTreatment": {
-      "corners": "sharp",
+      "corners": "undetermined",
       "borders": "none",
       "elevation": "flat",
-      "finish": "Warm matte cream field, completely untextured, with the photograph laid straight onto it as a hard square-cut plate: no frame, rule, radius or shadow at the join. The image's own grain and low winter light supply the only texture.",
+      "finish": "Plain flat cream fill below the photo; the photograph itself carries a faint dark gradient/vignette toward its lower edge, otherwise no texture or layering is visible.",
       "authorship": "agent"
     },
     "imagery": {
       "kind": "photography",
-      "treatment": "One aerial documentary photograph, warm low-sun grade with deep shadows, bled off the top and left edges, square-cut with no border, mask or overlay; its earth tones sit close to the cream page colour.",
+      "treatment": "A single full-bleed aerial/drone photograph of a construction site in warm, low, golden-hour light, with a subtle dark gradient overlay at the bottom edge presumably for text legibility of content not yet visible.",
       "authorship": "agent"
     },
     "motion": {
@@ -95,7 +95,7 @@
       "authorship": "agent"
     },
     "philosophy": {
-      "text": "This frame spends its entire budget on one photograph and one colour. A warm cream field is the whole visual system, and the aerial site photo is dropped onto it as a hard-edged plate that bleeds off the top and left but stops short of the right and bottom, so the image reads as placed rather than as the page itself and the cream stays a deliberate material instead of leftover margin. The image is graded to sit near the paper tone, which keeps the seam quiet and lets the dark cut of the shadow carry the contrast rather than any rule, frame or shadow. Nothing is layered, rounded or lifted; the only hierarchy is picture against paper. What it trades away is any typographic or interface voice in this view - it has no fallback if the photograph is weak. The compensating craft lives in behaviour instead: scroll is smoothed and almost everything on the long page is moved by script at rates other than the scroll itself, while pointer hover deliberately returns nothing, so the page feels like footage being pulled past rather than a surface being poked at.",
+      "text": "This capture reads as the very top of a page where a single dramatic, wide-format photograph is left to carry the entire opening statement, with no headline, navigation or UI chrome yet competing for attention. The abrupt cut to a flat, empty cream field beneath it signals restraint: whatever content follows is being deliberately withheld from this frame, letting the image's own scale and light do the persuasive work before any typographic or systemic design decisions become visible. It trades immediate information density for a slower, image-first reveal.",
       "authorship": "agent"
     },
     "labels": {
@@ -116,13 +116,8 @@
     }
   },
   "build": {
-    "stack": [
-      "GSAP",
-      "GSAP ScrollTrigger",
-      "Lenis",
-      "Swiper"
-    ],
-    "techniques": "Lenis-smoothed scroll driving ScrollTrigger: the full-bleed photo scrubs at a slower rate than the page for parallax inside a fixed-ratio overflow-hidden wrapper, with staggered fade-and-rise reveals batched per section rather than one global group. A CSS-transform marquee looping on a long linear duration, a Swiper testimonial track on continuous autoplay, and a sticky header that resizes on scroll direction. Hover states intentionally left inert.",
+    "stack": [],
+    "techniques": "Full-bleed responsive hero image (object-fit: cover) with a bottom gradient overlay for contrast; nothing else in this capture calls for a distinctive stack.",
     "authorship": "suggested"
   }
 }

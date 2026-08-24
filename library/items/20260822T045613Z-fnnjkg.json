@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 3,
+  "id": "20260822T045613Z-fnnjkg",
+  "addedAt": "2026-08-22T04:57:38.852Z",
+  "source": {
+    "kind": "url",
+    "url": "https://unitedcarriers.com/"
+  },
+  "capture": {
+    "file": "20260822T045613Z-fnnjkg.png",
+    "takenAt": "2026-08-22T04:55:51.547Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-opus-5",
+    "runAt": "2026-08-22T04:57:38.852Z",
+    "promptVersion": "3.1.0-drag-trigger"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#06070a",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#ffffff",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#8e9299",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#f2621e",
+        "weight": "supporting",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Very heavy wide squarish grotesque, all-caps, flat horizontal terminals, squared bowls on E/G/J, near-zero tracking so letters almost touch, tight leading around 0.9",
+      "bodyFamily": "",
+      "bodyCharacter": "Neutral humanist sans, regular weight, normal tracking, generous ~1.5 leading, short measure of roughly 40 characters, set in grey below the headline",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Full-bleed dark canvas; a left text rail carries eyebrow, display headline, copy and two buttons, with the nav column stacked vertically beside the logo. The globe bleeds off the top-right and is cropped by the frame.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Large empty voids left and below the hero; tight inside groups (headline lines nearly collide, nav items on a short even step), with a wide gap between headline block and button row",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "pill",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Matte black with starfield grain and atmospheric bloom: orange rim-light along the top limb, cold blue halo below, landmasses drawn as fine white dot clusters. The one opaque white card sits flat on it",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "3d-render",
+      "treatment": "A particle globe of fine white dots, cropped hard by the right and top edges, ringed by orange rim-glow and blue atmosphere, overlaid with thin orange arc paths and small black rectangular pins with orange markers",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "pervasive",
+      "triggers": [
+        "scroll",
+        "hover",
+        "ambient"
+      ],
+      "easing": "mixed",
+      "pace": "measured",
+      "character": "Colour, border and transform transitions at 0.35-0.4s ease; primary button hover shifts colour, border and a filter glow; an 8s linear marquee on the ticker and a 3s cubic-bezier pulse on the globe markers loop forever",
+      "choreography": "Lenis smooth scroll over a 31-viewport page: 399 elements travel at rates other than the scroll itself, so nearly every layer parallaxes. Reveals fade in at several different depths rather than as one group; 60 elements loop with no input at all",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "This design treats the viewport as a window onto an operating system rather than a page: the globe is not decoration but the subject, cropped off two edges so it reads as larger than the frame and continuing beyond it. Everything else is subordinated to that — the type sits in flat black negative space on the left, the navigation is a plain stacked list with no chrome, and the only opaque surface in the composition is the consent card. Colour is rationed to a single orange that appears identically as the planet's rim-light, the route arcs and the map pins, tying interface and render into one object. The squared techno lettering on labels and the black-box pins borrow the register of a tracking console, so the ambient pulsing and the sequenced parallax read as live telemetry rather than as flourish. What it trades away is hierarchy at rest — the page depends on continuous motion across a 31-viewport scroll, and keeps that motion even under reduced-motion.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "technical",
+          "experimental"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "bold",
+          "serious"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "Three.js",
+      "React Three Fiber",
+      "GSAP",
+      "ScrollTrigger",
+      "Lenis",
+      "drei"
+    ],
+    "techniques": "Dotted globe as instanced points sampled from a landmass mask, with additive rim/atmosphere shaders for the orange limb and blue halo; great-circle arc curves with animated draw and pulsing markers; HTML pin labels projected from 3D positions; ScrollTrigger layering elements at differing scroll rates over Lenis; CSS marquee for the ticker.",
+    "authorship": "suggested"
+  }
+}
