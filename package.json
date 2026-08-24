@@ -10,6 +10,10 @@
     "doc": "docs"
   },
   "scripts": {
+    "dev": "npm --prefix web run dev",
+    "build": "npm --prefix web run build",
+    "start": "npm --prefix web run start",
+    "lint": "npm --prefix web run lint",
     "dna": "tsx producer/src/cli.ts",
     "library:check": "tsx producer/src/cli.ts check",
     "library:format": "tsx producer/src/cli.ts check --fix",
