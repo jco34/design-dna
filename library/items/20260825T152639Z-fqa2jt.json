@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 3,
+  "id": "20260825T152639Z-fqa2jt",
+  "addedAt": "2026-08-25T15:32:00.000Z",
+  "source": {
+    "kind": "url",
+    "url": "https://dottxt.ai/"
+  },
+  "capture": {
+    "file": "20260825T152639Z-fqa2jt.png",
+    "takenAt": "2026-08-25T15:26:48.111Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "hand",
+    "model": "claude-opus-5",
+    "runAt": "2026-08-25T15:32:00.000Z",
+    "promptVersion": null
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#efefef",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#000000",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#a6b4a3",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#bd932f",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "NeueBit",
+      "headingCharacter": "Bitmap display face, uppercase, fluid to ~204-267px with leading at 0.75 of size so the two lines nearly touch; the second line is indented, not aligned. Glyph edges are visibly stair-stepped.",
+      "bodyFamily": "PP Neue Montreal Mono",
+      "bodyCharacter": "Monospace carries the interface voice - nav, labels, eyebrows and toasts at 12-16px. The proportional grotesk is reserved for prose, where individual words are tinted like syntax highlighting.",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Fixed full-viewport shell: a hairline-bordered white panel inset in a grey frame, nav pinned above it, and a persistent right rail holding a dither tile and a stack of toast cards. The hero sets a two-line stepped headline top-left, a terminal window bottom-left, icons and tagline bottom-right.",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "The hero is mostly void - the middle half of the frame is empty, with content pinned to the four corners. Deeper panels invert this into dense edge-to-edge bento tiles on a 1rem gutter. Gaps stay uniform; the emptiness is the composition.",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "sharp",
+      "borders": "hairline",
+      "elevation": "subtle",
+      "finish": "Flat 1-bit fills, no gradients or blur anywhere. Texture comes entirely from ordered-dither raster fields. The terminal card carries one hard grey offset shadow, 6px 6px at zero blur, in the manner of a classic Mac window.",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "abstract-graphic",
+      "treatment": "Ordered-dither halftone tiles as the recurring motif, plus outlined pixel-art glyphs (cube, smiley, bomb, coffee cup, rocket, bolt). Deeper panels carry 1-bit dithered photography and a multi-colour pixel field behind the footer.",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "pervasive",
+      "triggers": [
+        "page-load",
+        "scroll",
+        "hover",
+        "click"
+      ],
+      "easing": "mixed",
+      "pace": "brisk",
+      "character": "Headline scrambles through random ASCII, locking left to right ~70ms a step, settled at 1.96s. Scroll is virtual: the wheel drives a fixed shell 1:1, first frame at 14ms, exponentially damped to rest by 1.13s. Hover hard-inverts over 0.3s.",
+      "choreography": "Characters resolve strictly left to right, each after two or three random draws, so the line reads as being generated rather than revealed. Section changes are scroll-position-driven wipes with a dithered leading edge. Nothing runs on its own - the canvases are byte-identical at rest.",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The page argues for its product by performing the opposite: the headline arrives as random ASCII and locks character by character into \"NO BAD OUTPUTS\", so you watch constrained decoding happen before you read the claim. Everything else exists to make that legible - a 1-bit palette, a bitmap face with visibly stair-stepped glyphs, ordered-dither fields standing in for a probability distribution, and a monospace interface voice that treats a marketing site as a piece of software. Single-key accelerators in the nav commit to the same address: this is for people who live in terminals. What it trades is comfort and reach. Scroll is virtualised rather than native, the headline scramble runs identically under prefers-reduced-motion, and focused nav items show no ring at all, so the demonstration is consistently prioritised over the conventions that would make it quieter and easier to enter.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "technical",
+          "retro"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "bold",
+          "playful"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "Lenis",
+      "HTML Canvas"
+    ],
+    "techniques": "Virtual scroll: the body stays one viewport tall with overflow hidden while a fixed shell is transformed 1:1 with wheel delta and damped by an exponential lerp, so nothing scrolls natively. A per-character text scramble draws random ASCII and locks left to right. Ordered-dither raster fields are painted to canvas and re-generated per section rather than looped. Single-key nav accelerators are bound at the document level. A bitmap webfont does the display work that would otherwise need SVG or canvas.",
+    "authorship": "suggested"
+  }
+}

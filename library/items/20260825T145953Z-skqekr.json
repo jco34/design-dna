@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 3,
+  "id": "20260825T145953Z-skqekr",
+  "addedAt": "2026-08-25T15:01:15.081Z",
+  "source": {
+    "kind": "url",
+    "url": "https://www.butter.video/"
+  },
+  "capture": {
+    "file": "20260825T145953Z-skqekr.png",
+    "takenAt": "2026-08-25T14:59:07.751Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "cli",
+    "model": "claude-haiku-4-5-20251001+claude-sonnet-5",
+    "runAt": "2026-08-25T15:01:15.081Z",
+    "promptVersion": "3.1.0-drag-trigger"
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#e6e6e6",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#f2f2f2",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#141414",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#4d4d4d",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#181818",
+        "weight": "occasional",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Very large, heavy-weight grotesk sans, tight tracking, mixed case, high contrast against the flat background",
+      "bodyFamily": "",
+      "bodyCharacter": "Regular-weight sans serif, comfortable size and generous letter spacing, single centered line",
+      "scale": "dramatic",
+      "weightRange": "paired",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Centered single-column hero: floating pill nav bar at top, a 3D object suspended above a huge centered headline, subhead and pill CTA stacked beneath, all on one vertical axis",
+      "contentWidth": "contained",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "Generous, evenly stepped gaps between nav, hero art, headline, subhead and CTA; large empty space reserved below the fold",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "pill",
+      "borders": "none",
+      "elevation": "subtle",
+      "finish": "Plain flat fills over a soft light-to-white vertical gradient, with one glossy, multi-material 3D render as the sole textured element",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "3d-render",
+      "treatment": "A glossy 3D-rendered keyring loaded with mixed-material fobs (brushed metal, matte black, glossy pink, translucent green) shaped like brand marks and a physical key, softly lit and floating above the headline",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "pervasive",
+      "triggers": [
+        "scroll",
+        "page-load",
+        "hover"
+      ],
+      "easing": "mixed",
+      "pace": "measured",
+      "character": "Elements fade/slide/scale in over ~0.5-0.8s on an ease-out-quint curve as they enter view; most tracked elements parallax or shift beyond scroll delta; header resizes and sticks; button bg swaps instantly on hover",
+      "choreography": "Reveals fire at many different scroll depths rather than together, giving a sequenced, staggered arrival down the page; parallax-shifted elements move continuously and independently of each other alongside the reveals",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "The page sells a technical, developer-facing product through one disarming, tactile image rather than through interface screenshots or feature lists: a keyring of glossy brand-shaped charms stands in for 'things you can build,' letting a single oversized, blunt headline carry the actual claim. Everything else is stripped back to a flat neutral field, pill-shaped chrome and one accent color so that the 3D object and the scroll choreography are what read as expensive, while the surrounding UI reads as deliberately unremarkable. The trade is depth of content for a strong first impression: this frame is almost pure hero, betting attention on motion and craft in the opening seconds rather than on information density.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "landing-page",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "bold",
+          "playful"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "Three.js",
+      "React Three Fiber",
+      "GSAP",
+      "Lenis",
+      "ScrollTrigger"
+    ],
+    "techniques": "A real-time or pre-baked 3D render for the hero keychain (Three.js/R3F with physically-based glossy materials); scroll-linked reveal and parallax transforms driven by inline styles rather than CSS (GSAP/ScrollTrigger-style rig); Lenis-smoothed scroll feeding a sticky/resizing header; staggered viewport-triggered entrance timing rather than a single simultaneous load.",
+    "authorship": "suggested"
+  }
+}

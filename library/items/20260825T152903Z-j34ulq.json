@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 3,
+  "id": "20260825T152903Z-j34ulq",
+  "addedAt": "2026-08-25T15:31:41.576Z",
+  "source": {
+    "kind": "url",
+    "url": "https://kononenkogroup.com/"
+  },
+  "capture": {
+    "file": "20260825T152903Z-j34ulq.png",
+    "takenAt": "2026-08-25T15:29:39.782Z",
+    "pixelWidth": 2880,
+    "pixelHeight": 1800,
+    "mode": "viewport"
+  },
+  "scope": "page",
+  "taxonomyVersion": 1,
+  "notApplicable": [],
+  "note": null,
+  "authoredBy": {
+    "kind": "hand",
+    "model": "claude-opus-5",
+    "runAt": "2026-08-25T15:31:41.576Z",
+    "promptVersion": null
+  },
+  "dna": {
+    "palette": {
+      "background": {
+        "hex": "#ffffff",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "surface": {
+        "hex": "#eeeeee",
+        "weight": "occasional",
+        "authorship": "agent"
+      },
+      "ink": {
+        "hex": "#000000",
+        "weight": "dominant",
+        "authorship": "agent"
+      },
+      "muted": {
+        "hex": "#929292",
+        "weight": "supporting",
+        "authorship": "agent"
+      },
+      "accent": {
+        "hex": "#000000",
+        "weight": "supporting",
+        "authorship": "agent"
+      }
+    },
+    "typography": {
+      "headingFamily": "",
+      "headingCharacter": "Neutral grotesk, one weight, horizontal terminals and closed apertures; tracked -0.02 to -0.03em, set near 0.8 line-height at display size so lines nearly collide. Sentence case, never caps",
+      "bodyFamily": "",
+      "bodyCharacter": "High-contrast display serif with sharp wedge serifs and a long open-tailed g; same negative tracking, 1.1-1.2 leading. Carries long copy, small field labels, area figures and superscripts",
+      "scale": "dramatic",
+      "weightRange": "uniform",
+      "authorship": "agent"
+    },
+    "composition": {
+      "structure": "Fixed difference-blended header: three-line wordmark far left, comma-separated nav far right. Full-bleed image sections alternate with typographic ones; field labels sit far left against prose in a right column, project images in a two-column grid of unequal tiles at unequal offsets",
+      "contentWidth": "full-bleed",
+      "authorship": "agent"
+    },
+    "spacing": {
+      "density": "airy",
+      "rhythm": "A narrow ~24px page gutter against near-empty viewports between sections, and hairline-ruled table rows on an even pitch. The rhythm breaks inside the display type, where the leading is tighter than the type size",
+      "authorship": "agent"
+    },
+    "surfaceTreatment": {
+      "corners": "mixed",
+      "borders": "hairline",
+      "elevation": "flat",
+      "finish": "Matte throughout: no gradient, shadow, blur or translucency anywhere, the photography being the only material. Sharp-cornered images and panels sit beside circular logo masks and one 6px grey control chip",
+      "authorship": "agent"
+    },
+    "imagery": {
+      "kind": "mixed",
+      "treatment": "Architectural 3D renders run full-bleed and ungraded; documentary studio photography is reserved for the black sections; ink concept sketches are black line on white; CAD elevations and plans are shown raw, unredrawn",
+      "authorship": "agent"
+    },
+    "motion": {
+      "presence": "pervasive",
+      "triggers": [
+        "scroll",
+        "hover",
+        "page-load",
+        "ambient"
+      ],
+      "easing": "eased",
+      "pace": "slow",
+      "character": "One curve for everything: cubic-bezier(0.17, 0.84, 0.44, 1). Project images ease to scale(1.035) over 1.109s on hover and link underlines wipe in from the left over the same 1.109s; the header re-blends in 0.6s, opacity in 0.3s",
+      "choreography": "Copy arrives line by line from behind clipping masks, table rows following in turn with their rules drawing left to right. Deeper down photographs travel a circular orbit and a hairline constellation turns slowly around a pinned headline",
+      "authorship": "agent"
+    },
+    "philosophy": {
+      "text": "A studio that draws buildings has built a site with no colour in it at all - pure black, pure white, one grey for anything secondary - so the only chromatic events on the page are the renders themselves. Around them sits a two-family, single-weight typographic system: a neutral grotesk for names, numbers and navigation, a high-contrast display serif for everything the bureau actually claims, set so tight that the lines stack like a drawn elevation. The page then spends twenty-odd thousand pixels of depth being slow on purpose - a counter that holds you for twenty seconds before anything appears, hover states that take 1.1 seconds to finish, whole empty viewports between one section and the next. What it trades away is speed and any trace of a product: no form, no call to action, nothing being sold in the ordinary sense, only evidence being laid out. The one indulgence is the scroll rig - photographs swung along a circular orbit, a constellation of numbered nodes rotating around a fixed line of type - and even that is drawn in hairlines.",
+      "authorship": "agent"
+    },
+    "labels": {
+      "genre": {
+        "value": "portfolio",
+        "authorship": "agent"
+      },
+      "style": {
+        "values": [
+          "swiss"
+        ],
+        "authorship": "agent"
+      },
+      "mood": {
+        "values": [
+          "refined",
+          "bold"
+        ],
+        "authorship": "agent"
+      }
+    }
+  },
+  "build": {
+    "stack": [
+      "Next.js",
+      "Lenis",
+      "GSAP",
+      "ScrollTrigger",
+      "SplitType"
+    ],
+    "techniques": "Next.js and Lenis are visible in the running page; the rest is inferred from behaviour and is a suggestion only. Per-line clip-path masks over split text drive the copy reveals, so a text-splitting step comes before any scroll work. One scroll timeline does the rest: parallax on image frames, a pinned drawing viewer that steps on scroll, and polar transforms carrying photographs along a circular orbit. The shared curve, cubic-bezier(0.17, 0.84, 0.44, 1), is worth a token; the difference-blended header needs no script.",
+    "authorship": "suggested"
+  }
+}
